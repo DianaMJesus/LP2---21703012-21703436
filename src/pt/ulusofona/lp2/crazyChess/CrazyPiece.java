@@ -53,7 +53,14 @@ public class CrazyPiece {
     //se existe peca e se é da equipa
 
     public boolean mover(int x,int y){
-        if((this.posX-x==1 || this.posX-x==-1 || this.posY-y==1 || this.posY==-1) && (this.posX!=x || this.posY!=y)){
+        if((this.posX==1+x || this.posX==-1+x || this.posY==1+y || this.posY==-1+y) && (this.posX!=x || this.posY!=y)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean comida(){
+        if(this.posY==-1 && this.posX==-1){
             return true;
         }
         return false;

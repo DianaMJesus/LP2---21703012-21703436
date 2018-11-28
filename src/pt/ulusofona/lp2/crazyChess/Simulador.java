@@ -15,6 +15,7 @@ public class Simulador {
     int validasPretas,capturadasPretas,invalidasPretas; // Equipa a jogar - 0
     int validasBrancas,capturadasBrancas,invalidasBrancas; //Equipa a jogar - 1
     int vencedor,turno,equipaJogar,semCaptura;
+    boolean capturaPrevia;
 
     //Variaveis que são listas
     List<CrazyPiece> pecasMalucas=new ArrayList<>();
@@ -25,6 +26,7 @@ public class Simulador {
     public Simulador(){
         this.turno=0;
         this.semCaptura=0;
+        this.capturaPrevia=false;
         this.validasPretas = 0;
         this.capturadasPretas = 0;
         this.invalidasPretas = 0;
@@ -95,29 +97,38 @@ public class Simulador {
     //Executa o movimento de uma peça (Resolver o problema da horizontal)
     public boolean processaJogada(int xO, int yO, int xD, int yD){
         if(xO>=0 && xO<tamanhoTabuleiro && yO>=0 &&yO<tamanhoTabuleiro && xD>=0 && xD<tamanhoTabuleiro && yD>=0 && yD<tamanhoTabuleiro){
-            System.out.println("pos existe");
             CrazyPiece origem=receberPeca(xO,yO);
             if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
-                System.out.println("origem existe");
                 CrazyPiece destino=receberPeca(xD,yD);
                 if (destino == null) {
-                    System.out.println("destino é null");
                     if (origem.mover(xD,yD)){
-                        System.out.println("move");
                         origem.setPosicao(xD,yD);
-                        turno++;
-                        semCaptura++;
+                        this.semCaptura++;
+                        if(this.getIDEquipaAJogar()==0){
+                            this.validasPretas++;
+                        }else if(this.getIDEquipaAJogar()==1){
+                            this.validasBrancas++;
+                        }
+                        this.turno++;
                         return true;
                     }
                 }
-                else if (destino.getEquipa() != equipaJogar) {
+                if (destino.getEquipa() != equipaJogar) {
                     System.out.println("destino é equipa oposta");
                     if (origem.mover(xD,yD)){
                         System.out.println("mover2");
                         destino.setPosicao(-1,-1);
                         origem.setPosicao(xD,yD);
-                        turno++;
-                        semCaptura=0;
+                        this.semCaptura=0;
+                        this.capturaPrevia=true;
+                        if(getIDEquipaAJogar()==0){
+                            this.validasPretas++;
+                            this.capturadasPretas++;
+                        }else if(getIDEquipaAJogar()==1){
+                            this.validasBrancas++;
+                            this.capturadasBrancas++;
+                        }
+                        this.turno++;
                         return true;
                     }
                 }
@@ -140,6 +151,45 @@ public class Simulador {
 
     //Premite finalizar o jogo se for comprida alguma das condições
     public boolean jogoTerminado(){
+        int reisBrancos = 0,reisPretos = 0;
+
+        for(CrazyPiece piece:pecasMalucas){
+            if(!piece.comida()){
+                if(piece.getTipoPeca()==0){
+                    if(piece.getEquipa()==0){
+                        reisPretos++;
+                    }else if(piece.getEquipa()==1){
+                        reisBrancos++;
+                    }
+                }
+            }
+        }
+        //Ver vencedor:
+        //0 - Pretas
+        //1 - Brancas
+        //2 - Empate
+
+        if(reisBrancos==0){
+            //PRETAS VENCEM
+            this.vencedor=1;
+            return true;
+        }else if(reisPretos==0){
+            //BRANCAS VENCEM
+            this.vencedor=0;
+            return true;
+        }else if(reisBrancos==1 && reisPretos==1){
+            //EMPATE
+            this.vencedor=2;
+            return true;
+        }
+
+        if(this.capturaPrevia){
+            if(semCaptura==10){
+                this.vencedor=2;
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -154,10 +204,39 @@ public class Simulador {
 
     //Devolve o valor dos resultados do jogo
     public List<String> getResultados(){
-        if(resultados==null){
+        //Ver vencedor:
+        //0 - Pretas
+        //1 - Brancas
+        //2 - Empate
 
+        this.resultados.add("JOGO DE CRAZY CHESS");
+        switch (this.vencedor){
+            case 0:
+                this.resultados.add("Resultado: VENCERAM AS PRETAS");
+                break;
+
+            case 1:
+                this.resultados.add("Resultado: VENCERAM AS BRANCAS");
+                break;
+
+            case 2:
+                this.resultados.add("Resultado: EMPATE");
+                break;
         }
-        return resultados;
+        this.resultados.add("---");
+
+        //Informacao da equipa preta
+        this.resultados.add("Equipa das Pretas");
+        this.resultados.add(this.capturadasPretas + "");
+        this.resultados.add(this.validasPretas + "");
+        this.resultados.add(this.invalidasPretas + "");
+
+        //Informacao da equipa branca
+        this.resultados.add("Equipa das Brancas");
+        this.resultados.add(this.capturadasBrancas + "");
+        this.resultados.add(this.validasBrancas + "");
+        this.resultados.add(this.invalidasBrancas + "");
+        return this.resultados;
     }
 
     //Devolve o id de uma peça naquela posição (Feito)
