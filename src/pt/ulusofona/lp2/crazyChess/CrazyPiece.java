@@ -1,16 +1,15 @@
 package pt.ulusofona.lp2.crazyChess;
 
 public class CrazyPiece {
-    int id;
+    int id,equipa;
     String imagePNG = null;
     String alcunha;
     Tipo tipoPeca;
-    Equipa equipa;
     Posicao posicao;
 
     public CrazyPiece(){}
 
-    public CrazyPiece(int id,Tipo tipoPeca,Equipa equipa,String alcunha){
+    public CrazyPiece(int id,Tipo tipoPeca,int equipa,String alcunha){
         this.id=id;
         this.tipoPeca=tipoPeca;
         this.equipa=equipa;
@@ -21,7 +20,7 @@ public class CrazyPiece {
         return posicao;
     }
 
-    public Equipa getEquipa() {
+    public int getEquipa() {
         return equipa;
     }
 

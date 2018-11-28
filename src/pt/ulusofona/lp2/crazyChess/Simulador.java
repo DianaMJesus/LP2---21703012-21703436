@@ -57,8 +57,7 @@ public class Simulador {
                 }else if((countLinha-2)<nPecas){
                     info=linha.split(":"); //coloca num array a infomacao da linha e é separada pelos :
                     Tipo tPeca=new Tipo(Integer.parseInt(info[1]));
-                    Equipa equipa=new Equipa(Integer.parseInt(info[2]));
-                    CrazyPiece novaPeca=new CrazyPiece(Integer.parseInt(info[0]),tPeca,equipa,info[3]);
+                    CrazyPiece novaPeca=new CrazyPiece(Integer.parseInt(info[0]),tPeca,Integer.parseInt(info[2]),info[3]);
                     pecasMalucas.add(novaPeca);
 
                 }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
@@ -97,7 +96,7 @@ public class Simulador {
             //Posicao origem= new Posicao(xO,yO);
             for(CrazyPiece peca:pecasMalucas){
                 if(peca.getPosicao().equals(xO,yO)){
-                    if(peca.getEquipa().getId()==turnoAtual.getEquipaJogar()){
+                    if(peca.getEquipa()==turnoAtual.getEquipaJogar()){
                         int difX=xD-xO;
                         int difY=Yd-yO;
                         int difXModulo = difX,difYModulo = difY;
