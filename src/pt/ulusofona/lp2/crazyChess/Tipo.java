@@ -30,11 +30,43 @@ public class Tipo {
         return id;
     }
 
-    public int getnPassos() {
+    public int getnPassosMax() {
         return nPassosMax;
     }
 
-   /*public String getSentido() {
+    public boolean getHRight(){
+        return hRight;
+    }
+
+    public boolean getHLeft(){
+        return hLeft;
+    }
+
+    public boolean getVUp() {
+        return vUp;
+    }
+
+    public boolean getVDown(){
+        return vDown;
+    }
+
+    public boolean getDRightUp(){
+        return dRightUp;
+    }
+
+    public boolean getDRightDown(){
+        return dRightDown;
+    }
+
+    public boolean getDLeftUp(){
+        return dLeftUp;
+    }
+
+    public boolean getDLeftDown(){
+        return dLeftDown;
+    }
+
+    /*public String getSentido() {
         return sentido;
     }*/
 

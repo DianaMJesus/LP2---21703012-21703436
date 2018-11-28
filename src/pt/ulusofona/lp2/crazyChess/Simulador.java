@@ -12,8 +12,8 @@ public class Simulador {
     int tamanhoTabuleiro,idEquipaAJogar;
 
     //Variaveis que seram mudadas de lugar
-    int validasBrancas = 0,capturadasBrancas = 0,invalidasBrancas = 0;
-    int validasPretas = 0,capturadasPretas = 0,invalidaspretas = 0;
+    int validasPretas = 0,capturadasPretas = 0,invalidaspretas = 0; // Equipa a jogar - 0
+    int validasBrancas = 0,capturadasBrancas = 0,invalidasBrancas = 0; //Equipa a jogar - 1
     int vencedor;
     Turno turnoAtual=new Turno();
 
@@ -110,7 +110,22 @@ public class Simulador {
                             difYModulo=difY * (-1);
                         }
 
-                        if(peca.getTipoPeca().getnPassos()<=difXModulo && peca.getTipoPeca().getnPassos()<=difYModulo){
+                        if(peca.getTipoPeca().getnPassosMax()<=difXModulo && peca.getTipoPeca().getnPassosMax()<=difYModulo){
+                            if(difX>0){
+                                if(peca.getTipoPeca().getHRight()){
+                                    if(difY>0){
+                                        if(peca.getTipoPeca().getVUp()){
+                                            peca.getPosicao().moveRight(difXModulo);
+                                            peca.getPosicao().moveUp(difYModulo);
+                                        }else{
+                                            switch (turnoAtual.getEquipaJogar()){
+                                                case 0:
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             //Funcao .remove usada para remover da lista já existe na biblioteca
                         }
 
