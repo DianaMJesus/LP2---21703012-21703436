@@ -12,21 +12,25 @@ public class Simulador {
     int tamanhoTabuleiro,idEquipaAJogar;
 
     //Variaveis que seram mudadas de lugar
-    int validasPretas = 0,capturadasPretas = 0,invalidasPretas = 0; // Equipa a jogar - 0
-    int validasBrancas = 0,capturadasBrancas = 0,invalidasBrancas = 0; //Equipa a jogar - 1
-    int vencedor;
-    Turno turnoAtual=new Turno();
+    int validasPretas,capturadasPretas,invalidasPretas; // Equipa a jogar - 0
+    int validasBrancas,capturadasBrancas,invalidasBrancas; //Equipa a jogar - 1
+    int vencedor,turno,equipaJogar,semCaptura;
 
+    //Variaveis que são listas
     List<CrazyPiece> pecasMalucas=new ArrayList<>();
     List<String> autores=new ArrayList<>();
     List<String> resultados=new ArrayList<>();
 
     //Contrutores
-    public Simulador(){}
-    public Simulador(int tamanhoTabuleiro,List<CrazyPiece> pecasMalucas,int idEquipaAJogar){
-        this.tamanhoTabuleiro=tamanhoTabuleiro;
-        this.pecasMalucas=pecasMalucas;
-        this.idEquipaAJogar=idEquipaAJogar;
+    public Simulador(){
+        this.turno=0;
+        this.semCaptura=0;
+        this.validasPretas = 0;
+        this.capturadasPretas = 0;
+        this.invalidasPretas = 0;
+        this.validasBrancas = 0;
+        this.capturadasBrancas = 0;
+        this.invalidasBrancas = 0;
     }
 
     //Leitura do Ficheiro (Feito)
@@ -65,8 +69,7 @@ public class Simulador {
                         if(Integer.parseInt(info[i])!=0){
                             for(CrazyPiece crazyPiece:pecasMalucas){
                                 if(Integer.parseInt(info[i])==crazyPiece.getId()){
-                                    Posicao posicao=new Posicao(i,countLinha-nPecas-2);
-                                    crazyPiece.setPosicao(posicao);
+                                    crazyPiece.setPosicao(i,countLinha-(nPecas+2));
                                 }
                             }
                         }
@@ -89,20 +92,55 @@ public class Simulador {
         return tamanhoTabuleiro;
     }
 
-    //Executa o movimento de uma peça
-    public boolean processaJogada(int xO, int yO, int xD, int Yd){
-
-        return true;
+    //Executa o movimento de uma peça (Resolver o problema da horizontal)
+    public boolean processaJogada(int xO, int yO, int xD, int yD){
+        if(xO>=0 && xO<tamanhoTabuleiro && yO>=0 &&yO<tamanhoTabuleiro && xD>=0 && xD<tamanhoTabuleiro && yD>=0 && yD<tamanhoTabuleiro){
+            System.out.println("pos existe");
+            CrazyPiece origem=receberPeca(xO,yO);
+            if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
+                System.out.println("origem existe");
+                CrazyPiece destino=receberPeca(xD,yD);
+                if (destino == null) {
+                    System.out.println("destino é null");
+                    if (origem.mover(xD,yD)){
+                        System.out.println("move");
+                        origem.setPosicao(xD,yD);
+                        turno++;
+                        semCaptura++;
+                        return true;
+                    }
+                }
+                else if (destino.getEquipa() != equipaJogar) {
+                    System.out.println("destino é equipa oposta");
+                    if (origem.mover(xD,yD)){
+                        System.out.println("mover2");
+                        destino.setPosicao(-1,-1);
+                        origem.setPosicao(xD,yD);
+                        turno++;
+                        semCaptura=0;
+                        return true;
+                    }
+                }
+            }
+        }
+        //contar jogada invalida
+        if(this.getIDEquipaAJogar()==0){
+            invalidasPretas++;
+        }else if(this.getIDEquipaAJogar()==1){
+            invalidasBrancas++;
+        }
+        System.out.println("invalida");
+        return false;
     }
 
-    //Devolve a lista de todas asa peças em jogo
+    //Devolve a lista de todas asa peças em jogo(Feito)
     public List<CrazyPiece> getPecasMalucas(){
         return pecasMalucas;
     }
 
     //Premite finalizar o jogo se for comprida alguma das condições
     public boolean jogoTerminado(){
-        return true;
+        return false;
     }
 
     //Devolve a lista dos autores (Feito)
@@ -125,7 +163,7 @@ public class Simulador {
     //Devolve o id de uma peça naquela posição (Feito)
     public int getIDPeca(int x, int y){
         for(CrazyPiece crazyPiece:pecasMalucas) {
-            if (crazyPiece.getPosicao().equals(x,y)) {
+            if (crazyPiece.getPosX()==x && crazyPiece.getPosY()==y) {
                 return crazyPiece.getId();
             }
         }
@@ -134,6 +172,20 @@ public class Simulador {
 
     //Devolve a equipa a jogar (Feito)
     public int getIDEquipaAJogar(){
-        return turnoAtual.getEquipaJogar();
+        if(turno%2==0){
+            equipaJogar=0;
+        }else{
+            equipaJogar=1;
+        }
+        return equipaJogar;
+    }
+
+    public CrazyPiece receberPeca(int x,int y){
+        for(CrazyPiece peace: pecasMalucas) {
+            if (peace.posX == x && peace.posY == y) {
+                return peace;
+            }
+        }
+        return null;
     }
 }

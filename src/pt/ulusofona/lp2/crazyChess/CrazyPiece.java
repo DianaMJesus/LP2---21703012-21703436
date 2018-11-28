@@ -1,10 +1,9 @@
 package pt.ulusofona.lp2.crazyChess;
 
 public class CrazyPiece {
-    int id,equipa,tipoPeca;
-    String imagePNG = null;
+    int id,equipa,tipoPeca,posX,posY;
+    String imagePNG;
     String alcunha;
-    Posicao posicao;
 
     public CrazyPiece(){}
 
@@ -13,10 +12,6 @@ public class CrazyPiece {
         this.tipoPeca=tipoPeca;
         this.equipa=equipa;
         this.alcunha=alcunha;
-    }
-
-    public Posicao getPosicao() {
-        return posicao;
     }
 
     public int getEquipa() {
@@ -36,14 +31,35 @@ public class CrazyPiece {
     }
 
     public String getImagePNG(){
-        return imagePNG;
+        if(equipa==0){
+            return "crazy_emoji_black.png";
+        }else {
+            return "crazy_emoji_white.png";
+        }
     }
 
-    public void setPosicao(Posicao posicao) {
-        this.posicao = posicao;
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosicao(int x, int y) {
+        this.posX = x;
+        this.posY = y;
+    }
+    //se existe peca e se é da equipa
+
+    public boolean mover(int x,int y){
+        if((this.posX-x==1 || this.posX-x==-1 || this.posY-y==1 || this.posY==-1) && (this.posX!=x || this.posY!=y)){
+            return true;
+        }
+        return false;
     }
 
     public String toString(){
-        return posicao.getPosX() + "|" + posicao.getPosY();
+        return getPosX() + "|" + getPosY();
     }
 }
