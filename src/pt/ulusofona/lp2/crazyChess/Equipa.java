@@ -15,11 +15,11 @@ public class Equipa {
 
         switch (id) {
             case 0:
-                cor = "Branca";
+                cor = "Preta";
                 break;
 
             case 1:
-                cor = "Preta";
+                cor = "Branca";
         }
     }
 

@@ -8,10 +8,10 @@ public class Turno {
     public Turno(int turno){
         this.trunoAtual=turno;
 
-        if(trunoAtual==0){
-            equipaJogar=1;
-        }else if(trunoAtual==1){
+        if(trunoAtual%2==0){
             equipaJogar=0;
+        }else{
+            equipaJogar=1;
         }
     }
 
