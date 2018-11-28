@@ -111,7 +111,7 @@ public class Simulador {
                         }
 
                         if(peca.getTipoPeca().getnPassos()<=difXModulo && peca.getTipoPeca().getnPassos()<=difYModulo){
-
+                            //Funcao .remove usada para remover da lista já existe na biblioteca
                         }
 
                     }
