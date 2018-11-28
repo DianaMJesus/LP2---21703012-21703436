@@ -4,6 +4,7 @@ public class CrazyPiece {
     int id,equipa,tipoPeca,posX,posY;
     String imagePNG;
     String alcunha;
+    boolean emJogo=false;
 
     public CrazyPiece(){}
 
@@ -21,6 +22,10 @@ public class CrazyPiece {
         return false;
     }
 
+    public int getId(){
+        return id;
+    }
+
     public int getEquipa() {
         return equipa;
     }
@@ -33,8 +38,8 @@ public class CrazyPiece {
         return alcunha;
     }
 
-    public int getId(){
-        return id;
+    public boolean getEmJogo() {
+        return emJogo;
     }
 
     public String getImagePNG(){
@@ -71,6 +76,10 @@ public class CrazyPiece {
             return true;
         }
         return false;
+    }
+
+    public void estaEmJogo(){
+        this.emJogo=true;
     }
 
     public String toString(){

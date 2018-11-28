@@ -71,6 +71,7 @@ public class Simulador {
                         if(Integer.parseInt(info[i])!=0){
                             for(CrazyPiece crazyPiece:pecasMalucas){
                                 if(Integer.parseInt(info[i])==crazyPiece.getId()){
+                                    crazyPiece.estaEmJogo();
                                     crazyPiece.setPosicao(i,countLinha-(nPecas+2));
                                 }
                             }
@@ -154,7 +155,7 @@ public class Simulador {
         int reisBrancos = 0,reisPretos = 0;
 
         for(CrazyPiece piece:pecasMalucas){
-            if(piece!=null) {
+            if(piece.getEmJogo()) {
                 if (!piece.comida()) {
                     if (piece.getTipoPeca() == 0) {
                         if (piece.getEquipa() == 0) {
@@ -164,8 +165,6 @@ public class Simulador {
                         }
                     }
                 }
-            }else{
-                vencedor=2;
             }
         }
         //Ver vencedor:
