@@ -157,9 +157,9 @@ public class Simulador {
             if(!piece.comida()){
                 if(piece.getTipoPeca()==0){
                     if(piece.getEquipa()==0){
-                        reisPretos++;
-                    }else if(piece.getEquipa()==1){
                         reisBrancos++;
+                    }else if(piece.getEquipa()==1){
+                        reisPretos++;
                     }
                 }
             }
@@ -169,11 +169,11 @@ public class Simulador {
         //1 - Brancas
         //2 - Empate
 
-        if(reisPretos==0){
+        if(reisBrancos==0){
             //PRETAS VENCEM
             this.vencedor=1;
             return true;
-        }else if(reisBrancos==0){
+        }else if(reisPretos==0){
             //BRANCAS VENCEM
             this.vencedor=0;
             return true;
