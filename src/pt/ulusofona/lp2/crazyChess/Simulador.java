@@ -12,7 +12,7 @@ public class Simulador {
     int tamanhoTabuleiro,idEquipaAJogar;
 
     //Variaveis que seram mudadas de lugar
-    int validasPretas = 0,capturadasPretas = 0,invalidaspretas = 0; // Equipa a jogar - 0
+    int validasPretas = 0,capturadasPretas = 0,invalidasPretas = 0; // Equipa a jogar - 0
     int validasBrancas = 0,capturadasBrancas = 0,invalidasBrancas = 0; //Equipa a jogar - 1
     int vencedor;
     Turno turnoAtual=new Turno();
@@ -56,8 +56,7 @@ public class Simulador {
 
                 }else if((countLinha-2)<nPecas){
                     info=linha.split(":"); //coloca num array a infomacao da linha e é separada pelos :
-                    Tipo tPeca=new Tipo(Integer.parseInt(info[1]));
-                    CrazyPiece novaPeca=new CrazyPiece(Integer.parseInt(info[0]),tPeca,Integer.parseInt(info[2]),info[3]);
+                    CrazyPiece novaPeca=new CrazyPiece(Integer.parseInt(info[0]),Integer.parseInt(info[1]),Integer.parseInt(info[2]),info[3]);
                     pecasMalucas.add(novaPeca);
 
                 }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
@@ -92,46 +91,7 @@ public class Simulador {
 
     //Executa o movimento de uma peça
     public boolean processaJogada(int xO, int yO, int xD, int Yd){
-        if(xD>=0 && xD<tamanhoTabuleiro && Yd>=0 && Yd<tamanhoTabuleiro){
-            //Posicao origem= new Posicao(xO,yO);
-            for(CrazyPiece peca:pecasMalucas){
-                if(peca.getPosicao().equals(xO,yO)){
-                    if(peca.getEquipa()==turnoAtual.getEquipaJogar()){
-                        int difX=xD-xO;
-                        int difY=Yd-yO;
-                        int difXModulo = difX,difYModulo = difY;
 
-                        //Criar o modulo para o caso da diferenca ser negativa
-                        if(difX<0){
-                            difXModulo=difX * (-1);
-                        }
-                        if(difY<0){
-                            difYModulo=difY * (-1);
-                        }
-
-                        if(peca.getTipoPeca().getnPassosMax()<=difXModulo && peca.getTipoPeca().getnPassosMax()<=difYModulo){
-                            if(difX>0){
-                                if(peca.getTipoPeca().getHRight()){
-                                    if(difY>0){
-                                        if(peca.getTipoPeca().getVUp()){
-                                            peca.getPosicao().moveRight(difXModulo);
-                                            peca.getPosicao().moveUp(difYModulo);
-                                        }else{
-                                            switch (turnoAtual.getEquipaJogar()){
-                                                case 0:
-
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            //Funcao .remove usada para remover da lista já existe na biblioteca
-                        }
-
-                    }
-                }
-            }
-        }
         return true;
     }
 

@@ -35,20 +35,13 @@ public class Posicao {
         return false;
     }
 
-    public void moveRight(int x){
+    public void moveHorizontal(int x){
         this.posX+=x;
     }
 
-    public void moveLeft(int x){
-        this.posX-=x;
-    }
-
-    public void moveUp(int y){
+    public void moveVertical(int y){
         this.posY-=y;
     }
 
-    public void moveDown(int y){
-        this.posY+=y;
-    }
 
 }
