@@ -169,11 +169,11 @@ public class Simulador {
         //1 - Brancas
         //2 - Empate
 
-        if(reisBrancos==0){
+        if(reisPretos==0){
             //PRETAS VENCEM
             this.vencedor=1;
             return true;
-        }else if(reisPretos==0){
+        }else if(reisBrancos==0){
             //BRANCAS VENCEM
             this.vencedor=0;
             return true;
