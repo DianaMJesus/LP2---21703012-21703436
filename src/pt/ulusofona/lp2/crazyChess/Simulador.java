@@ -37,6 +37,7 @@ public class Simulador {
 
     //Leitura do Ficheiro (Feito)
     public boolean iniciaJogo(File ficheiroInicial){
+        resultados.clear();
         try{
             Scanner leitorFicheiro = new Scanner (ficheiroInicial);
             int countLinha=0;
@@ -211,17 +212,17 @@ public class Simulador {
 
         this.resultados.add("JOGO DE CRAZY CHESS");
         switch (this.vencedor){
-            case 0:
+            case 0:{
                 this.resultados.add("Resultado: VENCERAM AS PRETAS");
-                break;
+                break;}
 
-            case 1:
+            case 1:{
                 this.resultados.add("Resultado: VENCERAM AS BRANCAS");
-                break;
+                break;}
 
-            case 2:
+            case 2:{
                 this.resultados.add("Resultado: EMPATE");
-                break;
+                break;}
         }
         this.resultados.add("---");
 
