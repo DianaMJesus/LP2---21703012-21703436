@@ -154,14 +154,18 @@ public class Simulador {
         int reisBrancos = 0,reisPretos = 0;
 
         for(CrazyPiece piece:pecasMalucas){
-            if(!piece.comida()){
-                if(piece.getTipoPeca()==0){
-                    if(piece.getEquipa()==0){
-                        reisBrancos++;
-                    }else if(piece.getEquipa()==1){
-                        reisPretos++;
+            if(piece!=null) {
+                if (!piece.comida()) {
+                    if (piece.getTipoPeca() == 0) {
+                        if (piece.getEquipa() == 0) {
+                            reisBrancos++;
+                        } else if (piece.getEquipa() == 1) {
+                            reisPretos++;
+                        }
                     }
                 }
+            }else{
+                vencedor=2;
             }
         }
         //Ver vencedor:
