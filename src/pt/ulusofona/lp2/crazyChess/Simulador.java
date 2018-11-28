@@ -37,7 +37,6 @@ public class Simulador {
 
     //Leitura do Ficheiro (Feito)
     public boolean iniciaJogo(File ficheiroInicial){
-        resultados.clear();
         try{
             Scanner leitorFicheiro = new Scanner (ficheiroInicial);
             int countLinha=0;
@@ -114,7 +113,7 @@ public class Simulador {
                         return true;
                     }
                 }
-                if (destino.getEquipa() != equipaJogar) {
+                if (!destino.equipaEquals(equipaJogar)) {
                     System.out.println("destino é equipa oposta");
                     if (origem.mover(xD,yD)){
                         System.out.println("mover2");

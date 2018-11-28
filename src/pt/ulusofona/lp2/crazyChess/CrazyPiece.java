@@ -14,6 +14,13 @@ public class CrazyPiece {
         this.alcunha=alcunha;
     }
 
+    public boolean equipaEquals(int valor){
+        if(this.equipa==valor){
+            return true;
+        }
+        return false;
+    }
+
     public int getEquipa() {
         return equipa;
     }
@@ -53,7 +60,7 @@ public class CrazyPiece {
     //se existe peca e se é da equipa
 
     public boolean mover(int x,int y){
-        if((this.posX==1+x || this.posX==-1+x || this.posY==1+y || this.posY==-1+y) && (this.posX!=x || this.posY!=y)){
+        if(Math.abs(x - this.posX) <= 1 && Math.abs(y - this.posY) <= 1 && (this.posX!=x || this.posY!=y)){
             return true;
         }
         return false;
@@ -67,6 +74,9 @@ public class CrazyPiece {
     }
 
     public String toString(){
-        return getPosX() + "|" + getPosY();
+        if(this.posX==-1 && this.posY==-1){
+            return getId() + " | " + getTipoPeca() + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
+        }
+        return getId() + " | " + getTipoPeca() + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
     }
 }
