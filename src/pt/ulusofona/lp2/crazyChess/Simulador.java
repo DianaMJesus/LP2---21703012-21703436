@@ -241,6 +241,33 @@ public class Simulador {
         this.resultados.add(this.capturadasBrancas + "");
         this.resultados.add(this.validasBrancas + "");
         this.resultados.add(this.invalidasBrancas + "");
+        this.resultados.add("JOGO DE CRAZY CHESS");
+        switch (this.vencedor){
+            case 0:{
+                this.resultados.add("Resultado: VENCERAM AS PRETAS");
+                break;}
+
+            case 1:{
+                this.resultados.add("Resultado: VENCERAM AS BRANCAS");
+                break;}
+
+            case 2:{
+                this.resultados.add("Resultado: EMPATE");
+                break;}
+        }
+        this.resultados.add("---");
+
+        //Informacao da equipa preta
+        this.resultados.add("Equipa das Pretas");
+        this.resultados.add(this.capturadasPretas + "");
+        this.resultados.add(this.validasPretas + "");
+        this.resultados.add(this.invalidasPretas + "");
+
+        //Informacao da equipa branca
+        this.resultados.add("Equipa das Brancas");
+        this.resultados.add(this.capturadasBrancas + "");
+        this.resultados.add(this.validasBrancas + "");
+        this.resultados.add(this.invalidasBrancas + "");
         return this.resultados;
     }
 
