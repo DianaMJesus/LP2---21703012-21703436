@@ -275,6 +275,7 @@ public class Simulador {
     }
 
     public void reset(){
+
         pecasMalucas.clear();
         autores.clear();
         resultados.clear();
