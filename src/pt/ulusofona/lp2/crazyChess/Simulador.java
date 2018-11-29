@@ -68,7 +68,7 @@ public class Simulador {
                 }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
                     info=linha.split(":");
                     for(int i=0;i<tamanhoTabuleiro;i++){
-                        if(Integer.parseInt(info[i])>=1){
+                        if(Integer.parseInt(info[i])!=0){
                             for(CrazyPiece crazyPiece:pecasMalucas){
                                 if(Integer.parseInt(info[i])==crazyPiece.getId()){
                                     crazyPiece.estaEmJogo();

@@ -1,7 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
 public class CrazyPiece {
-    int id,equipa,tipoPeca,posX,posY;
+    int id,equipa,tipoPeca,posX = -1,posY = -1;
     String imagePNG;
     String alcunha;
     boolean emJogo=false;
@@ -16,10 +16,7 @@ public class CrazyPiece {
     }
 
     public boolean equipaEquals(int valor){
-        if(this.equipa==valor){
-            return true;
-        }
-        return false;
+        return this.equipa == valor;
     }
 
     public int getId(){
@@ -65,17 +62,11 @@ public class CrazyPiece {
     //se existe peca e se é da equipa
 
     public boolean mover(int x,int y){
-        if(Math.abs(x - this.posX) <= 1 && Math.abs(y - this.posY) <= 1 && (this.posX!=x || this.posY!=y)){
-            return true;
-        }
-        return false;
+        return Math.abs(x - this.posX) <= 1 && Math.abs(y - this.posY) <= 1 && (this.posX != x || this.posY != y);
     }
 
     public boolean comida(){
-        if(this.posY==-1 && this.posX==-1){
-            return true;
-        }
-        return false;
+        return this.posY == -1 && this.posX == -1;
     }
 
     public void estaEmJogo(){
