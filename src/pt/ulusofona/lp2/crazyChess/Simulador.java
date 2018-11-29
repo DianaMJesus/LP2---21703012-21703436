@@ -37,6 +37,7 @@ public class Simulador {
 
     //Leitura do Ficheiro (Feito)
     public boolean iniciaJogo(File ficheiroInicial){
+        this.reset();
         try{
             Scanner leitorFicheiro = new Scanner (ficheiroInicial);
             int countLinha=0;
@@ -271,5 +272,20 @@ public class Simulador {
             }
         }
         return null;
+    }
+
+    public void reset(){
+        pecasMalucas.clear();
+        autores.clear();
+        resultados.clear();
+        this.turno=0;
+        this.semCaptura=0;
+        this.capturaPrevia=false;
+        this.validasPretas = 0;
+        this.capturadasPretas = 0;
+        this.invalidasPretas = 0;
+        this.validasBrancas = 0;
+        this.capturadasBrancas = 0;
+        this.invalidasBrancas = 0;
     }
 }
