@@ -97,7 +97,8 @@ public class Simulador {
 
     //Executa o movimento de uma peça (Resolver o problema da horizontal)
     public boolean processaJogada(int xO, int yO, int xD, int yD){
-        if(xO>=0 && xO<tamanhoTabuleiro && yO>=0 &&yO<tamanhoTabuleiro && xD>=0 && xD<tamanhoTabuleiro && yD>=0 && yD<tamanhoTabuleiro){
+        if(((xO>=0 && xO<tamanhoTabuleiro) && (yO>=0 && yO<tamanhoTabuleiro)) &&
+                ((xD>=0 && xD<tamanhoTabuleiro) && (yD>=0 && yD<tamanhoTabuleiro))){
             CrazyPiece origem=receberPeca(xO,yO);
             if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
                 CrazyPiece destino=receberPeca(xD,yD);
@@ -113,8 +114,7 @@ public class Simulador {
                         this.turno++;
                         return true;
                     }
-                }
-                if (!destino.equipaEquals(equipaJogar)) {
+                } else if (!destino.equipaEquals(equipaJogar)) {
                     System.out.println("destino é equipa oposta");
                     if (origem.mover(xD,yD)){
                         System.out.println("mover2");
