@@ -12,10 +12,10 @@ public class Simulador {
     int tamanhoTabuleiro,idEquipaAJogar;
 
     //Variaveis que seram mudadas de lugar
-    int validasPretas,capturadasPretas,invalidasPretas; // Equipa a jogar - 0
-    int validasBrancas,capturadasBrancas,invalidasBrancas; //Equipa a jogar - 1
-    int vencedor,turno,equipaJogar,semCaptura;
-    boolean capturaPrevia;
+    int validasPretas = 0,capturadasPretas = 0,invalidasPretas = 0; // Equipa a jogar - 0
+    int validasBrancas = 0,capturadasBrancas = 0,invalidasBrancas = 0; //Equipa a jogar - 1
+    int vencedor,turno = 0,equipaJogar,semCaptura = 0;
+    boolean capturaPrevia = false;
 
     //Variaveis que são listas
     List<CrazyPiece> pecasMalucas=new ArrayList<>();
@@ -24,15 +24,6 @@ public class Simulador {
 
     //Contrutores
     public Simulador(){
-        this.turno=0;
-        this.semCaptura=0;
-        this.capturaPrevia=false;
-        this.validasPretas = 0;
-        this.capturadasPretas = 0;
-        this.invalidasPretas = 0;
-        this.validasBrancas = 0;
-        this.capturadasBrancas = 0;
-        this.invalidasBrancas = 0;
     }
 
     //Leitura do Ficheiro (Feito)
