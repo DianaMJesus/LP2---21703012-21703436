@@ -68,7 +68,7 @@ public class Simulador {
                 }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
                     info=linha.split(":");
                     for(int i=0;i<tamanhoTabuleiro;i++){
-                        if(Integer.parseInt(info[i])!=0){
+                        if(Integer.parseInt(info[i])>=1){
                             for(CrazyPiece crazyPiece:pecasMalucas){
                                 if(Integer.parseInt(info[i])==crazyPiece.getId()){
                                     crazyPiece.estaEmJogo();
@@ -153,7 +153,9 @@ public class Simulador {
     //Premite finalizar o jogo se for comprida alguma das condições
     public boolean jogoTerminado(){
         int reisBrancos = 0,reisPretos = 0;
-
+        if (this.pecasMalucas == null){
+            return true;
+        }
         for(CrazyPiece piece:pecasMalucas){
             if(piece.getEmJogo()) {
                 if (!piece.comida()) {
