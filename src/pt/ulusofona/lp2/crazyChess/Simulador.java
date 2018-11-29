@@ -19,8 +19,6 @@ public class Simulador {
 
     //Variaveis que são listas
     List<CrazyPiece> pecasMalucas=new ArrayList<>();
-    List<String> autores=new ArrayList<>();
-    List<String> resultados=new ArrayList<>();
 
     //Contrutores
     public Simulador(){
@@ -56,6 +54,7 @@ public class Simulador {
                     info=linha.split(":"); //coloca num array a infomacao da linha e é separada pelos :
                     CrazyPiece novaPeca=new CrazyPiece(Integer.parseInt(info[0]),Integer.parseInt(info[1]),Integer.parseInt(info[2]),info[3]);
                     pecasMalucas.add(novaPeca);
+
 
                 }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
                     info=linha.split(":");
@@ -192,48 +191,48 @@ public class Simulador {
 
     //Devolve a lista dos autores (Feito)
     public List<String> getAutores(){
-        if(autores.size()==0){
-            autores.add("Ana Maria - nº 21703436");
-            autores.add("Diana Jesus - nº 21703012");
-        }
+        List<String> autores=new ArrayList<>();
+        autores.add("Ana Maria - nº 21703436");
+        autores.add("Diana Jesus - nº 21703012");
         return autores;
     }
 
     //Devolve o valor dos resultados do jogo
     public List<String> getResultados(){
+        List<String> resultados=new ArrayList<>();
         //Ver vencedor:
         //0 - Pretas
         //1 - Brancas
         //2 - Empate
 
-        this.resultados.add("JOGO DE CRAZY CHESS");
+        resultados.add("JOGO DE CRAZY CHESS");
         switch (this.vencedor){
             case 0:{
-                this.resultados.add("Resultado: VENCERAM AS PRETAS");
+                resultados.add("Resultado: VENCERAM AS PRETAS");
                 break;}
 
             case 1:{
-                this.resultados.add("Resultado: VENCERAM AS BRANCAS");
+                resultados.add("Resultado: VENCERAM AS BRANCAS");
                 break;}
 
             case 2:{
-                this.resultados.add("Resultado: EMPATE");
+                resultados.add("Resultado: EMPATE");
                 break;}
         }
-        this.resultados.add("---");
+        resultados.add("---");
 
         //Informacao da equipa preta
-        this.resultados.add("Equipa das Pretas");
-        this.resultados.add(this.capturadasPretas + "");
-        this.resultados.add(this.validasPretas + "");
-        this.resultados.add(this.invalidasPretas + "");
+        resultados.add("Equipa das Pretas");
+        resultados.add(this.capturadasPretas + "");
+        resultados.add(this.validasPretas + "");
+        resultados.add(this.invalidasPretas + "");
 
         //Informacao da equipa branca
-        this.resultados.add("Equipa das Brancas");
-        this.resultados.add(this.capturadasBrancas + "");
-        this.resultados.add(this.validasBrancas + "");
-        this.resultados.add(this.invalidasBrancas + "");
-        return this.resultados;
+        resultados.add("Equipa das Brancas");
+        resultados.add(this.capturadasBrancas + "");
+        resultados.add(this.validasBrancas + "");
+        resultados.add(this.invalidasBrancas + "");
+        return resultados;
     }
 
     //Devolve o id de uma peça naquela posição (Feito)
@@ -268,8 +267,6 @@ public class Simulador {
     public void reset(){
 
         pecasMalucas.clear();
-        autores.clear();
-        resultados.clear();
         this.turno=0;
         this.semCaptura=0;
         this.capturaPrevia=false;
