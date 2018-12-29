@@ -1,0 +1,3 @@
+Sugerir Jogada(pecas que não funcionam):
+-> Rainha(confirmar se tem Padre da Vila perto);
+-> Joker (falta testar)
