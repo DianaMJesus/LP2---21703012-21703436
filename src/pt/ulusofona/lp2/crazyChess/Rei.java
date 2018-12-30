@@ -13,6 +13,11 @@ public class Rei extends CrazyPiece{
         super.alcunha=alcunha;
         super.valorRelativo=Integer.MAX_VALUE;
         super.passoMax=1;
+        if(equipa==10){
+            super.imagePNG="rei_preto.png";
+        }else if(equipa==20){
+            super.imagePNG="rei_branco.png";
+        }
     }
 
     @Override
@@ -20,9 +25,7 @@ public class Rei extends CrazyPiece{
         if((x>=0 && x<Simulador.tamanhoTabuleiro) && (y>=0 && y<Simulador.tamanhoTabuleiro)) {
             if (Math.abs(x - this.getPosX()) <= 1 && Math.abs(y - this.getPosY()) <= 1 && (this.getPosX() != x || this.getPosY() != y)) {
                 CrazyPiece novaPeace=Simulador.receberPeca(x,y);
-                if(novaPeace==null || novaPeace.getEquipa()!=Simulador.equipaJogar){
-                    return true;
-                }
+                return novaPeace == null || novaPeace.getEquipa() != Simulador.equipaJogar;
             }
         }
         return false;

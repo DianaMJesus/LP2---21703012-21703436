@@ -12,11 +12,17 @@ public class TorreH extends CrazyPiece {
 
     @Override
     public boolean podeMover(int x,int y){
-        CrazyPiece novaPeace;
+        CrazyPiece novaPeace = Simulador.receberPeca(x,y);
 
-        if(Math.abs(y-this.getPosY())==0 && (this.getPosX() != x || this.getPosY() != y)){
-            for(int mov=1;mov<=Math.abs(y-this.getPosY());mov++){
-                novaPeace=Simulador.receberPeca(x,this.getPosY()+mov);
+        if(y-this.getPosY()==0 && this.getPosX() != x ){
+            for(int mov=1;mov<Math.abs(x-this.getPosX());mov++){
+                if((x-this.getPosX())<0){
+                    novaPeace=Simulador.receberPeca(this.getPosX()-mov,y);
+                }
+                else if((x-this.getPosX())>0){
+                    novaPeace=Simulador.receberPeca(this.getPosX()+mov,y);
+                }
+
                 if(novaPeace!=null){
                     return false;
                 }

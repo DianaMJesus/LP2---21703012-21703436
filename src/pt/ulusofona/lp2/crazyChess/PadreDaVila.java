@@ -26,6 +26,10 @@ public class PadreDaVila extends CrazyPiece {
                     }
                 }
 
+                if(novaPeace!=null && novaPeace.getTipoPeca()==1 && novaPeace.getEquipa()!= Simulador.equipaJogar){
+                    return false;
+                }
+
                 for (int pos = 0; pos <= 7; pos++) {
                     switch (pos) {
                         case 0: {

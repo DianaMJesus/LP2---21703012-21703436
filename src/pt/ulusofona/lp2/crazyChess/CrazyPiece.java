@@ -42,11 +42,7 @@ public class CrazyPiece {
     }
 
     public String getImagePNG() {
-        if (equipa == 10) {
-            return "crazy_emoji_black.png";
-        } else {
-            return "crazy_emoji_white.png";
-        }
+        return imagePNG;
     }
 
     public int getPosX() {
@@ -133,9 +129,10 @@ public class CrazyPiece {
         return true;
     }*/
 
-    public List<String> sugetaoJogada(int x, int y, List<CrazyPiece> pecasMalucas, CrazyPiece pecaRecebida) {
+    public List<String> sugetaoJogada(int x, int y) {
         List<String> posibilidades = new ArrayList<>();
         String resultado;
+        CrazyPiece pecaRecebida=Simulador.receberPeca(x,y);
 
         if(pecaRecebida.getTipoPeca()!=2) {
             for (int pos = 1; pos <= pecaRecebida.passoMax; pos++) {
@@ -243,9 +240,46 @@ public class CrazyPiece {
 
 
     public String toString(){
-        if(this.posX==-1 && this.posY==-1){
-            return getId() + " | " + getTipoPeca() + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
+        String nomeTipo = "";
+        switch (getTipoPeca()){
+            case 0:
+                nomeTipo = "Rei";
+                break;
+
+            case 1:
+                nomeTipo = "Rainha";
+                break;
+
+            case 2:
+                nomeTipo = "Ponei Mágico";
+                break;
+
+            case 3:
+                nomeTipo = "Padre da Vila";
+                break;
+
+            case 4:
+                nomeTipo = "TorreH";
+                break;
+
+            case 5:
+                nomeTipo = "TorreV";
+                break;
+
+            case 6:
+                nomeTipo = "Lebre";
+                break;
+
+            case 7:
+                nomeTipo = "Joker";
+                break;
+
+            default:
+                break;
         }
-        return getId() + " | " + getTipoPeca() + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
+        if(this.posX==-1 && this.posY==-1){
+            return getId() + " | " + nomeTipo + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
+        }
+        return getId() + " | " + nomeTipo + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
     }
 }

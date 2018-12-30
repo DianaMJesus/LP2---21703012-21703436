@@ -36,39 +36,38 @@ public class Joker extends CrazyPiece {
 
     @Override
     public boolean podeMover(int x,int y){
-        CrazyPiece piece = null;
+        CrazyPiece piece = Simulador.receberPeca(x,y);
         switch (Simulador.turno %6){
             case 0:
                 piece = new Rainha(id,Simulador.equipaJogar,alcunha);
+                piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
             case 1:
                 piece = new PoneiMagico(id,Simulador.equipaJogar,alcunha);
+                piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
             case 2:
                 piece = new PadreDaVila(id,Simulador.equipaJogar,alcunha);
+                piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
             case 3:
                 piece = new TorreH(id,Simulador.equipaJogar,alcunha);
+                piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
             case 4:
                 piece = new TorreV(id,Simulador.equipaJogar,alcunha);
+                piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
             case 5:
                 piece = new Lebre(id,Simulador.equipaJogar,alcunha);
+                piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
         }
-
-        if (piece != null) {
-            System.out.println(piece.getTipoPeca());
-            return piece.podeMover(x,y);
-        } else {
-            System.out.println("null");
-            return false;
-        }
+        return piece.podeMover(x,y);
     }
 }

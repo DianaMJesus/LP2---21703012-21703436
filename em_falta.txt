@@ -1,3 +1,9 @@
-Sugerir Jogada(pecas que não funcionam):
--> Rainha(confirmar se tem Padre da Vila perto);
--> Joker (falta testar)
+getImagens:
+-> Acabar de conseguir as imagens para o jogo;
+-> Atribuir imagens;
+
+gravarJogo:
+-> Fazer tudo;
+
+anularJogadaAnterior:
+-> Resolver o problema de guardar as peças
