@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CrazyPiece {
-    int id, equipa, tipoPeca, posX = -1, posY = -1, valorRelativo, passoMax;
+    int id, equipa, tipoPeca, posX = -1, posY = -1, passoMax;
     String imagePNG;
     String alcunha;
+    String valorRelativo;
     boolean emJogo = false;
 
     public CrazyPiece() {

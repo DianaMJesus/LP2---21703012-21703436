@@ -6,7 +6,7 @@ public class TorreH extends CrazyPiece {
         super.tipoPeca=4;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo=3;
+        super.valorRelativo="3";
         super.passoMax=Simulador.tamanhoTabuleiro;
     }
 

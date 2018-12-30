@@ -11,7 +11,7 @@ public class Rei extends CrazyPiece{
         super.tipoPeca=0;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo=Integer.MAX_VALUE;
+        super.valorRelativo="(infinito)";
         super.passoMax=1;
         if(equipa==10){
             super.imagePNG="rei_preto.png";

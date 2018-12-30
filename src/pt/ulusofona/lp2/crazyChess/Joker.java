@@ -6,7 +6,7 @@ public class Joker extends CrazyPiece {
         super.tipoPeca=7;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo=4;
+        super.valorRelativo="4";
         switch (Simulador.turno %6){
             case 0:
                 super.passoMax = 5;

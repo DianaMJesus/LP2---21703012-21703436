@@ -6,7 +6,7 @@ public class PoneiMagico extends CrazyPiece {
         super.tipoPeca=2;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo=5;
+        super.valorRelativo="5";
         super.passoMax=4;
     }
 
