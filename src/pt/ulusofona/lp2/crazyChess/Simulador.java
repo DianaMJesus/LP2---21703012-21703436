@@ -123,10 +123,21 @@ public class Simulador {
                             }
                         }
                     }
-                }else{
-                    //tem linhas a mais
-                    return false;
+                }else if((countLinha-nPecas-tamanhoTabuleiro-2)==1){
+                    info=linha.split(":");
+                    if(Integer.parseInt(info[0]) == 10){
+                        validasPretas=Integer.parseInt(info[1]);
+                        capturadasPretas=Integer.parseInt(info[2]);
+                        invalidasPretas=Integer.parseInt(info[3]);
+                        validasBrancas=Integer.parseInt(info[4]);
+                        capturadasBrancas=Integer.parseInt(info[5]);
+                        invalidasBrancas=Integer.parseInt(info[6]);
+                    }
+                    else if(Integer.parseInt(info[0]) == 20){
+
+                    }
                 }
+
                 countLinha++;
             }
 
@@ -225,6 +236,7 @@ public class Simulador {
     public boolean jogoTerminado(){
         int reisBrancos = 0,reisPretos = 0;
         if (pecasMalucas == null){
+            reset();
             return true;
         }
         for(CrazyPiece piece:pecasMalucas){
