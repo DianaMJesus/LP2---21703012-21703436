@@ -1,6 +1,8 @@
 package pt.ulusofona.lp2.crazyChess;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +15,21 @@ public class Simulador {
     private int validasBrancas = 0,capturadasBrancas = 0,invalidasBrancas = 0; //Equipa a jogar - 1
     private int vencedor,semCaptura = 0;
     private boolean capturaPrevia = false, antigaCapturaPrevia;
-    private List<CrazyPiece> recuperaPecas = new ArrayList<>();
-    private List<String> informacaoEquipas = new ArrayList<>();
     private int turnoAntigo,capturasAntigas;
 
-//Variaveis que são static
-    static List<CrazyPiece> pecasMalucas = new ArrayList<>();
-    static int turno = 0,equipaJogar,tamanhoTabuleiro;
+    int turno = 0,equipaJogar,tamanhoTabuleiro;
+
+    //Listas
+    List<CrazyPiece> pecasMalucas = new ArrayList<>();
+    List<CrazyPiece> recuperaPecas = new ArrayList<>();
+    private List<String> informacaoEquipas = new ArrayList<>();
 
  //Contrutores
     public Simulador(){
     }
 
     public Simulador(int boardSize) {
-        Simulador.tamanhoTabuleiro = boardSize;
+        tamanhoTabuleiro = boardSize;
     }
 
 //Leitura do Ficheiro (Feito)
@@ -86,11 +89,11 @@ public class Simulador {
                             break;
 
                         case 4:
-                            novaPeca=new TorreH(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
+                            novaPeca=new TorreH(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
                             break;
 
                         case 5:
-                            novaPeca=new TorreV(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
+                            novaPeca=new TorreV(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
                             break;
 
                         case 6:
@@ -98,7 +101,7 @@ public class Simulador {
                             break;
 
                         case 7:
-                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
+                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],turno,tamanhoTabuleiro);
                             break;
 
                         default:
@@ -124,6 +127,7 @@ public class Simulador {
                 }
                 countLinha++;
             }
+
             return true;
 
         } catch (FileNotFoundException e) {
@@ -139,7 +143,8 @@ public class Simulador {
 //Executa o movimento de uma peça (Resolver o problema da horizontal)
     public boolean processaJogada(int xO, int yO, int xD, int yD){
         //Guardar a posição e estado das peças
-        recuperaPecas=pecasMalucas;
+        recuperaPecas.removeAll(recuperaPecas);
+        recuperaPecas.addAll(pecasMalucas);
         System.out.println(recuperaPecas);
 
         //Apaga a informação existente anteriormente
@@ -162,12 +167,12 @@ public class Simulador {
 
         if(((xO>=0 && xO<tamanhoTabuleiro) && (yO>=0 && yO<tamanhoTabuleiro)) &&
                 ((xD>=0 && xD<tamanhoTabuleiro) && (yD>=0 && yD<tamanhoTabuleiro))){
-            CrazyPiece origem=receberPeca(xO,yO);
-            if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
-                CrazyPiece destino=receberPeca(xD,yD);
+            CrazyPiece origem=receberPeca(xO,yO,pecasMalucas);
 
+            if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
+                CrazyPiece destino=receberPeca(xD,yD,pecasMalucas);
                 if (destino == null) {
-                    if (origem.podeMover(xD,yD)){
+                    if (origem.podeMover(xD,yD,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)){
                         origem.setPosicao(xD,yD);
                         this.semCaptura++;
                         if(this.getIDEquipaAJogar()==10){ //Pretas
@@ -180,7 +185,7 @@ public class Simulador {
                         return true;
                     }
                 } else if (!destino.equipaEquals(equipaJogar)) {
-                    if (origem.podeMover(xD,yD)){
+                    if (origem.podeMover(xD,yD,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)){
                         destino.setPosicao(-1,-1);
                         origem.setPosicao(xD,yD);
                         this.semCaptura=0;
@@ -320,17 +325,18 @@ public class Simulador {
 
 //Devolve a equipa a jogar (Feito)
     public int getIDEquipaAJogar(){
-        if(Simulador.turno%2==0){
-            Simulador.equipaJogar=10; //Pretas
+        if(turno%2==0){
+            equipaJogar=10; //Pretas
         }else{
-            Simulador.equipaJogar=20; //Brancas
+            equipaJogar=20; //Brancas
         }
-        return Simulador.equipaJogar;
+        return equipaJogar;
     }
 
 //Devolve a peça que se encontra numa determinada coordenada
-    public static CrazyPiece receberPeca(int x,int y){
-        for(CrazyPiece piece: Simulador.pecasMalucas) {
+    public static CrazyPiece receberPeca(int x,int y, List<CrazyPiece> pecasMalucas){
+
+        for(CrazyPiece piece: pecasMalucas) {
             if (piece.posX == x && piece.posY == y) {
                 return piece;
             }
@@ -341,9 +347,9 @@ public class Simulador {
 //Disponibiliza as possíveis jogadas de cada peça
     public List<String> obterSugestoesJogada(int xO, int yO){
         List<String> sugetoesJogada = new ArrayList<>();
-        CrazyPiece peace = receberPeca(xO,yO);
+        CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
         if (peace != null) {
-            sugetoesJogada = peace.sugetaoJogada(xO, yO);
+            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas ,tamanhoTabuleiro,equipaJogar,turno);
         }
         return sugetoesJogada;
     }
@@ -390,6 +396,7 @@ public class Simulador {
 
 //Grava o jogo como ele se encontra atualmente
     public boolean gravarJogo(File ficheiroDestino){
+
         return true;
     }
 

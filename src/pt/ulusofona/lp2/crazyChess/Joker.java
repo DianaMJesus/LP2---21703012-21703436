@@ -1,73 +1,55 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.List;
+
 public class Joker extends CrazyPiece {
-    public Joker(int id,int equipa,String alcunha){
+    public Joker(int id,int equipa,String alcunha, int turno,int tamanhoTabuleiro){
         super.id=id;
         super.tipoPeca=7;
         super.equipa=equipa;
         super.alcunha=alcunha;
         super.valorRelativo="4";
-        switch (Simulador.turno %6){
-            case 0:
-                super.passoMax = 5;
-                break;
-
-            case 1:
-                super.passoMax = 2;
-                break;
-
-            case 2:
-                super.passoMax = 3;
-                break;
-
-            case 3:
-                super.passoMax = Simulador.tamanhoTabuleiro;
-                break;
-
-            case 4:
-                super.passoMax = Simulador.tamanhoTabuleiro;
-                break;
-
-            case 5:
-                super.passoMax =1;
-                break;
+        if(equipa == 10){
+            imagePNG = "joker_preto.png";
+        }else if(equipa == 20){
+            imagePNG = "joker_branco.png";
         }
     }
 
     @Override
-    public boolean podeMover(int x,int y){
-        CrazyPiece piece = Simulador.receberPeca(x,y);
-        switch (Simulador.turno %6){
-            case 0:
-                piece = new Rainha(id,Simulador.equipaJogar,alcunha);
+    public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas , int tamanhoTabuleiro, int equipaJogar, int turno){
+        CrazyPiece piece = Simulador.receberPeca(x,y,pecasMalucas);
+        switch (turno %6){
+            case 0: //Rainha
+                piece = new Rainha(id,equipaJogar,alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
-            case 1:
-                piece = new PoneiMagico(id,Simulador.equipaJogar,alcunha);
+            case 1: //Ponei Magico
+                piece = new PoneiMagico(id,equipaJogar,alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
-            case 2:
-                piece = new PadreDaVila(id,Simulador.equipaJogar,alcunha);
+            case 2: //Padre da Vila
+                piece = new PadreDaVila(id,equipaJogar,alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
-            case 3:
-                piece = new TorreH(id,Simulador.equipaJogar,alcunha);
+            case 3: //TorreH
+                piece = new TorreH(id,equipaJogar,alcunha,tamanhoTabuleiro);
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
-            case 4:
-                piece = new TorreV(id,Simulador.equipaJogar,alcunha);
+            case 4: //TorreV
+                piece = new TorreV(id,equipaJogar,alcunha,tamanhoTabuleiro);
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
 
-            case 5:
-                piece = new Lebre(id,Simulador.equipaJogar,alcunha);
+            case 5: //Lebre
+                piece = new Lebre(id,equipaJogar,alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
         }
-        return piece.podeMover(x,y);
+        return piece!=null && piece.podeMover(x,y,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno);
     }
 }

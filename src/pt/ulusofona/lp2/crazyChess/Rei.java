@@ -11,6 +11,7 @@ public class Rei extends CrazyPiece{
         super.tipoPeca=0;
         super.equipa=equipa;
         super.alcunha=alcunha;
+        int asdas = Integer.MAX_VALUE;
         super.valorRelativo="(infinito)";
         super.passoMax=1;
         if(equipa==10){
@@ -21,11 +22,11 @@ public class Rei extends CrazyPiece{
     }
 
     @Override
-    public boolean podeMover(int x,int y){
-        if((x>=0 && x<Simulador.tamanhoTabuleiro) && (y>=0 && y<Simulador.tamanhoTabuleiro)) {
+    public boolean podeMover(int x,int y,List<CrazyPiece> pecasMalucas,int tamanhoTabuleiro,int equipaJogar,int turno){
+        if((x>=0 && x<tamanhoTabuleiro) && (y>=0 && y<tamanhoTabuleiro)) {
             if (Math.abs(x - this.getPosX()) <= 1 && Math.abs(y - this.getPosY()) <= 1 && (this.getPosX() != x || this.getPosY() != y)) {
-                CrazyPiece novaPeace=Simulador.receberPeca(x,y);
-                return novaPeace == null || novaPeace.getEquipa() != Simulador.equipaJogar;
+                CrazyPiece novaPeace=Simulador.receberPeca(x,y,pecasMalucas);
+                return novaPeace == null || novaPeace.getEquipa() != equipaJogar;
             }
         }
         return false;
