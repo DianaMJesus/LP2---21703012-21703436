@@ -32,7 +32,7 @@ public class PadreDaVila extends CrazyPiece {
                     }
                 }
 
-                if(novaPeace!=null && novaPeace.getTipoPeca()==1 && novaPeace.getEquipa()!= Simulador.equipaJogar){
+                if(novaPeace!=null && novaPeace.getTipoPeca()==1 && novaPeace.getEquipa()!= Simulador.getEquipaJogar()){
                     return false;
                 }
 
@@ -93,7 +93,7 @@ public class PadreDaVila extends CrazyPiece {
                     }
                     System.out.println(novaPeace);
 
-                    if (novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.equipaJogar) {
+                    if (novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar()) {
                         return false;
                     }
                 }

@@ -26,7 +26,7 @@ public class Rei extends CrazyPiece{
         if((x>=0 && x<Simulador.tamanhoTabuleiro) && (y>=0 && y<Simulador.tamanhoTabuleiro)) {
             if (Math.abs(x - this.getPosX()) <= 1 && Math.abs(y - this.getPosY()) <= 1 && (this.getPosX() != x || this.getPosY() != y)) {
                 CrazyPiece novaPeace=Simulador.receberPeca(x,y);
-                return novaPeace == null || novaPeace.getEquipa() != Simulador.equipaJogar;
+                return novaPeace == null || novaPeace.getEquipa() != Simulador.getEquipaJogar();
             }
         }
         return false;

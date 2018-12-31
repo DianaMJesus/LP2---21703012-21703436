@@ -17,8 +17,9 @@ public class Simulador {
     private int vencedor,semCaptura = 0;
     private boolean capturaPrevia = false, antigaCapturaPrevia;
     private int turnoAntigo,capturasAntigas;
+    int equipaJogar;
 
-    static int turno = 0,tamanhoTabuleiro,equipaJogar;
+    static int turno = 0,tamanhoTabuleiro;
 
     //Listas
     static List<CrazyPiece> pecasMalucas = new ArrayList<>();
@@ -231,9 +232,9 @@ public class Simulador {
                 if (!piece.comida()) {
                     if (piece.getTipoPeca() == 0) {
                         if (piece.getEquipa() == 10) { //Pecas Pretas
-                            reisBrancos++;
-                        } else if (piece.getEquipa() == 20) { //Pecas Brancas
                             reisPretos++;
+                        } else if (piece.getEquipa() == 20) { //Pecas Brancas
+                            reisBrancos++;
                         }
                     }
                 }
@@ -244,15 +245,15 @@ public class Simulador {
         //1 - Brancas
         //2 - Empate
 
-        if(reisBrancos==0){
+        if(reisBrancos==0 && reisPretos!=0){
             //PRETAS VENCEM
-            this.vencedor=1;
-            return true;
-        }else if(reisPretos==0){
-            //BRANCAS VENCEM
             this.vencedor=0;
             return true;
-        }else if(reisBrancos==1 && reisPretos==1){
+        }else if(reisPretos==0 && reisBrancos!=0){
+            //BRANCAS VENCEM
+            this.vencedor=1;
+            return true;
+        }else if((reisBrancos==1 && reisPretos==1) || (reisBrancos==0 && reisPretos==0)){
             //EMPATE
             this.vencedor=2;
             return true;
@@ -334,6 +335,14 @@ public class Simulador {
         return equipaJogar;
     }
 
+    public static int getEquipaJogar(){
+        if(turno%2==0){
+            return 10; //Pretas
+        }else{
+            return 20; //Brancas
+        }
+    }
+
 //Devolve a peça que se encontra numa determinada coordenada
     public static CrazyPiece receberPeca(int x,int y){
 
@@ -359,8 +368,8 @@ public class Simulador {
     public void anularJogadaAnterior(){
         int count=0;
         //Repor as peças
-        //Simulador.pecasMalucas.clear();
-        //Simulador.pecasMalucas=recuperaPecas;
+        Simulador.pecasMalucas.clear();
+        Simulador.pecasMalucas=recuperaPecas;
         System.out.println(recuperaPecas);
         System.out.println(pecasMalucas);
 
@@ -447,7 +456,7 @@ public class Simulador {
                     }
                 }
                 else if(secao == 4){
-                    linhaAdicionar = Simulador.equipaJogar + ":" + validasPretas + ":" + capturadasPretas + ":" + invalidasPretas + ":" + validasBrancas + ":" + capturadasBrancas + ":" + invalidasBrancas;
+                    linhaAdicionar = getIDEquipaAJogar() + ":" + validasPretas + ":" + capturadasPretas + ":" + invalidasPretas + ":" + validasBrancas + ":" + capturadasBrancas + ":" + invalidasBrancas;
                     escrever.write(linhaAdicionar);
                 }
             }

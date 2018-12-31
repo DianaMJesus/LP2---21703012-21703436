@@ -79,7 +79,7 @@ public class Rainha extends CrazyPiece {
                 }
             }
 
-            return (novaPeace == null) || (novaPeace.getTipoPeca() != 1 && novaPeace.getEquipa() != Simulador.equipaJogar);
+            return (novaPeace == null) || (novaPeace.getTipoPeca() != 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar());
         }
         return false;
     }
