@@ -143,7 +143,7 @@ public class Simulador {
 //Executa o movimento de uma peça (Resolver o problema da horizontal)
     public boolean processaJogada(int xO, int yO, int xD, int yD){
         //Guardar a posição e estado das peças
-        recuperaPecas.removeAll(recuperaPecas);
+        recuperaPecas.clear();
         recuperaPecas.addAll(pecasMalucas);
         System.out.println(recuperaPecas);
 
