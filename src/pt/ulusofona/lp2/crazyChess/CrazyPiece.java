@@ -68,7 +68,7 @@ public class CrazyPiece {
         this.emJogo = true;
     }
 
-    public boolean podeMover(int x, int y,List<CrazyPiece> pecasMalucas,int tamanhoTabuleiro,int equipaJogar,int turno) {
+    public boolean podeMover(int x, int y) {
         return false;
     }
 
@@ -130,14 +130,14 @@ public class CrazyPiece {
         return true;
     }*/
 
-    public List<String> sugetaoJogada(int x, int y,List<CrazyPiece> pecasMalucas,int tamanhoTabuleiro,int equipaJogar,int turno) {
+    public List<String> sugetaoJogada(int x, int y,int tamanhoTabuleiro,int equipaJogar,int turno) {
         List<String> posibilidades = new ArrayList<>();
         String resultado;
-        CrazyPiece pecaRecebida=Simulador.receberPeca(x,y,pecasMalucas);
+        CrazyPiece pecaRecebida=Simulador.receberPeca(x,y);
 
         if(pecaRecebida!=null && pecaRecebida.getTipoPeca()!=2) {
             for (int pos = 1; pos <= pecaRecebida.passoMax; pos++) {
-                if (podeMover(x - pos, y - pos,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)){
+                if (podeMover(x - pos, y - pos)){
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)) {
                         System.out.println("0");
                         resultado = (x - pos) + ", " + (y - pos);
@@ -145,7 +145,7 @@ public class CrazyPiece {
                     }
                 }
 
-                if (podeMover(x, y - pos,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)){
+                if (podeMover(x, y - pos)){
                     if ((x >= 0 && x < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)){
                         System.out.println("1");
                         resultado = x + ", " + (y - pos);
@@ -153,7 +153,7 @@ public class CrazyPiece {
                     }
                 }
 
-                if (podeMover(x + pos, y - pos,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)){
+                if (podeMover(x + pos, y - pos)){
                     if ((x + pos >= 0 && x + pos < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)) {
                         System.out.println("2");
                         resultado = (x + pos) + ", " + (y - pos);
@@ -161,7 +161,7 @@ public class CrazyPiece {
                     }
                 }
 
-                if (podeMover(x + pos, y,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if (podeMover(x + pos, y)) {
                     if ((x + pos >= 0 && x + pos < tamanhoTabuleiro) && (y >= 0 && y < tamanhoTabuleiro)) {
                         System.out.println("3");
                         resultado = (x + pos) + ", " + y;
@@ -169,7 +169,7 @@ public class CrazyPiece {
                     }
                 }
 
-                if (podeMover(x + pos, y + pos,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if (podeMover(x + pos, y + pos)) {
                     if ((x + pos >= 0 && x + pos < tamanhoTabuleiro) && (y + pos >= 0 && y + pos < tamanhoTabuleiro)) {
                         System.out.println("4");
                         resultado = (x + pos) + ", " + (y + pos);
@@ -177,7 +177,7 @@ public class CrazyPiece {
                     }
                 }
 
-                if (podeMover(x, y + pos,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if (podeMover(x, y + pos)) {
                     if ((x >= 0 && x < tamanhoTabuleiro) && (y + pos >= 0 && y + pos < tamanhoTabuleiro)) {
                         System.out.println("5");
                         resultado = x + ", " + (y + pos);
@@ -185,7 +185,7 @@ public class CrazyPiece {
                     }
                 }
 
-                if (podeMover(x - pos, y + pos,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if (podeMover(x - pos, y + pos)) {
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y + pos >= 0 && y + pos < tamanhoTabuleiro)) {
                         System.out.println("6");
                         resultado = (x - pos) + ", " + (y + pos);
@@ -193,7 +193,7 @@ public class CrazyPiece {
                     }
                 }
 
-                if (podeMover(x - pos, y,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if (podeMover(x - pos, y)) {
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y >= 0 && y < tamanhoTabuleiro)) {
                         System.out.println("7");
                         resultado = (x - pos) + ", " + y;
@@ -204,7 +204,7 @@ public class CrazyPiece {
         }
         else if(pecaRecebida.getTipoPeca()== 2){
             if((x - 2 >= 0) && (y - 2 >= 0)){
-                if(podeMover(x - 2,y - 2,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if(podeMover(x - 2,y - 2)) {
                     System.out.println("Esquerda-Cima");
                     resultado = (x - 2) + ", " + (y - 2);
                     posibilidades.add(resultado);
@@ -212,7 +212,7 @@ public class CrazyPiece {
             }
 
             if((x - 2 >= 0) && (y + 2 < tamanhoTabuleiro)){
-                if(podeMover(x - 2,y + 2,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if(podeMover(x - 2,y + 2)) {
                     System.out.println("Esquerda-Baixo");
                     resultado = (x - 2) + ", " + (y + 2);
                     posibilidades.add(resultado);
@@ -220,7 +220,7 @@ public class CrazyPiece {
             }
 
             if((x + 2 < tamanhoTabuleiro) && (y - 2 >= 0)){
-                if(podeMover(x + 2,y-2,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if(podeMover(x + 2,y-2)) {
                     System.out.println("Direita-Cima");
                     resultado = (x + 2) + ", " + (y - 2);
                     posibilidades.add(resultado);
@@ -228,7 +228,7 @@ public class CrazyPiece {
             }
 
             if((2 < tamanhoTabuleiro) && (y - 2 < tamanhoTabuleiro)){
-                if(podeMover(x + 2,y + 2,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)) {
+                if(podeMover(x + 2,y + 2)) {
                     System.out.println("Direita-Baixo");
                     resultado = (x + 2) + ", " + (y + 2);
                     posibilidades.add(resultado);

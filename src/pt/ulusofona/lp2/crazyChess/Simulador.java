@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import javax.xml.soap.SOAPPart;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,10 +18,10 @@ public class Simulador {
     private boolean capturaPrevia = false, antigaCapturaPrevia;
     private int turnoAntigo,capturasAntigas;
 
-    int turno = 0,equipaJogar,tamanhoTabuleiro;
+    static int turno = 0,tamanhoTabuleiro,equipaJogar;
 
     //Listas
-    List<CrazyPiece> pecasMalucas = new ArrayList<>();
+    static List<CrazyPiece> pecasMalucas = new ArrayList<>();
     List<CrazyPiece> recuperaPecas = new ArrayList<>();
     private List<String> informacaoEquipas = new ArrayList<>();
 
@@ -89,11 +90,11 @@ public class Simulador {
                             break;
 
                         case 4:
-                            novaPeca=new TorreH(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
+                            novaPeca=new TorreH(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
                             break;
 
                         case 5:
-                            novaPeca=new TorreV(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
+                            novaPeca=new TorreV(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
                             break;
 
                         case 6:
@@ -101,7 +102,7 @@ public class Simulador {
                             break;
 
                         case 7:
-                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],turno,tamanhoTabuleiro);
+                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
                             break;
 
                         default:
@@ -167,12 +168,12 @@ public class Simulador {
 
         if(((xO>=0 && xO<tamanhoTabuleiro) && (yO>=0 && yO<tamanhoTabuleiro)) &&
                 ((xD>=0 && xD<tamanhoTabuleiro) && (yD>=0 && yD<tamanhoTabuleiro))){
-            CrazyPiece origem=receberPeca(xO,yO,pecasMalucas);
+            CrazyPiece origem=receberPeca(xO,yO);
 
             if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
-                CrazyPiece destino=receberPeca(xD,yD,pecasMalucas);
+                CrazyPiece destino=receberPeca(xD,yD);
                 if (destino == null) {
-                    if (origem.podeMover(xD,yD,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)){
+                    if (origem.podeMover(xD,yD)){
                         origem.setPosicao(xD,yD);
                         this.semCaptura++;
                         if(this.getIDEquipaAJogar()==10){ //Pretas
@@ -185,7 +186,7 @@ public class Simulador {
                         return true;
                     }
                 } else if (!destino.equipaEquals(equipaJogar)) {
-                    if (origem.podeMover(xD,yD,pecasMalucas,tamanhoTabuleiro,equipaJogar,turno)){
+                    if (origem.podeMover(xD,yD)){
                         destino.setPosicao(-1,-1);
                         origem.setPosicao(xD,yD);
                         this.semCaptura=0;
@@ -334,7 +335,7 @@ public class Simulador {
     }
 
 //Devolve a peça que se encontra numa determinada coordenada
-    public static CrazyPiece receberPeca(int x,int y, List<CrazyPiece> pecasMalucas){
+    public static CrazyPiece receberPeca(int x,int y){
 
         for(CrazyPiece piece: pecasMalucas) {
             if (piece.posX == x && piece.posY == y) {
@@ -347,9 +348,9 @@ public class Simulador {
 //Disponibiliza as possíveis jogadas de cada peça
     public List<String> obterSugestoesJogada(int xO, int yO){
         List<String> sugetoesJogada = new ArrayList<>();
-        CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
+        CrazyPiece peace = receberPeca(xO,yO);
         if (peace != null) {
-            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas ,tamanhoTabuleiro,equipaJogar,turno);
+            sugetoesJogada = peace.sugetaoJogada(xO,yO,tamanhoTabuleiro,equipaJogar,turno);
         }
         return sugetoesJogada;
     }
@@ -396,7 +397,64 @@ public class Simulador {
 
 //Grava o jogo como ele se encontra atualmente
     public boolean gravarJogo(File ficheiroDestino){
+        String newLine=System.getProperty("line.separator");
+        String linhaAdicionar;
+        try{
+            FileWriter escrever = new FileWriter(ficheiroDestino);
 
+            for(int secao=0;secao<=4;secao++){
+                if(secao == 0){
+                    escrever.write("" + Simulador.tamanhoTabuleiro);
+                    escrever.write(newLine);
+                }
+
+                if(secao == 1){
+                    escrever.write("" + Simulador.pecasMalucas.size());
+                    escrever.write(newLine);
+                }
+
+                if(secao == 2){
+                    for(CrazyPiece peace : pecasMalucas){
+                        linhaAdicionar = "" + peace.getId() + ":" + peace.getTipoPeca() + ":" + peace.getEquipa() + ":" + peace.getAlcunha();
+                        escrever.write(linhaAdicionar);
+                        escrever.write(newLine);
+                    }
+                }
+
+                if(secao == 3){
+                    for(int y=0;y<Simulador.tamanhoTabuleiro;y++){
+                        linhaAdicionar="";
+                        for(int x=0;x<Simulador.tamanhoTabuleiro;x++){
+                            CrazyPiece peace = receberPeca(x,y);
+                            if(x < Simulador.tamanhoTabuleiro-1){
+                                if(peace != null) {
+                                    linhaAdicionar = linhaAdicionar + peace.getId() + ":";
+                                }else{
+                                    linhaAdicionar = linhaAdicionar + "0:";
+                                }
+                            }
+                            else if(x == Simulador.tamanhoTabuleiro-1){
+                                if(peace != null) {
+                                    linhaAdicionar = linhaAdicionar + peace.getId();
+                                }else{
+                                    linhaAdicionar = linhaAdicionar + "0";
+                                }
+                            }
+
+                        }
+                        escrever.write(linhaAdicionar);
+                        escrever.write(newLine);
+                    }
+                }
+                else if(secao == 4){
+                    linhaAdicionar = Simulador.equipaJogar + ":" + validasPretas + ":" + capturadasPretas + ":" + invalidasPretas + ":" + validasBrancas + ":" + capturadasBrancas + ":" + invalidasBrancas;
+                    escrever.write(linhaAdicionar);
+                }
+            }
+            escrever.close();
+        } catch (IOException e) {
+            System.out.println("Deu erro ao guardar o jogo");
+        }
         return true;
     }
 

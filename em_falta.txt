@@ -1,9 +1,0 @@
-getImagens:
--> Acabar de conseguir as imagens para o jogo;
--> Atribuir imagens;
-
-gravarJogo:
--> Fazer tudo;
-
-anularJogadaAnterior:
--> Resolver o problema de guardar as peças
