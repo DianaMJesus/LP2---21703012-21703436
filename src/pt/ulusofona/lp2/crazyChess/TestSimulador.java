@@ -2,7 +2,6 @@ package pt.ulusofona.lp2.crazyChess;
 
 import org.junit.Test;
 
-import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -213,7 +212,6 @@ public class TestSimulador {
         possiveisMovimentos.add("0, 3");
         assertEquals("Deveria dar [1, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
     }
-
 //Testes para a peça Ponei Magico
     @Test
     public void moverPonei(){

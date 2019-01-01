@@ -17,13 +17,13 @@ public class Simulador {
     private int vencedor,semCaptura = 0;
     private boolean capturaPrevia = false, antigaCapturaPrevia;
     private int turnoAntigo,capturasAntigas;
-    int equipaJogar;
+    int equipaJogar,countAnulaJogada=0;
 
     static int turno = 0,tamanhoTabuleiro;
 
     //Listas
     static List<CrazyPiece> pecasMalucas = new ArrayList<>();
-    List<CrazyPiece> recuperaPecas = new ArrayList<>();
+    List<String> recuperaPecas = new ArrayList<>();
     private List<String> informacaoEquipas = new ArrayList<>();
 
  //Contrutores
@@ -157,7 +157,11 @@ public class Simulador {
     public boolean processaJogada(int xO, int yO, int xD, int yD){
         //Guardar a posição e estado das peças
         recuperaPecas.clear();
-        recuperaPecas.addAll(pecasMalucas);
+        String linha;
+        for(CrazyPiece peace:pecasMalucas){
+            linha = "" + peace.getId() + ":" + peace.getPosX() + ":" + peace.getPosY();
+            recuperaPecas.add(linha);
+        }
         System.out.println(recuperaPecas);
 
         //Apaga a informação existente anteriormente
@@ -378,42 +382,48 @@ public class Simulador {
 
 //Premite anular a ultima jogada realizada
     public void anularJogadaAnterior(){
-        int count=0;
-        //Repor as peças
-        Simulador.pecasMalucas.clear();
-        Simulador.pecasMalucas=recuperaPecas;
-        System.out.println(recuperaPecas);
-        System.out.println(pecasMalucas);
+        if(countAnulaJogada<=1) {
+            int count = 0;
+            //Repor as peças
+            for (String linha : recuperaPecas) {
+                String info[];
+                info = linha.split(":");
+                for (CrazyPiece peace : pecasMalucas) {
+                    if (peace.getId() == Integer.parseInt(info[0])) {
+                        int x = Integer.parseInt(info[1]);
+                        int y = Integer.parseInt(info[2]);
+                        peace.setPosicao(x, y);
+                    }
+                }
+            }
 
-        for(String equipas : informacaoEquipas){
+            for (String equipas : informacaoEquipas) {
 //Repor a informação da equipa Preta
-            if (count == 0){
-                validasPretas = Integer.parseInt(equipas);
-            }
-            else if (count == 1){
-                capturadasPretas = Integer.parseInt(equipas);
-            }
-            else if (count == 2){
-                invalidasPretas = Integer.parseInt(equipas);
-            }
+                if (count == 0) {
+                    validasPretas = Integer.parseInt(equipas);
+                } else if (count == 1) {
+                    capturadasPretas = Integer.parseInt(equipas);
+                } else if (count == 2) {
+                    invalidasPretas = Integer.parseInt(equipas);
+                }
 //Repor a informação da equipa Branca
-            else if (count == 3){
-                validasBrancas = Integer.parseInt(equipas);
+                else if (count == 3) {
+                    validasBrancas = Integer.parseInt(equipas);
+                } else if (count == 4) {
+                    capturadasBrancas = Integer.parseInt(equipas);
+                } else if (count == 5) {
+                    invalidasBrancas = Integer.parseInt(equipas);
+                }
+                count++;
             }
-            else if (count == 4){
-                capturadasBrancas = Integer.parseInt(equipas);
-            }
-            else if (count == 5){
-                invalidasBrancas = Integer.parseInt(equipas);
-            }
-            count++;
-        }
 
 //Repor a informação do jogo
-        turno = turnoAntigo;
-        semCaptura = capturasAntigas;
-        capturaPrevia =antigaCapturaPrevia;
+            turno = turnoAntigo;
+            semCaptura = capturasAntigas;
+            capturaPrevia = antigaCapturaPrevia;
 
+            countAnulaJogada++;
+        }
     }
 
 //Grava o jogo como ele se encontra atualmente
