@@ -69,6 +69,7 @@ public class TestSimulador {
     @Test
     public void moverRainhaDiagonal(){
         Simulador simulador = new Simulador(4);
+        simulador.iniciaJogo(new File("test-files/test_rei.txt"));
         List<CrazyPiece>pecasMalucas = new ArrayList<>();
         CrazyPiece rainha = new Rainha (1,10,"Rainha Preta");
         rainha.setPosicao(1,1);
@@ -80,6 +81,7 @@ public class TestSimulador {
     public void moverRainhaHorizontal(){
         Simulador simulador = new Simulador(4);
         List<CrazyPiece>pecasMalucas = new ArrayList<>();
+
         CrazyPiece rainha = new Rainha(1,10,"Rainha Preta");
         rainha.setPosicao(1,1);
         pecasMalucas.add(rainha);
