@@ -88,7 +88,7 @@ public class TestSimulador {
         possiveisMovimentos.add("1, 0");
         possiveisMovimentos.add("1, 1");
         possiveisMovimentos.add("0, 1");
-        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0,pecasMalucas));
+        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
     }
 
 //Testes da peca Rainha
@@ -227,7 +227,7 @@ public class TestSimulador {
         possiveisMovimentos.add("3, 0");
         possiveisMovimentos.add("3, 3");
         possiveisMovimentos.add("0, 3");
-        assertEquals("Deveria dar [1, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0,pecasMalucas));
+        assertEquals("Deveria dar [1, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
     }
 //Testes para a peça Ponei Magico
     @Test
@@ -327,7 +327,7 @@ public class TestSimulador {
         pecasMalucas.add(ponei);
         List<String> possiveisMovimentos = new ArrayList<>();
         possiveisMovimentos.add("2, 2");
-        assertEquals("Deveria dar a posição [2, 2]", possiveisMovimentos, simulador.obterSugestoesJogada(0,0,pecasMalucas));
+        assertEquals("Deveria dar a posição [2, 2]", possiveisMovimentos, simulador.obterSugestoesJogada(0,0));
     }
 
 //Testes da peca Padre da Vila
@@ -434,7 +434,7 @@ public class TestSimulador {
         possiveisMovimentos.add("1, 1");
         possiveisMovimentos.add("2, 2");
         possiveisMovimentos.add("3, 3");
-        assertEquals("Deveria dar as posições [1, 1, 2, 2, 3, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0,pecasMalucas));
+        assertEquals("Deveria dar as posições [1, 1, 2, 2, 3, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
     }
 
 //Testes da peça Torre Horizontal
@@ -508,7 +508,7 @@ public class TestSimulador {
         possiveisMovimentos.add("1, 1");
         possiveisMovimentos.add("2, 1");
         possiveisMovimentos.add("3, 1");
-        assertEquals("Deveria dar as posições [1, 1, 2, 1, 3, 1]",possiveisMovimentos,simulador.obterSugestoesJogada(0,1,pecasMalucas));
+        assertEquals("Deveria dar as posições [1, 1, 2, 1, 3, 1]",possiveisMovimentos,simulador.obterSugestoesJogada(0,1));
     }
 
 //Testes da peça Torre Vertical
@@ -582,7 +582,7 @@ public class TestSimulador {
         possiveisMovimentos.add("1, 1");
         possiveisMovimentos.add("1, 2");
         possiveisMovimentos.add("1, 3");
-        assertEquals("Deveria dar as posições [1, 1, 1, 2, 1, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(1,0,pecasMalucas));
+        assertEquals("Deveria dar as posições [1, 1, 1, 2, 1, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(1,0));
     }
 //Testes da peça Lebre
     @Test
@@ -655,7 +655,7 @@ public class TestSimulador {
         posiveisMovimentos.add("3, 0");
         posiveisMovimentos.add("3, 2");
         posiveisMovimentos.add("1, 2");
-        assertEquals("Deveria dar as posições [1, 0, 3, 0, 3, 2, 1, 2]",posiveisMovimentos,simulador.obterSugestoesJogada(2,1,pecasMalucas));
+        assertEquals("Deveria dar as posições [1, 0, 3, 0, 3, 2, 1, 2]",posiveisMovimentos,simulador.obterSugestoesJogada(2,1));
     }
 //Testes da peca Joker
 
@@ -730,7 +730,7 @@ public class TestSimulador {
         pecasMalucas.add(joker);
         Simulador.turno=0;
         List<String> possiveisMovimentos = new ArrayList<>();
-        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1 , 2, 0 , 2, 2 , 0, 2, 3, 0, 3, 3 , 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0,pecasMalucas));
+        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1 , 2, 0 , 2, 2 , 0, 2, 3, 0, 3, 3 , 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
     }
 
     @Test

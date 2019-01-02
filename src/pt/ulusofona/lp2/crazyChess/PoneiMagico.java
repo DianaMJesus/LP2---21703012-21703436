@@ -10,6 +10,7 @@ public class PoneiMagico extends CrazyPiece {
         super.alcunha=alcunha;
         super.valorRelativo="5";
         super.passoMax=4;
+        super.tipo="Ponei Mágico";
         if(equipa == 10){
             imagePNG = "ponei_preto.png";
         }else if(equipa == 20){

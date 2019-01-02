@@ -8,6 +8,7 @@ public class CrazyPiece {
     String imagePNG;
     String alcunha;
     String valorRelativo;
+    String tipo;
     boolean emJogo = false;
 
     public CrazyPiece() {
@@ -54,6 +55,10 @@ public class CrazyPiece {
         return posY;
     }
 
+    public String getTipo(){
+        return tipo;
+    }
+
     public void setPosicao(int x, int y) {
         this.posX = x;
         this.posY = y;
@@ -71,64 +76,6 @@ public class CrazyPiece {
     public boolean podeMover(int x,int y,List<CrazyPiece>pecasMalucas) {
         return false;
     }
-
-    /*public boolean haPadre(int x, int y, int tPeca) {
-        CrazyPiece novaPeace = Simulador.receberPeca(x,y);
-        System.out.println("ola");
-
-        for (int pos = 0; pos <= 7; pos++) {
-            switch (pos) {
-                case 0: {
-                    novaPeace = Simulador.receberPeca(x - 1, y - 1);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                case 1: {
-                    novaPeace = Simulador.receberPeca(x, y - 1);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                case 2: {
-                    novaPeace = Simulador.receberPeca(x + 1, y - 1);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                case 3: {
-                    novaPeace = Simulador.receberPeca(x + 1, y);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                case 4: {
-                    novaPeace = Simulador.receberPeca(x + 1, y + 1);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                case 5: {
-                    novaPeace = Simulador.receberPeca(x, y + 1);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                case 6: {
-                    novaPeace = Simulador.receberPeca(x - 1, y + 1);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                case 7: {
-                    novaPeace = Simulador.receberPeca(x - 1, y);
-                    System.out.println(novaPeace);
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-            System.out.println(novaPeace);
-            if (novaPeace != null && novaPeace.getTipoPeca() == tPeca && novaPeace.getEquipa() != Simulador.equipaJogar) {
-                return false;
-            }
-        }
-        return true;
-    }*/
 
     public List<String> sugetaoJogada(int x, int y,List<CrazyPiece>pecasMalucas) {
         List<String> posibilidades = new ArrayList<>();
@@ -240,47 +187,11 @@ public class CrazyPiece {
     }
 
 
-    public String toString(){
-        String nomeTipo = "";
-        switch (getTipoPeca()){
-            case 0:
-                nomeTipo = "Rei";
-                break;
-
-            case 1:
-                nomeTipo = "Rainha";
-                break;
-
-            case 2:
-                nomeTipo = "Ponei Mágico";
-                break;
-
-            case 3:
-                nomeTipo = "Padre da Vila";
-                break;
-
-            case 4:
-                nomeTipo = "TorreH";
-                break;
-
-            case 5:
-                nomeTipo = "TorreV";
-                break;
-
-            case 6:
-                nomeTipo = "Lebre";
-                break;
-
-            case 7:
-                nomeTipo = "Joker";
-                break;
-
-            default:
-                break;
-        }
+    @Override
+    public  String toString(){
         if(this.posX==-1 && this.posY==-1){
-            return getId() + " | " + nomeTipo + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
+            return getId() + " | " + getTipo() + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
         }
-        return getId() + " | " + nomeTipo + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
+        return getId() + " | " + getTipo() + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
     }
 }

@@ -10,6 +10,7 @@ public class TorreH extends CrazyPiece {
         super.alcunha=alcunha;
         super.valorRelativo="3";
         super.passoMax=Simulador.tamanhoTabuleiro;
+        super.tipo="TorreH";
         if(equipa == 10){
             imagePNG = "torreh_preta.png";
         }else if(equipa == 20){

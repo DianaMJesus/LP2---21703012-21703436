@@ -11,6 +11,7 @@ public class Rainha extends CrazyPiece {
         super.alcunha=alcunha;
         super.valorRelativo="8";
         super.passoMax=5;
+        super.tipo="Rainha";
         if(equipa == 10){
             imagePNG = "rainha_preta.png";
         }else if(equipa == 20){
@@ -83,5 +84,4 @@ public class Rainha extends CrazyPiece {
         }
         return false;
     }
-
 }

@@ -123,7 +123,7 @@ public class Simulador {
                             }
                         }
                     }
-                }else if((countLinha-nPecas-tamanhoTabuleiro-2)==1){
+                }else{
                     info=linha.split(":");
                     if(Integer.parseInt(info[0]) == 10){
                         validasPretas=Integer.parseInt(info[1]);

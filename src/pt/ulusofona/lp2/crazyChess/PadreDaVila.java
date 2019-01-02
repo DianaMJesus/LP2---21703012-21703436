@@ -11,7 +11,7 @@ public class PadreDaVila extends CrazyPiece {
         super.alcunha=alcunha;
         super.valorRelativo="3";
         super.passoMax=3;
-
+        super.tipo="Padre da Vila";
         if(equipa == 10){
             imagePNG = "padre_preto.png";
         }else if(equipa == 20){

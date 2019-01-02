@@ -10,6 +10,7 @@ public class Lebre extends CrazyPiece {
         super.alcunha=alcunha;
         super.valorRelativo="2";
         super.passoMax=1;
+        super.tipo="Lebre";
         if(equipa == 10){
             imagePNG = "lebre_preta.png";
         }else if(equipa == 20){
