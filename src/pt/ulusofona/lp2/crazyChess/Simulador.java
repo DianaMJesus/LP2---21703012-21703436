@@ -371,7 +371,7 @@ public class Simulador {
     }
 
 //Disponibiliza as possíveis jogadas de cada peça
-    public List<String> obterSugestoesJogada(int xO, int yO,List<CrazyPiece> pecasMalucas){
+    public List<String> obterSugestoesJogada(int xO, int yO){
         List<String> sugetoesJogada = new ArrayList<>();
         CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
         if (peace != null) {
