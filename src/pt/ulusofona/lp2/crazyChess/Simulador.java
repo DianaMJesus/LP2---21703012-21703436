@@ -22,7 +22,7 @@ public class Simulador {
     static int turno = 0,tamanhoTabuleiro;
 
     //Listas
-    static List<CrazyPiece> pecasMalucas = new ArrayList<>();
+    List<CrazyPiece> pecasMalucas = new ArrayList<>();
     List<String> recuperaPecas = new ArrayList<>();
     private List<String> informacaoEquipas = new ArrayList<>();
 
@@ -184,12 +184,12 @@ public class Simulador {
 
         if(((xO>=0 && xO<tamanhoTabuleiro) && (yO>=0 && yO<tamanhoTabuleiro)) &&
                 ((xD>=0 && xD<tamanhoTabuleiro) && (yD>=0 && yD<tamanhoTabuleiro))){
-            CrazyPiece origem=receberPeca(xO,yO);
+            CrazyPiece origem=receberPeca(xO,yO,pecasMalucas);
 
             if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
-                CrazyPiece destino=receberPeca(xD,yD);
+                CrazyPiece destino=receberPeca(xD,yD,pecasMalucas);
                 if (destino == null) {
-                    if (origem.podeMover(xD,yD)){
+                    if (origem.podeMover(xD,yD,pecasMalucas)){
                         origem.setPosicao(xD,yD);
                         this.semCaptura++;
                         if(this.getIDEquipaAJogar()==10){ //Pretas
@@ -202,7 +202,7 @@ public class Simulador {
                         return true;
                     }
                 } else if (!destino.equipaEquals(equipaJogar)) {
-                    if (origem.podeMover(xD,yD)){
+                    if (origem.podeMover(xD,yD,pecasMalucas)){
                         destino.setPosicao(-1,-1);
                         origem.setPosicao(xD,yD);
                         this.semCaptura=0;
@@ -360,7 +360,7 @@ public class Simulador {
     }
 
 //Devolve a peça que se encontra numa determinada coordenada
-    public static CrazyPiece receberPeca(int x,int y){
+    public static CrazyPiece receberPeca(int x,int y,List<CrazyPiece> pecasMalucas){
 
         for(CrazyPiece piece: pecasMalucas) {
             if (piece.posX == x && piece.posY == y) {
@@ -371,11 +371,11 @@ public class Simulador {
     }
 
 //Disponibiliza as possíveis jogadas de cada peça
-    public List<String> obterSugestoesJogada(int xO, int yO){
+    public List<String> obterSugestoesJogada(int xO, int yO,List<CrazyPiece> pecasMalucas){
         List<String> sugetoesJogada = new ArrayList<>();
-        CrazyPiece peace = receberPeca(xO,yO);
+        CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
         if (peace != null) {
-            sugetoesJogada = peace.sugetaoJogada(xO,yO,tamanhoTabuleiro,equipaJogar,turno);
+            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas);
         }
         return sugetoesJogada;
     }
@@ -440,7 +440,7 @@ public class Simulador {
                 }
 
                 if(secao == 1){
-                    escrever.write("" + Simulador.pecasMalucas.size());
+                    escrever.write("" + pecasMalucas.size());
                     escrever.write(newLine);
                 }
 
@@ -456,7 +456,7 @@ public class Simulador {
                     for(int y=0;y<Simulador.tamanhoTabuleiro;y++){
                         linhaAdicionar="";
                         for(int x=0;x<Simulador.tamanhoTabuleiro;x++){
-                            CrazyPiece peace = receberPeca(x,y);
+                            CrazyPiece peace = receberPeca(x,y,pecasMalucas);
                             if(x < Simulador.tamanhoTabuleiro-1){
                                 if(peace != null) {
                                     linhaAdicionar = linhaAdicionar + peace.getId() + ":";

@@ -18,8 +18,8 @@ public class Lebre extends CrazyPiece {
     }
 
     @Override
-    public boolean podeMover(int x, int y){
-        CrazyPiece novaPeace = Simulador.receberPeca(x,y);
+    public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas){
+        CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
         if(Math.abs(x - this.getPosX()) <= 1 && Math.abs(y - this.getPosY()) <= 1 && (this.getPosX() != x || this.getPosY() != y)) {
            if(Math.abs(x - this.getPosX()) == Math.abs(y - this.getPosY())) {
                if(novaPeace!=null && novaPeace.getEquipa()==this.getEquipa()){

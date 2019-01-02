@@ -17,8 +17,8 @@ public class Joker extends CrazyPiece {
     }
 
     @Override
-    public boolean podeMover(int x, int y){
-        CrazyPiece piece = Simulador.receberPeca(x,y);
+    public boolean podeMover(int x, int y,List<CrazyPiece>pecasMalucas){
+        CrazyPiece piece = Simulador.receberPeca(x,y,pecasMalucas);
         switch (Simulador.turno %6){
             case 0: //Rainha
                 piece = new Rainha(id,Simulador.getEquipaJogar(),alcunha);
@@ -50,6 +50,6 @@ public class Joker extends CrazyPiece {
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
         }
-        return piece!=null && piece.podeMover(x,y);
+        return piece!=null && piece.podeMover(x,y,pecasMalucas);
     }
 }
