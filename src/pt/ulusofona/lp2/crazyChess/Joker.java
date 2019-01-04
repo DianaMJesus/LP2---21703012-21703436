@@ -58,27 +58,27 @@ public class Joker extends CrazyPiece {
         String nomeTipo="";
         switch (turno%6){
             case 0:
-                this.tipo="Joker/Rainha";
+                nomeTipo="Joker/Rainha";
                 break;
 
             case 1:
-                this.tipo="Joker/Ponei Mágico";
+                nomeTipo="Joker/Ponei Mágico";
                 break;
 
             case 2:
-                this.tipo="Joker/Padre da Vila";
+                nomeTipo="Joker/Padre da Vila";
                 break;
 
             case 3:
-                this.tipo="Joker/TorreH";
+                nomeTipo="Joker/TorreH";
                 break;
 
             case 4:
-                this.tipo="Joker/TorreV";
+                nomeTipo="Joker/TorreV";
                 break;
 
             case 5:
-                this.tipo="Joker/Lebre";
+                nomeTipo="Joker/Lebre";
                 break;
         }
         return nomeTipo;
