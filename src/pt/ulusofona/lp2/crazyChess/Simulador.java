@@ -357,7 +357,7 @@ public class Simulador {
     public static CrazyPiece receberPeca(int x,int y,List<CrazyPiece> pecasMalucas){
 
         for(CrazyPiece piece: pecasMalucas) {
-            if (piece.posX == x && piece.posY == y) {
+            if (piece.posX == x && piece.posY== y) {
                 return piece;
             }
         }
