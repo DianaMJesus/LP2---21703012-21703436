@@ -22,11 +22,11 @@ public class Rei extends CrazyPiece{
     }
 
     @Override
-    public boolean podeMover(int x,int y,List<CrazyPiece> pecasMalucas){
-        if((x>=0 && x<Simulador.tamanhoTabuleiro) && (y>=0 && y<Simulador.tamanhoTabuleiro)) {
+    public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro){
+        if((x >= 0 && x < tamanhoTabuleiro) && (y >= 0 && y < tamanhoTabuleiro)) {
             if (Math.abs(x - this.getPosX()) <= 1 && Math.abs(y - this.getPosY()) <= 1 && (this.getPosX() != x || this.getPosY() != y)) {
                 CrazyPiece novaPeace=Simulador.receberPeca(x,y,pecasMalucas);
-                return novaPeace == null || novaPeace.getEquipa() != Simulador.getEquipaJogar();
+                return novaPeace == null || novaPeace.getEquipa() != Simulador.getEquipaJogar(turno);
             }
         }
         return false;

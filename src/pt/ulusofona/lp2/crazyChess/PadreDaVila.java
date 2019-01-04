@@ -20,80 +20,20 @@ public class PadreDaVila extends CrazyPiece {
     }
 
     @Override
-    public boolean podeMover(int x, int y,List<CrazyPiece>pecasMalucas){
-        CrazyPiece novaPeace=Simulador.receberPeca(x,y,pecasMalucas);
-        if(Math.abs(x-this.getPosX())<=3 && Math.abs(y-this.getPosY())<=3 && (this.getPosX() != x || this.getPosY() != y)){
-            if(Math.abs(x-this.getPosX())==Math.abs(y-this.getPosY())){
-                for(int mov=0;mov<Math.abs(x-this.getPosX());mov++){
-                    novaPeace=Simulador.receberPeca(Math.abs((this.getPosX()+(x-this.getPosX()))-mov),Math.abs((this.getPosY()+(y-this.getPosY()))-mov),pecasMalucas);
+    public boolean podeMover(int x, int y, List<CrazyPiece>pecasMalucas, int turno, int tamanhoTabuleiro){
+        CrazyPiece novaPeace;
+        if(Math.abs(x - this.getPosX()) <= 3 && Math.abs(y - this.getPosY()) <= 3 && (this.getPosX() != x || this.getPosY() != y)){
+            if(Math.abs(x - this.getPosX()) == Math.abs(y - this.getPosY())){
+                for(int mov = 0;mov < Math.abs(x - this.getPosX());mov++){
+                    novaPeace = Simulador.receberPeca(Math.abs((this.getPosX()+(x-this.getPosX()))-mov),Math.abs((this.getPosY()+(y-this.getPosY()))-mov),pecasMalucas);
 
                     if(novaPeace!=null){
                         return false;
                     }
                 }
-
-                if(novaPeace!=null && novaPeace.getTipoPeca()==1 && novaPeace.getEquipa()!= Simulador.getEquipaJogar()){
-                    return false;
-                }
-
-                for (int pos = 0; pos <= 7; pos++) {
-                    switch (pos) {
-                        case 0: {
-                            novaPeace = Simulador.receberPeca(x - 1, y - 1,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        case 1: {
-                            novaPeace = Simulador.receberPeca(x, y - 1,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        case 2: {
-                            novaPeace = Simulador.receberPeca(x + 1, y - 1,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        case 3: {
-                            novaPeace = Simulador.receberPeca(x + 1, y,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        case 4: {
-                            novaPeace = Simulador.receberPeca(x + 1, y + 1,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        case 5: {
-                            novaPeace = Simulador.receberPeca(x, y + 1,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        case 6: {
-                            novaPeace = Simulador.receberPeca(x - 1, y + 1,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        case 7: {
-                            novaPeace = Simulador.receberPeca(x - 1, y,pecasMalucas);
-                            System.out.println(novaPeace);
-                            break;
-                        }
-
-                        default: {
-                            break;
-                        }
-
-                    }
-                    System.out.println(novaPeace);
-
-                    if (novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar()) {
+                List<CrazyPiece> pecasAoRedor = getPecasAoRedor(x,y,pecasMalucas);
+                for (CrazyPiece peace : pecasAoRedor) {
+                    if (peace != null && peace.getTipoPeca() == 1 && peace.getEquipa() != Simulador.getEquipaJogar(turno)) {
                         return false;
                     }
                 }

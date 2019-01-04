@@ -17,9 +17,7 @@ public class Simulador {
     private int vencedor,semCaptura = 0;
     private boolean capturaPrevia = false, antigaCapturaPrevia;
     private int turnoAntigo,capturasAntigas;
-    int equipaJogar,countAnulaJogada=0;
-
-    static int turno = 0,tamanhoTabuleiro;
+    int equipaJogar,countAnulaJogada=0,turno = 0,tamanhoTabuleiro;
 
     //Listas
     List<CrazyPiece> pecasMalucas = new ArrayList<>();
@@ -91,11 +89,11 @@ public class Simulador {
                             break;
 
                         case 4:
-                            novaPeca=new TorreH(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
+                            novaPeca=new TorreH(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
                             break;
 
                         case 5:
-                            novaPeca=new TorreV(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
+                            novaPeca=new TorreV(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
                             break;
 
                         case 6:
@@ -103,7 +101,7 @@ public class Simulador {
                             break;
 
                         case 7:
-                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
+                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],turno);
                             break;
 
                         default:
@@ -113,10 +111,10 @@ public class Simulador {
 
                 }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
                     info=linha.split(":");
-                    for(int i=0;i<tamanhoTabuleiro;i++){
-                        if(Integer.parseInt(info[i])!=0){
+                    for(int i=0;i < tamanhoTabuleiro;i++){
+                        if(Integer.parseInt(info[i]) != 0){
                             for(CrazyPiece crazyPiece:pecasMalucas){
-                                if(Integer.parseInt(info[i])==crazyPiece.getId()){
+                                if(Integer.parseInt(info[i]) == crazyPiece.getId()){
                                     crazyPiece.estaEmJogo();
                                     crazyPiece.setPosicao(i,countLinha-(nPecas+2));
                                 }
@@ -124,18 +122,14 @@ public class Simulador {
                         }
                     }
                 }else{
-                    info=linha.split(":");
-                    if(Integer.parseInt(info[0]) == 10){
-                        validasPretas=Integer.parseInt(info[1]);
-                        capturadasPretas=Integer.parseInt(info[2]);
-                        invalidasPretas=Integer.parseInt(info[3]);
-                        validasBrancas=Integer.parseInt(info[4]);
-                        capturadasBrancas=Integer.parseInt(info[5]);
-                        invalidasBrancas=Integer.parseInt(info[6]);
-                    }
-                    else if(Integer.parseInt(info[0]) == 20){
-
-                    }
+                    info = linha.split(":");
+                    validasPretas = Integer.parseInt(info[1]);
+                    capturadasPretas = Integer.parseInt(info[2]);
+                    invalidasPretas = Integer.parseInt(info[3]);
+                    validasBrancas = Integer.parseInt(info[4]);
+                    capturadasBrancas = Integer.parseInt(info[5]);
+                    invalidasBrancas = Integer.parseInt(info[6]);
+                    turno=validasBrancas + validasPretas;
                 }
 
                 countLinha++;
@@ -189,7 +183,7 @@ public class Simulador {
             if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
                 CrazyPiece destino=receberPeca(xD,yD,pecasMalucas);
                 if (destino == null) {
-                    if (origem.podeMover(xD,yD,pecasMalucas)){
+                    if (origem.podeMover(xD,yD,pecasMalucas,turno,tamanhoTabuleiro)){
                         origem.setPosicao(xD,yD);
                         this.semCaptura++;
                         if(this.getIDEquipaAJogar()==10){ //Pretas
@@ -202,7 +196,7 @@ public class Simulador {
                         return true;
                     }
                 } else if (!destino.equipaEquals(equipaJogar)) {
-                    if (origem.podeMover(xD,yD,pecasMalucas)){
+                    if (origem.podeMover(xD,yD,pecasMalucas,turno,tamanhoTabuleiro)){
                         destino.setPosicao(-1,-1);
                         origem.setPosicao(xD,yD);
                         this.semCaptura=0;
@@ -351,7 +345,7 @@ public class Simulador {
         return equipaJogar;
     }
 
-    public static int getEquipaJogar(){
+    public static int getEquipaJogar(int turno){
         if(turno%2==0){
             return 10; //Pretas
         }else{
@@ -375,7 +369,7 @@ public class Simulador {
         List<String> sugetoesJogada = new ArrayList<>();
         CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
         if (peace != null) {
-            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas);
+            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas,turno,tamanhoTabuleiro);
         }
         return sugetoesJogada;
     }
@@ -435,7 +429,7 @@ public class Simulador {
 
             for(int secao=0;secao<=4;secao++){
                 if(secao == 0){
-                    escrever.write("" + Simulador.tamanhoTabuleiro);
+                    escrever.write("" + tamanhoTabuleiro);
                     escrever.write(newLine);
                 }
 
@@ -453,18 +447,18 @@ public class Simulador {
                 }
 
                 if(secao == 3){
-                    for(int y=0;y<Simulador.tamanhoTabuleiro;y++){
+                    for(int y=0;y<tamanhoTabuleiro;y++){
                         linhaAdicionar="";
-                        for(int x=0;x<Simulador.tamanhoTabuleiro;x++){
+                        for(int x=0;x<tamanhoTabuleiro;x++){
                             CrazyPiece peace = receberPeca(x,y,pecasMalucas);
-                            if(x < Simulador.tamanhoTabuleiro-1){
+                            if(x < tamanhoTabuleiro-1){
                                 if(peace != null) {
                                     linhaAdicionar = linhaAdicionar + peace.getId() + ":";
                                 }else{
                                     linhaAdicionar = linhaAdicionar + "0:";
                                 }
                             }
-                            else if(x == Simulador.tamanhoTabuleiro-1){
+                            else if(x == tamanhoTabuleiro-1){
                                 if(peace != null) {
                                     linhaAdicionar = linhaAdicionar + peace.getId();
                                 }else{
