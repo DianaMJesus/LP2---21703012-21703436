@@ -21,7 +21,7 @@ public class Rainha extends CrazyPiece {
 
     @Override
     public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro){
-        CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
+        CrazyPiece novaPeace = Simulador.receberPeca(this.getPosX(),this.getPosY(),pecasMalucas);
 
 //      check if the movement is between the rang that the queen can move it self and if the destiny is different from the actual position
         if(Math.abs(x - this.getPosX()) <= 5 && Math.abs(y - this.getPosY()) <= 5 && (this.getPosX() != x || this.getPosY() != y)){
@@ -48,35 +48,15 @@ public class Rainha extends CrazyPiece {
                     }
                 }
             }else{
-                if(x == 0 && y != 0){
-                    for(int mov = 1;mov < Math.abs(y-this.getPosY());mov++){ //Vertical
-
-                        if((y - this.getPosY()) < 0){ //Cima
-                            novaPeace = Simulador.receberPeca(x,this.getPosY() - mov,pecasMalucas);
-                        }
-                        else if((y - this.getPosY()) > 0){ //Baixo
-                            novaPeace = Simulador.receberPeca(x,this.getPosY() - mov,pecasMalucas);
-                        }
-
-                        if(novaPeace != null){
-                            return false;
-                        }
-                    }
-                }else if(x != 0 && y == 0){
-                    for(int mov = 1;mov < Math.abs(x - this.getPosX());mov++){ //Horizontal
-
-                        if((x - this.getPosX()) < 0){ //Cima
-                            novaPeace = Simulador.receberPeca(this.getPosX() - mov,y,pecasMalucas);
-                        }
-                        else if((y - this.getPosY()) > 0){ //Baixo
-                            novaPeace = Simulador.receberPeca(this.getPosX() - mov,y,pecasMalucas);
-                        }
-
-                        if(novaPeace != null){
-                            return false;
-                        }
+                if(Math.abs(x - this.getPosX()) == 0 && Math.abs(y - this.getPosY()) != 0){ //Vertical
+                    if(novaPeace != null || !novaPeace.validaMovimentoVertical(x,y,pecasMalucas)){
+                        return false;
                     }
 
+                }else if(Math.abs(x - this.getPosX()) != 0 && Math.abs(y - this.getPosY()) == 0){ //Horizontal
+                    if(novaPeace != null || !novaPeace.validaMovimentoHorizontal(x, y, pecasMalucas)){
+                        return false;
+                    }
                 }
             }
             List<CrazyPiece> pecasAoRedor = getPecasAoRedor(x,y,pecasMalucas);
@@ -86,7 +66,10 @@ public class Rainha extends CrazyPiece {
                 }
             }
 
-            return (novaPeace != null && novaPeace.getTipoPeca() != 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno));
+            if(novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno)){
+                return false;
+            }
+            return true;
         }
         return false;
     }
