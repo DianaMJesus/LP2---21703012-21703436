@@ -259,49 +259,28 @@ public class TestSimulador {
     @Test
     public void moverComPecaNoCaminho(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
-        CrazyPiece rainha = new Rainha(2,20,"Rainha Branco");
-        rainha.setPosicao(2,2);
-        pecasMalucas.add(rainha);
+        simulador.iniciaJogo(new File("test-files/test_padreComPecaNoCaminho.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,3,3));
     }
 
     @Test
     public void padreComeRainhaAdversaria(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
-        CrazyPiece rainha = new Rainha(2,20,"Rainha Branca");
-        rainha.setPosicao(2,2);
-        pecasMalucas.add(rainha);
+        simulador.iniciaJogo(new File("test-files/test_padreComPecaNoCaminho.txt"));
         assertFalse("Não deveria poder comer",simulador.processaJogada(0,0,2,2));
     }
 
     @Test
     public void padreComePecaEquipa(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
-        CrazyPiece rainha = new Rainha(2,10,"Rainha Branca");
-        rainha.setPosicao(2,2);
-        pecasMalucas.add(rainha);
+        simulador.iniciaJogo(new File("test-files/test_padreComPecaEquipa.txt"));
         assertFalse("Não deveria poder comer",simulador.processaJogada(0,0,2,2));
     }
 
     @Test
     public void sugestaoPadre(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_padre.txt"));
         List<String> possiveisMovimentos = new ArrayList<>();
         possiveisMovimentos.add("1, 1");
         possiveisMovimentos.add("2, 2");
