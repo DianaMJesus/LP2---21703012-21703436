@@ -49,12 +49,12 @@ public class Rainha extends CrazyPiece {
                 }
             }else{
                 if(Math.abs(x - this.getPosX()) == 0 && Math.abs(y - this.getPosY()) != 0){ //Vertical
-                    if(novaPeace != null || !novaPeace.validaMovimentoVertical(x,y,pecasMalucas)){
+                    if(!novaPeace.validaMovimentoVertical(x,y,pecasMalucas)){
                         return false;
                     }
 
                 }else if(Math.abs(x - this.getPosX()) != 0 && Math.abs(y - this.getPosY()) == 0){ //Horizontal
-                    if(novaPeace != null || !novaPeace.validaMovimentoHorizontal(x, y, pecasMalucas)){
+                    if(!novaPeace.validaMovimentoHorizontal(x, y, pecasMalucas)){
                         return false;
                     }
                 }

@@ -76,8 +76,6 @@ public class TestSimulador {
     @Test
     public void moverRainhaHorizontal(){
         Simulador simulador = new Simulador(4);
-
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
         simulador.iniciaJogo(new File("test-files/test_rainha.txt"));
         assertTrue("Deveria poder mover",simulador.processaJogada(1,1,2,1));
     }
@@ -120,13 +118,7 @@ public class TestSimulador {
     @Test
     public void rainhaComePecaEquipa(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece rainha = new Rainha(1,10,"Rainha Preta");
-        rainha.setPosicao(1,1);
-        pecasMalucas.add(rainha);
-        CrazyPiece padre = new PadreDaVila(2,10,"Padre Preto");
-        padre.setPosicao(2,2);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_rainhaComePecaEquipa.txt"));
         assertFalse("Não deveria poder comer",simulador.processaJogada(1,1,2,2));
     }
 
@@ -135,13 +127,6 @@ public class TestSimulador {
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_rainhaComeRainhaAdversaria.txt"));
         assertFalse("Não deveria poder comer",simulador.processaJogada(1,1,2,2));
-    }
-
-    @Test
-    public void rainhaComePecaAdversaria(){
-        Simulador simulador = new Simulador(4);
-        simulador.iniciaJogo(new File("test-files/test_rainhaComePecaAdversaria.txt"));
-        assertTrue("Deveria poder comer a peça",simulador.processaJogada(1,1,2,2));
     }
 
     @Test
@@ -154,30 +139,26 @@ public class TestSimulador {
     @Test
     public void sugestaoRainha(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece rainha = new Rainha(1,10,"Rainha Preta");
-        rainha.setPosicao(0,0);
-        pecasMalucas.add(rainha);
+        simulador.iniciaJogo(new File("test-files/test_rainha.txt"));
         List<String> possiveisMovimentos = new ArrayList<>();
+        possiveisMovimentos.add("0, 0");
         possiveisMovimentos.add("1, 0");
-        possiveisMovimentos.add("1, 1");
-        possiveisMovimentos.add("0, 1");
         possiveisMovimentos.add("2, 0");
+        possiveisMovimentos.add("2, 1");
         possiveisMovimentos.add("2, 2");
+        possiveisMovimentos.add("1, 2");
         possiveisMovimentos.add("0, 2");
-        possiveisMovimentos.add("3, 0");
+        possiveisMovimentos.add("0, 1");
+        possiveisMovimentos.add("3, 1");
         possiveisMovimentos.add("3, 3");
-        possiveisMovimentos.add("0, 3");
-        assertEquals("Deveria dar [1, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
+        possiveisMovimentos.add("1, 3");
+        assertEquals("Deveria dar [1, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(1,1));
     }
 //Testes para a peça Ponei Magico
     @Test
     public void moverPonei(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,10, "Ponei Preto");
-        ponei.setPosicao(0,0);
-        pecasMalucas.add(ponei);
+        simulador.iniciaJogo(new File("test-files/test_ponei.txt"));
         assertTrue("Deveria poder mover",simulador.processaJogada(0,0,2,2));
     }
 
