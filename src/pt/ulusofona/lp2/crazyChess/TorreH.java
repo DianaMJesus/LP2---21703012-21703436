@@ -23,10 +23,7 @@ public class TorreH extends CrazyPiece {
         CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
 
         if(y - this.getPosY() == 0 && this.getPosX() != x ){
-            if(!novaPeace.validaMovimentoHorizontal(x,y,pecasMalucas)){
-                return false;
-            }
-            return true;
+            return novaPeace != null || novaPeace.validaMovimentoHorizontal(x, y, pecasMalucas);
         }
         return false;
     }

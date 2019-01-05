@@ -21,7 +21,7 @@ public class Rainha extends CrazyPiece {
 
     @Override
     public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro){
-        CrazyPiece novaPeace = Simulador.receberPeca(this.getPosX(),this.getPosY(),pecasMalucas);
+        CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
 
 //      check if the movement is between the rang that the queen can move it self and if the destiny is different from the actual position
         if(Math.abs(x - this.getPosX()) <= 5 && Math.abs(y - this.getPosY()) <= 5 && (this.getPosX() != x || this.getPosY() != y)){
@@ -59,6 +59,10 @@ public class Rainha extends CrazyPiece {
                     }
                 }
             }
+            if(novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno)){
+                return false;
+            }
+
             List<CrazyPiece> pecasAoRedor = getPecasAoRedor(x,y,pecasMalucas);
             for (CrazyPiece peace : pecasAoRedor) {
                 if (peace != null && peace.getTipoPeca() == 3 && peace.getEquipa() != Simulador.getEquipaJogar(turno)) {
@@ -66,9 +70,7 @@ public class Rainha extends CrazyPiece {
                 }
             }
 
-            if(novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno)){
-                return false;
-            }
+
             return true;
         }
         return false;

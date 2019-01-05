@@ -9,7 +9,6 @@ public class Joker extends CrazyPiece {
         super.equipa=equipa;
         super.alcunha=alcunha;
         super.valorRelativo="4";
-        super.tipo=setTipo(turno);
         if(equipa == 10){
             imagePNG = "joker_preto.png";
         }else if(equipa == 20){
@@ -51,6 +50,8 @@ public class Joker extends CrazyPiece {
                 piece.setPosicao(this.getPosX(),this.getPosY());
                 break;
         }
+        System.out.println(tipo);
+        System.out.println(turno);
         return piece!=null && piece.podeMover(x,y,pecasMalucas,turno,tamanhoTabuleiro);
     }
 
