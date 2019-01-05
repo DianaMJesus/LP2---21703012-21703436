@@ -253,7 +253,7 @@ public class CrazyPiece {
 
         }else if(Math.abs(yD - yO) > 0 && xO == xD){
             for(int mov = 1;mov < Math.abs(yD - yO);mov++){
-                if(yD - yO < 0){ //Baixo
+                if(yD - yO < 0){ //Cima
                     peace=Simulador.receberPeca(xO,yO - mov,pecasMalucas);
                     if(peace != null){
                         pecasCaminho.add(peace);

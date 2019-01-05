@@ -262,15 +262,15 @@ public class Simulador {
             //PRETAS VENCEM
             this.vencedor=0;
             return true;
-        }else if(reisBrancos==1 && reisPretos==1 && pecasNaoRei==0){
-            this.vencedor=0;
-            return true;
         }else if(reisPretos==0 && reisBrancos!=0){
             //BRANCAS VENCEM
             this.vencedor=1;
             return true;
         }else if(reisBrancos==0 && reisPretos==0){
             //EMPATE
+            this.vencedor=2;
+            return true;
+        }else if(reisBrancos==1 && reisPretos==1 && pecasNaoRei==0){
             this.vencedor=2;
             return true;
         }

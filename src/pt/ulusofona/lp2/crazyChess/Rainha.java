@@ -56,13 +56,13 @@ public class Rainha extends CrazyPiece {
             }
 
             novaPeace=Simulador.receberPeca(x,y,pecasMalucas);
-            if(novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno)){
+            if(novaPeace != null && (novaPeace.getTipoPeca() == 1 || (novaPeace.getTipoPeca() == 7 && turno%6 == 0)) && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno)){
                 return false;
             }
 
             List<CrazyPiece> pecasAoRedor = getPecasAoRedor(x,y,pecasMalucas);
             for (CrazyPiece peace : pecasAoRedor) {
-                if (peace != null && peace.getTipoPeca() == 3 && peace.getEquipa() != Simulador.getEquipaJogar(turno)) {
+                if (peace != null && (peace.getTipoPeca() == 3 || (peace.getTipoPeca() == 7 && turno%6 == 2)) && peace.getEquipa() != Simulador.getEquipaJogar(turno)) {
                     return false;
                 }
             }

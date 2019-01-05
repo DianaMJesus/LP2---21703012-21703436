@@ -25,8 +25,12 @@ public class TorreV extends CrazyPiece {
         List<CrazyPiece> pecasCaminho = novaPeace.getPecasCaminho(this.getPosX(),this.getPosY(),x,y,pecasMalucas);
         //System.out.println(pecasCaminho);
         if(x - this.getPosX() == 0 && this.getPosY() != y ){
-            if(pecasCaminho != null){
-                return false;
+            if(pecasCaminho.size() != 0){
+                for(CrazyPiece peace : pecasCaminho){
+                    if(peace.getTipoPeca()==0){
+                        return false;
+                    }
+                }
             }
             return true;
         }

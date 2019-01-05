@@ -24,8 +24,12 @@ public class TorreH extends CrazyPiece {
         CrazyPiece novaPeace = Simulador.receberPeca(this.getPosX(),this.getPosY(),pecasMalucas);
         List<CrazyPiece> pecasCaminho = novaPeace.getPecasCaminho(this.getPosX(),this.getPosY(),x,y,pecasMalucas);
         if(y - this.getPosY() == 0 && this.getPosX() != x ){
-            if(pecasCaminho != null){
-                return false;
+            if(pecasCaminho.size() != 0){
+                for(CrazyPiece peace : pecasCaminho){
+                    if(peace.getTipoPeca()==0){
+                        return false;
+                    }
+                }
             }
             return true;
         }
