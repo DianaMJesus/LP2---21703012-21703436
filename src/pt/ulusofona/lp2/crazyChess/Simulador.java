@@ -232,6 +232,7 @@ public class Simulador {
 
 //Premite finalizar o jogo se for comprida alguma das condições (Alterar)
     public boolean jogoTerminado(){
+        int pecasNaoRei=0;
         int reisBrancos = 0,reisPretos = 0;
         if (pecasMalucas == null){
             reset();
@@ -246,6 +247,8 @@ public class Simulador {
                         } else if (piece.getEquipa() == 20) { //Pecas Brancas
                             reisBrancos++;
                         }
+                    }else{
+                        pecasNaoRei++;
                     }
                 }
             }
@@ -259,11 +262,14 @@ public class Simulador {
             //PRETAS VENCEM
             this.vencedor=0;
             return true;
+        }else if(reisBrancos==1 && reisPretos==1 && pecasNaoRei==0){
+            this.vencedor=0;
+            return true;
         }else if(reisPretos==0 && reisBrancos!=0){
             //BRANCAS VENCEM
             this.vencedor=1;
             return true;
-        }else if((reisBrancos==1 && reisPretos==1) || (reisBrancos==0 && reisPretos==0)){
+        }else if(reisBrancos==0 && reisPretos==0){
             //EMPATE
             this.vencedor=2;
             return true;
