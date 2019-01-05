@@ -319,15 +319,15 @@ public class Simulador {
 
         //Informacao da equipa preta
         resultados.add("Equipa das Pretas");
-        resultados.add("Capturas: " + this.capturadasPretas);
-        resultados.add("Jogadas válidas: " + this.validasPretas);
-        resultados.add("Tentativas inválidas: " + this.invalidasPretas);
+        resultados.add(" Capturas: " + this.capturadasPretas);
+        resultados.add(" Jogadas válidas: " + this.validasPretas);
+        resultados.add(" Tentativas inválidas: " + this.invalidasPretas);
 
         //Informacao da equipa branca
         resultados.add("Equipa das Brancas");
-        resultados.add("Capturas: " + this.capturadasBrancas + "");
-        resultados.add("Jogadas válidas: " + this.validasBrancas + "");
-        resultados.add("Tentativas inválidas: " + this.invalidasBrancas + "");
+        resultados.add(" Capturas: " + this.capturadasBrancas + "");
+        resultados.add(" Jogadas válidas: " + this.validasBrancas + "");
+        resultados.add(" Tentativas inválidas: " + this.invalidasBrancas + "");
         return resultados;
     }
 

@@ -59,6 +59,10 @@ public class CrazyPiece {
         return tipo;
     }
 
+    public String getValorRelativo(){
+        return valorRelativo;
+    }
+
     public void setPosicao(int x, int y) {
         this.posX = x;
         this.posY = y;
@@ -273,8 +277,8 @@ public class CrazyPiece {
     @Override
     public  String toString(){
         if(this.posX==-1 && this.posY==-1){
-            return getId() + " | " + getTipo() + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
+            return getId() + " | " + getTipo() + " | " + getValorRelativo() + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
         }
-        return getId() + " | " + getTipo() + " | " + valorRelativo + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
+        return getId() + " | " + getTipo() + " | " + getValorRelativo() + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
     }
 }

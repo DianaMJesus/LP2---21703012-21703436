@@ -25,11 +25,7 @@ public class TorreH extends CrazyPiece {
         List<CrazyPiece> pecasCaminho = novaPeace.getPecasCaminho(this.getPosX(),this.getPosY(),x,y,pecasMalucas);
         if(y - this.getPosY() == 0 && this.getPosX() != x ){
             if(pecasCaminho.size() != 0){
-                for(CrazyPiece peace : pecasCaminho){
-                    if(peace.getTipoPeca()==0){
-                        return false;
-                    }
-                }
+                return false;
             }
             return true;
         }

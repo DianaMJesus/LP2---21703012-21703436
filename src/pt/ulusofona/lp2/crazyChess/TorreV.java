@@ -26,11 +26,7 @@ public class TorreV extends CrazyPiece {
         //System.out.println(pecasCaminho);
         if(x - this.getPosX() == 0 && this.getPosY() != y ){
             if(pecasCaminho.size() != 0){
-                for(CrazyPiece peace : pecasCaminho){
-                    if(peace.getTipoPeca()==0){
-                        return false;
-                    }
-                }
+                return false;
             }
             return true;
         }

@@ -224,53 +224,35 @@ public class TestSimulador {
     @Test
     public void moverPadre(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_padre.txt"));
         assertTrue("Deveria poder mover",simulador.processaJogada(0,0,2,2));
     }
 
     @Test
     public void moverPadreDepoisLimite(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_padre.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,5,5));
     }
 
     @Test
     public void moverPadreHorizontal(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_padre.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,0,3));
     }
 
     @Test
     public void moverPadreVertical(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_padre.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,3,0));
     }
 
     @Test
     public void moverPadreComRainhaAdversariaPerto(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece padre = new PadreDaVila(1,10,"Padre Preto");
-        padre.setPosicao(0,0);
-        pecasMalucas.add(padre);
-        CrazyPiece rainha = new Rainha(2,20,"Rainha Branco");
-        rainha.setPosicao(1,3);
-        pecasMalucas.add(rainha);
+        simulador.iniciaJogo(new File("test-files/test_padreComRainhaAdversariaPerto.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,2,2));
     }
 
