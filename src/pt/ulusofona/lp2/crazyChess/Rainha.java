@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.crazyChess;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Rainha extends CrazyPiece {
@@ -21,7 +22,8 @@ public class Rainha extends CrazyPiece {
 
     @Override
     public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro){
-        CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
+        CrazyPiece novaPeace = Simulador.receberPeca(this.getPosX(),this.getPosY(),pecasMalucas);
+        List<CrazyPiece> pecasCaminho = novaPeace.getPecasCaminho(this.getPosX(),this.getPosY(),x,y,pecasMalucas);
 
 //      check if the movement is between the rang that the queen can move it self and if the destiny is different from the actual position
         if(Math.abs(x - this.getPosX()) <= 5 && Math.abs(y - this.getPosY()) <= 5 && (this.getPosX() != x || this.getPosY() != y)){
@@ -48,18 +50,12 @@ public class Rainha extends CrazyPiece {
                     }
                 }
             }else{
-                if(Math.abs(x - this.getPosX()) == 0 && Math.abs(y - this.getPosY()) != 0){ //Vertical
-                    if(novaPeace != null && !novaPeace.validaMovimentoVertical(x,y,pecasMalucas)){
-                        return false;
-                    }
-
-                }else if(Math.abs(x - this.getPosX()) != 0 && Math.abs(y - this.getPosY()) == 0){ //Horizontal
-                    if(novaPeace != null && !novaPeace.validaMovimentoHorizontal(x, y, pecasMalucas)){
-                        return false;
-                    }
+                if (pecasCaminho.size() != 0) {
+                    return false;
                 }
             }
 
+            novaPeace=Simulador.receberPeca(x,y,pecasMalucas);
             if(novaPeace != null && novaPeace.getTipoPeca() == 1 && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno)){
                 return false;
             }

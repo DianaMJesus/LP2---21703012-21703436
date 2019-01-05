@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.crazyChess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TorreV extends CrazyPiece {
@@ -20,10 +21,11 @@ public class TorreV extends CrazyPiece {
 
     @Override
     public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro){
-        CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
-
+        CrazyPiece novaPeace = Simulador.receberPeca(this.getPosX(),this.getPosY(),pecasMalucas);
+        List<CrazyPiece> pecasCaminho = novaPeace.getPecasCaminho(this.getPosX(),this.getPosY(),x,y,pecasMalucas);
+        //System.out.println(pecasCaminho);
         if(x - this.getPosX() == 0 && this.getPosY() != y ){
-            if(novaPeace != null && novaPeace.validaMovimentoVertical(x, y, pecasMalucas)){
+            if(pecasCaminho != null){
                 return false;
             }
             return true;

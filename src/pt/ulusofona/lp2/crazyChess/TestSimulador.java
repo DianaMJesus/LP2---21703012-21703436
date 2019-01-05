@@ -165,88 +165,56 @@ public class TestSimulador {
     @Test
     public void moverPoneiDepoisLimite(){
         Simulador simulador = new Simulador(6);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,10,"Ponei Preto");
-        ponei.setPosicao(0,0);
-        pecasMalucas.add(ponei);
+        simulador.iniciaJogo(new File("test-files/test_ponei.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,3,3));
     }
 
     @Test
     public void moverPoneiCom1Rei() {
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,  10, "Ponei Preto");
-        ponei.setPosicao(3, 1);
-        pecasMalucas.add(ponei);
-        CrazyPiece rei = new Rei(2, 20, "Rei Branco");
-        rei.setPosicao(3, 3);
-        pecasMalucas.add(rei);
+        simulador.iniciaJogo(new File("test-files/test_poneiCom1Rei.txt"));
         assertTrue("Deveria poder mover", simulador.processaJogada(3, 1, 1, 3));
     }
 
     @Test
     public void moverPoneiCom2Reis() {
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,  10, "Ponei Preto");
-        ponei.setPosicao(3, 1);
-        pecasMalucas.add(ponei);
-        CrazyPiece rei = new Rei(2, 20, "Rei Branco");
-        rei.setPosicao(3, 3);
-        pecasMalucas.add(rei);
-        CrazyPiece reiSegundo = new Rei (3,20,"Segundo Rei Branco");
-        reiSegundo.setPosicao(1,2);
-        pecasMalucas.add(reiSegundo);
+        simulador.iniciaJogo(new File("test-files/test_poneiCom2Rei.txt"));
         assertFalse("Não deveria poder mover", simulador.processaJogada(3, 1, 1, 3));
     }
 
     @Test
     public void moverPoneiPecaCaminho(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,10,"Ponei Preto");
-        ponei.setPosicao(3,1);
-        pecasMalucas.add(ponei);
-        CrazyPiece rainha = new Rainha(2,10,"Rainha Preta");
-        rainha.setPosicao(3,3);
-        pecasMalucas.add(rainha);
+        simulador.iniciaJogo(new File("test-files/test_poneiComPecaCaminho.txt"));
+        assertTrue("Deveria poder mover",simulador.processaJogada(3,1,1,3));
+    }
+
+    @Test
+    public void moverPonei2PecaCaminho(){
+        Simulador simulador = new Simulador(4);
+        simulador.iniciaJogo(new File("test-files/test_poneiCom2PecaCaminho.txt"));
         assertTrue("Deveria poder mover",simulador.processaJogada(3,1,1,3));
     }
 
     @Test
     public void poneiComePecaEquipa(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,10,"Ponei Preto");
-        ponei.setPosicao(3,1);
-        pecasMalucas.add(ponei);
-        CrazyPiece rei = new Rei(2,10,"Rei Branca");
-        rei.setPosicao(1,3);
-        pecasMalucas.add(rei);
+        simulador.iniciaJogo(new File("test-files/test_poneiComePecaEquipa.txt"));
         assertFalse("Não deveria poder comer",simulador.processaJogada(3,1,1,3));
     }
 
     @Test
     public void poneiComePecaEquipaAdversaria(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,10,"Ponei Preto");
-        ponei.setPosicao(3,1);
-        pecasMalucas.add(ponei);
-        CrazyPiece rei = new Rei(2,20,"Rei Branca");
-        rei.setPosicao(1,3);
-        pecasMalucas.add(rei);
+        simulador.iniciaJogo(new File("test-files/test_poneiComePecaEquipaAdversaria.txt"));
         assertTrue("Deveria poder comer",simulador.processaJogada(3,1,1,3));
     }
 
     @Test
     public void sugetaoPoneiMagico(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece ponei = new PoneiMagico(1,10,"Ponei Preto");
-        ponei.setPosicao(0,0);
-        pecasMalucas.add(ponei);
+        simulador.iniciaJogo(new File("test-files/test_ponei.txt"));
         List<String> possiveisMovimentos = new ArrayList<>();
         possiveisMovimentos.add("2, 2");
         assertEquals("Deveria dar a posição [2, 2]", possiveisMovimentos, simulador.obterSugestoesJogada(0,0));

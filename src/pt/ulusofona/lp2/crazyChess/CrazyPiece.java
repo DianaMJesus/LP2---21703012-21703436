@@ -233,41 +233,40 @@ public class CrazyPiece {
         return pecasAoRedor;
     }
 
-    public boolean validaMovimentoHorizontal(int x, int y, List<CrazyPiece> pecasMalucas){
-        CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
-
-        for(int mov = 1;mov < Math.abs(x - this.getPosX());mov++){ //Horizontal
-
-            if((x - this.getPosX()) < 0){ //Esquerda
-                novaPeace = Simulador.receberPeca(this.getPosX() - mov,y,pecasMalucas);
+    public List<CrazyPiece> getPecasCaminho(int xO, int yO, int xD, int yD, List<CrazyPiece>pecasMalucas){
+        List<CrazyPiece> pecasCaminho = new ArrayList<>();
+        CrazyPiece peace;
+        if(Math.abs(xD - xO) > 0 && yO == yD){ //Horizontal
+            for(int mov = 1;mov < Math.abs(xD - xO);mov++){
+                if(xD - xO > 0){ //Direita
+                    peace=Simulador.receberPeca(xO + mov,yO,pecasMalucas);
+                    if(peace != null){
+                        pecasCaminho.add(peace);
+                    }
+                }else if(xD - xO < 0){ //Esquerda
+                    peace=Simulador.receberPeca(xO - mov,yO,pecasMalucas);
+                    if(peace != null){
+                        pecasCaminho.add(peace);
+                    }
+                }
             }
-            else if((x - this.getPosX()) > 0){ //Direita
-                novaPeace = Simulador.receberPeca(this.getPosX() + mov,y,pecasMalucas);
-            }
 
-            if(novaPeace != null){
-                return false;
+        }else if(Math.abs(yD - yO) > 0 && xO == xD){
+            for(int mov = 1;mov < Math.abs(yD - yO);mov++){
+                if(yD - yO < 0){ //Baixo
+                    peace=Simulador.receberPeca(xO,yO - mov,pecasMalucas);
+                    if(peace != null){
+                        pecasCaminho.add(peace);
+                    }
+                }else if(yD - yO > 0){ //Baixo
+                    peace=Simulador.receberPeca(xO,yO + mov,pecasMalucas);
+                    if(peace != null){
+                        pecasCaminho.add(peace);
+                    }
+                }
             }
         }
-        return true;
-    }
-
-    public boolean validaMovimentoVertical(int x, int y, List<CrazyPiece> pecasMalucas){
-        CrazyPiece novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
-        for(int mov = 1;mov < Math.abs(y-this.getPosY());mov++){ //Vertical
-
-            if((y - this.getPosY()) < 0){ //Cima
-                novaPeace = Simulador.receberPeca(x,this.getPosY() - mov,pecasMalucas);
-            }
-            else if((y - this.getPosY()) > 0){ //Baixo
-                novaPeace = Simulador.receberPeca(x,this.getPosY() + mov,pecasMalucas);
-            }
-
-            if(novaPeace != null){
-                return false;
-            }
-        }
-        return true;
+        return  pecasCaminho;
     }
 
 
