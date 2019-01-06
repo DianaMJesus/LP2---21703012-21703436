@@ -101,7 +101,8 @@ public class Simulador {
                             break;
 
                         case 7:
-                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],turno);
+                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
+                            ((Joker) novaPeca).setTipo(turno);
                             break;
 
                         default:

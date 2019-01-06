@@ -118,7 +118,7 @@ public class CrazyPiece {
             }
         }
 
-        if(pecaRecebida != null && pecaRecebida.getTipoPeca() != 2 && torreEspecial == false) {
+        if(pecaRecebida != null && pecaRecebida.getTipoPeca() != 2 && !torreEspecial) {
             for (int pos = 1; pos <= pecaRecebida.passoMax; pos++) {
                 if (podeMover(x - pos, y - pos,pecasMalucas,turno,tamanhoTabuleiro)){
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)) {
@@ -185,7 +185,7 @@ public class CrazyPiece {
                 }
             }
         }
-        else if(pecaRecebida.getTipoPeca()== 2 || torreEspecial == true){
+        else if(pecaRecebida.getTipoPeca()== 2 || torreEspecial){
             if((x - 2 >= 0) && (y - 2 >= 0)){
                 if(podeMover(x - 2,y - 2,pecasMalucas,turno,tamanhoTabuleiro)) {
                     System.out.println("Esquerda-Cima");
@@ -305,8 +305,6 @@ public class CrazyPiece {
         return  pecasCaminho;
     }
 
-
-    @Override
     public  String toString(){
         if(this.posX==-1 && this.posY==-1){
             return getId() + " | " + getTipo() + " | " + getValorRelativo() + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
