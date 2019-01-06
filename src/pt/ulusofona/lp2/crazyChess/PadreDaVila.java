@@ -21,16 +21,19 @@ public class PadreDaVila extends CrazyPiece {
 
     @Override
     public boolean podeMover(int x, int y, List<CrazyPiece>pecasMalucas, int turno, int tamanhoTabuleiro){
-        CrazyPiece novaPeace;
+        CrazyPiece novaPeace = Simulador.receberPeca(this.getPosX(),this.getPosY(),pecasMalucas);
+        List<CrazyPiece> pecasCaminho = novaPeace.getPecasCaminho(this.getPosX(),this.getPosY(),x,y,pecasMalucas);
         if(Math.abs(x - this.getPosX()) <= 3 && Math.abs(y - this.getPosY()) <= 3 && (this.getPosX() != x || this.getPosY() != y)){
             if(Math.abs(x - this.getPosX()) == Math.abs(y - this.getPosY())){
-                for(int mov = 0;mov < Math.abs(x - this.getPosX());mov++){
-                    novaPeace = Simulador.receberPeca(Math.abs((this.getPosX()+(x-this.getPosX()))-mov),Math.abs((this.getPosY()+(y-this.getPosY()))-mov),pecasMalucas);
-
-                    if(novaPeace!=null){
-                        return false;
-                    }
+                if(pecasCaminho.size() != 0){
+                    return false;
                 }
+
+                novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
+                if(novaPeace != null && novaPeace.getEquipa() == Simulador.getEquipaJogar(turno)){
+                    return false;
+                }
+
                 List<CrazyPiece> pecasAoRedor = getPecasAoRedor(x,y,pecasMalucas);
                 for (CrazyPiece peace : pecasAoRedor) {
                     if (peace != null && peace.getTipoPeca() == 1 && peace.getEquipa() != Simulador.getEquipaJogar(turno)) {

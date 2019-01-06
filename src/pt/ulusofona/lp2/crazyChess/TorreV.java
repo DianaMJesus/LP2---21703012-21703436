@@ -23,9 +23,12 @@ public class TorreV extends CrazyPiece {
     public boolean podeMover(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro){
         CrazyPiece novaPeace = Simulador.receberPeca(this.getPosX(),this.getPosY(),pecasMalucas);
         List<CrazyPiece> pecasCaminho = novaPeace.getPecasCaminho(this.getPosX(),this.getPosY(),x,y,pecasMalucas);
-        //System.out.println(pecasCaminho);
         if(x - this.getPosX() == 0 && this.getPosY() != y ){
             if(pecasCaminho.size() != 0){
+                return false;
+            }
+            novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
+            if(novaPeace != null && novaPeace.getEquipa() == Simulador.getEquipaJogar(turno)){
                 return false;
             }
             return true;

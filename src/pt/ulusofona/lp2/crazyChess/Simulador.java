@@ -177,41 +177,43 @@ public class Simulador {
         capturasAntigas=semCaptura;
         antigaCapturaPrevia=capturaPrevia;
 
-        if(((xO>=0 && xO<tamanhoTabuleiro) && (yO>=0 && yO<tamanhoTabuleiro)) &&
-                ((xD>=0 && xD<tamanhoTabuleiro) && (yD>=0 && yD<tamanhoTabuleiro))){
-            CrazyPiece origem=receberPeca(xO,yO,pecasMalucas);
+        if(!(xD == xO && yD == yO)) {
+            if (((xO >= 0 && xO < tamanhoTabuleiro) && (yO >= 0 && yO < tamanhoTabuleiro)) &&
+                    ((xD >= 0 && xD < tamanhoTabuleiro) && (yD >= 0 && yD < tamanhoTabuleiro))) {
+                CrazyPiece origem = receberPeca(xO, yO, pecasMalucas);
 
-            if(origem!=null && origem.getEquipa()==this.getIDEquipaAJogar()){
-                CrazyPiece destino=receberPeca(xD,yD,pecasMalucas);
-                if (destino == null) {
-                    if (origem.podeMover(xD,yD,pecasMalucas,turno,tamanhoTabuleiro)){
-                        origem.setPosicao(xD,yD);
-                        this.semCaptura++;
-                        if(this.getIDEquipaAJogar()==10){ //Pretas
-                            this.validasPretas++;
-                        }else if(this.getIDEquipaAJogar()==20){ //Brancas
-                            this.validasBrancas++;
+                if (origem != null && origem.getEquipa() == this.getIDEquipaAJogar()) {
+                    CrazyPiece destino = receberPeca(xD, yD, pecasMalucas);
+                    if (destino == null) {
+                        if (origem.podeMover(xD, yD, pecasMalucas, turno, tamanhoTabuleiro)) {
+                            origem.setPosicao(xD, yD);
+                            this.semCaptura++;
+                            if (this.getIDEquipaAJogar() == 10) { //Pretas
+                                this.validasPretas++;
+                            } else if (this.getIDEquipaAJogar() == 20) { //Brancas
+                                this.validasBrancas++;
+                            }
+                            turno++;
+                            System.out.println(recuperaPecas);
+                            return true;
                         }
-                        turno++;
-                        System.out.println(recuperaPecas);
-                        return true;
-                    }
-                } else if (!destino.equipaEquals(equipaJogar)) {
-                    if (origem.podeMover(xD,yD,pecasMalucas,turno,tamanhoTabuleiro)){
-                        destino.setPosicao(-1,-1);
-                        origem.setPosicao(xD,yD);
-                        this.semCaptura=0;
-                        this.capturaPrevia=true;
-                        if(this.getIDEquipaAJogar()==10){ //Pretas
-                            this.validasPretas++;
-                            this.capturadasPretas++;
-                        }else if(this.getIDEquipaAJogar()==20){ //Brancas
-                            this.validasBrancas++;
-                            this.capturadasBrancas++;
+                    } else if (!destino.equipaEquals(equipaJogar)) {
+                        if (origem.podeMover(xD, yD, pecasMalucas, turno, tamanhoTabuleiro)) {
+                            destino.setPosicao(-1, -1);
+                            origem.setPosicao(xD, yD);
+                            this.semCaptura = 0;
+                            this.capturaPrevia = true;
+                            if (this.getIDEquipaAJogar() == 10) { //Pretas
+                                this.validasPretas++;
+                                this.capturadasPretas++;
+                            } else if (this.getIDEquipaAJogar() == 20) { //Brancas
+                                this.validasBrancas++;
+                                this.capturadasBrancas++;
+                            }
+                            turno++;
+                            System.out.println(recuperaPecas);
+                            return true;
                         }
-                        turno++;
-                        System.out.println(recuperaPecas);
-                        return true;
                     }
                 }
             }

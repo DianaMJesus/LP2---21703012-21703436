@@ -27,6 +27,10 @@ public class TorreH extends CrazyPiece {
             if(pecasCaminho.size() != 0){
                 return false;
             }
+            novaPeace = Simulador.receberPeca(x,y,pecasMalucas);
+            if(novaPeace != null && novaPeace.getEquipa() == Simulador.getEquipaJogar(turno)){
+                return false;
+            }
             return true;
         }
         return false;

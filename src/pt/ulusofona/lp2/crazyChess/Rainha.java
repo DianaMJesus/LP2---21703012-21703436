@@ -28,34 +28,15 @@ public class Rainha extends CrazyPiece {
 //      check if the movement is between the rang that the queen can move it self and if the destiny is different from the actual position
         if(Math.abs(x - this.getPosX()) <= 5 && Math.abs(y - this.getPosY()) <= 5 && (this.getPosX() != x || this.getPosY() != y)){
 //          if the movement is made in the diagonal
-            if(Math.abs(x - this.getPosX()) == Math.abs(y - this.getPosY())){
-
-                for(int mov = 1;mov < Math.abs(x-this.getPosX());mov++){ //Diagonal
-
-                    if((x - this.getPosX()) < 0 && (y - this.getPosY()) < 0){ //Esquerda-Cima
-                        novaPeace = Simulador.receberPeca(this.getPosX() - mov,this.getPosY() - mov,pecasMalucas);
-                    }
-                    else if((x - this.getPosX()) < 0 && (y - this.getPosY()) > 0){ //Esquerda-Baixo
-                        novaPeace = Simulador.receberPeca(this.getPosX() - mov,this.getPosY() + mov,pecasMalucas);
-                    }
-                    else if((x - this.getPosX()) > 0 && (y - this.getPosY()) < 0){ //Direita-Cima
-                        novaPeace = Simulador.receberPeca(this.getPosX() + mov,this.getPosY() - mov,pecasMalucas);
-                    }
-                    else if((x - this.getPosX()) > 0 && (y - this.getPosY()) > 0){ //Direita-Baixo
-                        novaPeace=Simulador.receberPeca(this.getPosX() + mov,this.getPosY() + mov,pecasMalucas);
-                    }
-
-                    if(novaPeace != null){
-                        return false;
-                    }
-                }
-            }else{
-                if (pecasCaminho.size() != 0) {
-                    return false;
-                }
+            if (pecasCaminho.size() != 0) {
+                return false;
             }
 
             novaPeace=Simulador.receberPeca(x,y,pecasMalucas);
+            if(novaPeace != null && novaPeace.getEquipa() == Simulador.getEquipaJogar(turno)){
+                return false;
+            }
+
             if(novaPeace != null && (novaPeace.getTipoPeca() == 1 || (novaPeace.getTipoPeca() == 7 && turno%6 == 0)) && novaPeace.getEquipa() != Simulador.getEquipaJogar(turno)){
                 return false;
             }

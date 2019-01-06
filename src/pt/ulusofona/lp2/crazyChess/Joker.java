@@ -86,7 +86,6 @@ public class Joker extends CrazyPiece {
                 break;
         }
         return tipo;
-
     }
 
 }
