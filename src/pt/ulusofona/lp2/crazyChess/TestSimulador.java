@@ -267,7 +267,7 @@ public class TestSimulador {
     public void padreComeRainhaAdversaria(){
         Simulador simulador = new Simulador(6);
         simulador.iniciaJogo(new File("test-files/test_padreComPecaNoCaminho.txt"));
-        assertFalse("Não deveria poder comer",simulador.processaJogada(0,0,2,2));
+        assertTrue("Deveria poder comer",simulador.processaJogada(0,0,2,2));
     }
 
     @Test

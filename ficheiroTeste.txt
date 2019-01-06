@@ -1,13 +1,13 @@
 10
 8
-1:0:10:Chefe
-2:1:10:Selvagem
-3:2:10:Grande Artista
-4:3:10:O Maior
-5:4:10:O Amigo
-6:5:10:O Beberolas
-7:6:10:sfsahf
-8:7:10:jshff
+1:0:20:Chefe
+2:1:20:Selvagem
+3:2:20:Grande Artista
+4:3:20:O Maior
+5:4:20:O Amigo
+6:5:20:O Beberolas
+7:6:20:sfsahf
+8:7:20:jshff
 0:0:0:0:0:0:6:0:0:4
 0:2:0:0:0:0:0:0:0:0
 0:0:0:0:0:0:0:0:0:0

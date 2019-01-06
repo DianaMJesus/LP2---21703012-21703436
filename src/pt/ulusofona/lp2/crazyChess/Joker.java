@@ -9,6 +9,7 @@ public class Joker extends CrazyPiece {
         super.equipa=equipa;
         super.alcunha=alcunha;
         super.valorRelativo="4";
+        super.tipo="Joker/Rainha";
         if(equipa == 10){
             imagePNG = "joker_preto.png";
         }else if(equipa == 20){
@@ -59,7 +60,7 @@ public class Joker extends CrazyPiece {
         return piece!=null && piece.podeMover(x,y,pecasMalucas,turno,tamanhoTabuleiro);
     }
 
-    public String setTipo(int turno){
+    public void setTipo(int turno){
         switch (turno%6){
             case 0:
                 tipo="Joker/Rainha";
@@ -85,7 +86,6 @@ public class Joker extends CrazyPiece {
                 tipo="Joker/Lebre";
                 break;
         }
-        return tipo;
     }
 
 }

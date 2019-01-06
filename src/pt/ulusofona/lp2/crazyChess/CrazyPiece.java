@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CrazyPiece {
-    int id, equipa, tipoPeca, posX = -1, posY = -1, passoMax;
+    int id, equipa, tipoPeca, posX = -10, posY = -10, passoMax;
     String imagePNG;
     String alcunha;
     String valorRelativo;
@@ -317,10 +317,12 @@ public class CrazyPiece {
         return pecasCaminho;
     }
 
+    public void setTipo(int turno){}
+
     public  String toString(){
         if(this.posX==-1 && this.posY==-1){
-            return getId() + " | " + getTipo() + " | " + getValorRelativo() + " | " + getEquipa() + " | " + getAlcunha() + " @ (n/a)";
+            return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (n/a)";
         }
-        return getId() + " | " + getTipo() + " | " + getValorRelativo() + " | " + getEquipa() + " | " + getAlcunha() + " @ (" + getPosX() + ", " +  getPosY() + ")";
+        return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (" + posX + ", " +  posY + ")";
     }
 }
