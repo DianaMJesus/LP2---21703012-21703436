@@ -305,6 +305,7 @@ public class Simulador {
 
 //Devolve o valor dos resultados do jogo
     public List<String> getResultados(){
+        jogoTerminado();
         List<String> resultados=new ArrayList<>();
         //Ver vencedor:
         //0 - Pretas
@@ -384,10 +385,8 @@ public class Simulador {
     public List<String> obterSugestoesJogada(int xO, int yO){
         List<String> sugetoesJogada = new ArrayList<>();
         CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
-        if(peace.getEquipa() == getEquipaJogar(turno)) {
-            if (peace != null) {
-                sugetoesJogada = peace.sugetaoJogada(xO, yO, pecasMalucas, turno, tamanhoTabuleiro);
-            }
+        if(peace != null && peace.getEquipa() == getEquipaJogar(turno)) {
+            sugetoesJogada = peace.sugetaoJogada(xO, yO, pecasMalucas, turno, tamanhoTabuleiro);
         }else{
             sugetoesJogada.add("Pedido inválido");
         }

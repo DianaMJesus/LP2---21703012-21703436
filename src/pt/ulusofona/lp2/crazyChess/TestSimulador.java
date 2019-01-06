@@ -8,7 +8,6 @@ import java.util.List;
 
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 
 public class TestSimulador {
 
