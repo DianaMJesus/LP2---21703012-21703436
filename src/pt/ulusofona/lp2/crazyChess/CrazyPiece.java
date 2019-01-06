@@ -320,7 +320,7 @@ public class CrazyPiece {
     public void setTipo(int turno){}
 
     public  String toString(){
-        if(this.posX==-1 && this.posY==-1){
+        if(!this.emJogo){
             return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (n/a)";
         }
         return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (" + posX + ", " +  posY + ")";
