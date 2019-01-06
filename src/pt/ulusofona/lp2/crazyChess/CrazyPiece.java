@@ -85,8 +85,40 @@ public class CrazyPiece {
         List<String> posibilidades = new ArrayList<>();
         String resultado;
         CrazyPiece pecaRecebida=Simulador.receberPeca(x,y,pecasMalucas);
+        boolean torreEspecial=false;
 
-        if(pecaRecebida!=null && pecaRecebida.getTipoPeca()!=2) {
+        if(pecaRecebida.getTipoPeca()==7){
+            switch (turno%6){
+                case 0:
+                    pecaRecebida.passoMax=5;
+                    break;
+
+                case 1:
+                    torreEspecial=true;
+                    break;
+
+                case 2:
+                    pecaRecebida.passoMax=3;
+                    break;
+
+                case 3:
+                    pecaRecebida.passoMax=tamanhoTabuleiro;
+                    break;
+
+                case 4:
+                    pecaRecebida.passoMax=tamanhoTabuleiro;
+                    break;
+
+                case 5:
+                    pecaRecebida.passoMax=1;
+                    break;
+
+                    default:
+                        break;
+            }
+        }
+
+        if(pecaRecebida != null && pecaRecebida.getTipoPeca() != 2 && torreEspecial == false) {
             for (int pos = 1; pos <= pecaRecebida.passoMax; pos++) {
                 if (podeMover(x - pos, y - pos,pecasMalucas,turno,tamanhoTabuleiro)){
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)) {
@@ -153,7 +185,7 @@ public class CrazyPiece {
                 }
             }
         }
-        else if(pecaRecebida.getTipoPeca()== 2){
+        else if(pecaRecebida.getTipoPeca()== 2 || torreEspecial == true){
             if((x - 2 >= 0) && (y - 2 >= 0)){
                 if(podeMover(x - 2,y - 2,pecasMalucas,turno,tamanhoTabuleiro)) {
                     System.out.println("Esquerda-Cima");

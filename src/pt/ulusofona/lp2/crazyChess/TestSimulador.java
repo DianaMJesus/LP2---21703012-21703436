@@ -292,69 +292,42 @@ public class TestSimulador {
     @Test
     public void moverTorreHorizontal(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreH(1,10,"TorreH Preta",4);
-        torre.setPosicao(0,1);
-        pecasMalucas.add(torre);
+        simulador.iniciaJogo(new File("test-files/test_torreH.txt"));
         assertTrue("Deveria poder mover",simulador.processaJogada(0,1,3,1));
     }
 
     @Test
     public void moverTorreHNaVertical(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreH(1,10,"TorreH Preta",4);
-        torre.setPosicao(0,1);
-        pecasMalucas.add(torre);
+        simulador.iniciaJogo(new File("test-files/test_torreH.txt"));
         assertFalse("Deveria poder mover",simulador.processaJogada(0,1,0,3));
     }
 
     @Test
     public void moverTorreHorizontalComPecaCaminho(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreH(1,10,"TorreH Preta",4);
-        torre.setPosicao(0,1);
-        pecasMalucas.add(torre);
-        CrazyPiece padre = new PadreDaVila(2,20,"Padre Branco");
-        padre.setPosicao(2,1);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_torreHComPecaCaminho.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,1,3,1));
     }
 
     @Test
     public void torreHorizontalComePecaEquipa(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreH(1,10,"TorreH Preta",4);
-        torre.setPosicao(0,1);
-        pecasMalucas.add(torre);
-        CrazyPiece padre = new PadreDaVila(2,10,"Padre Branco");
-        padre.setPosicao(2,1);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_torreHComePecaEquipa.txt"));
         assertFalse("Não deveria poder comer",simulador.processaJogada(0,1,2,1));
     }
 
     @Test
     public void torreHorizontalComePecaEquipaAdversaria(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreH(1,10,"TorreH Preta",4);
-        torre.setPosicao(0,1);
-        pecasMalucas.add(torre);
-        CrazyPiece padre = new PadreDaVila(2,20,"Padre Branco");
-        padre.setPosicao(2,1);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_torreHComPecaCaminho.txt"));
         assertTrue("Deveria poder comer",simulador.processaJogada(0,1,2,1));
     }
 
     @Test
     public void sugestaoTorreHorizontal(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreH(1,10,"TorreH Preta",4);
-        torre.setPosicao(0,1);
-        pecasMalucas.add(torre);
+        simulador.iniciaJogo(new File("test-files/test_torreH.txt"));
         List<String> possiveisMovimentos = new ArrayList<>();
         possiveisMovimentos.add("1, 1");
         possiveisMovimentos.add("2, 1");
@@ -366,69 +339,42 @@ public class TestSimulador {
     @Test
     public void moverTorreVertical(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreV(1,10,"TorreV Preta",4);
-        torre.setPosicao(1,0);
-        pecasMalucas.add(torre);
+        simulador.iniciaJogo(new File("test-files/test_torreV.txt"));
         assertTrue("Deveria poder mover",simulador.processaJogada(1,0,1,3));
     }
 
     @Test
     public void moverTorreVNaHorizontal(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreV(1,10,"TorreV Preta",4);
-        torre.setPosicao(1,0);
-        pecasMalucas.add(torre);
+        simulador.iniciaJogo(new File("test-files/test_torreV.txt"));
         assertFalse("Deveria poder mover",simulador.processaJogada(1,0,2,0));
     }
 
     @Test
     public void moverTorreVerticalComPecaCaminho(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreV(1,10,"TorreV Preta",4);
-        torre.setPosicao(1,0);
-        pecasMalucas.add(torre);
-        CrazyPiece padre = new PadreDaVila(2,20,"Padre Branco");
-        padre.setPosicao(1,1);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_torreVComPecaCaminho.txt"));
         assertFalse("Não deveria poder mover",simulador.processaJogada(1,0,1,3));
     }
 
     @Test
     public void torreVerticalComePecaEquipa(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreV(1,10,"TorreV Preta",4);
-        torre.setPosicao(1,0);
-        pecasMalucas.add(torre);
-        CrazyPiece padre = new PadreDaVila(2,10,"Padre Branco");
-        padre.setPosicao(1,2);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_torreVComePecaEquipa.txt"));
         assertFalse("Não deveria poder comer",simulador.processaJogada(1,0,1,2));
     }
 
     @Test
     public void torreVerticalComePecaEquipaAdversaria(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreV(1,10,"TorreH Preta",4);
-        torre.setPosicao(1,0);
-        pecasMalucas.add(torre);
-        CrazyPiece padre = new PadreDaVila(2,20,"Padre Branco");
-        padre.setPosicao(1,2);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_torreVComPecaCaminho.txt"));
         assertTrue("Deveria poder comer",simulador.processaJogada(1,0,1,2));
     }
 
     @Test
     public void sugestaoTorreVertical(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece torre = new TorreV(1,10,"TorreH Preta",4);
-        torre.setPosicao(1,0);
-        pecasMalucas.add(torre);
+        simulador.iniciaJogo(new File("test-files/test_torreV.txt"));
         List<String> possiveisMovimentos = new ArrayList<>();
         possiveisMovimentos.add("1, 1");
         possiveisMovimentos.add("1, 2");
@@ -439,68 +385,47 @@ public class TestSimulador {
     @Test
     public void moverLebre(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece lebre = new Lebre(1,10,"Lebra Preta");
-        lebre.setPosicao(0,0);
-        pecasMalucas.add(lebre);
-        int turno=0;
+        simulador.iniciaJogo(new File("test-files/test_lebre.txt"));
+        simulador.turno=0;
         assertTrue("Deveria poder mover",simulador.processaJogada(0,0,1,1));
     }
 
     @Test
     public void naoMoverLebre(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece lebre = new Lebre(1,20,"Lebra Branca");
-        lebre.setPosicao(0,0);
-        pecasMalucas.add(lebre);
-        int turno = 1;
+        simulador.iniciaJogo(new File("test-files/test_lebre.txt"));
+        simulador.turno = 1;
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,1,1));
     }
 
     @Test
     public void lebreComePecaEquipa(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece lebre = new Lebre(1,10,"Lebre Preta");
-        lebre.setPosicao(0,0);
-        pecasMalucas.add(lebre);
-        CrazyPiece padre = new PadreDaVila(2,10,"Padre Preto");
-        padre.setPosicao(1,1);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_lebreComePecaEquipa.txt"));
+        simulador.turno=0;
         assertFalse("Não deveria poder mover",simulador.processaJogada(0,0,1,1));
     }
 
     @Test
     public void lebreComePecaEquipaAdversaria(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece lebre = new Lebre(1,10,"Lebre Preta");
-        lebre.setPosicao(0,0);
-        pecasMalucas.add(lebre);
-        CrazyPiece padre = new PadreDaVila(2,20,"Padre Preto");
-        padre.setPosicao(1,1);
-        pecasMalucas.add(padre);
+        simulador.iniciaJogo(new File("test-files/test_lebreComePecaAdversaria.txt"));
+        simulador.turno=0;
         assertTrue("Deveria poder mover",simulador.processaJogada(0,0,1,1));
     }
 
     @Test
     public void lebreMoverLimite(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece lebre = new Lebre(1,10,"Lebre Preta");
-        lebre.setPosicao(0,0);
-        pecasMalucas.add(lebre);
+        simulador.iniciaJogo(new File("test-files/test_lebre.txt"));
+        simulador.turno=0;
         assertFalse("Não deveria mover",simulador.processaJogada(0,0,2,2));
     }
 
     @Test
     public void sugetaoLebre(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece lebre = new Lebre(1,10,"Lebre Preto");
-        lebre.setPosicao(2,1);
-        pecasMalucas.add(lebre);
+        simulador.iniciaJogo(new File("test-files/test_lebreSugestao.txt"));
         List<String> posiveisMovimentos = new ArrayList<>();
         posiveisMovimentos.add("1, 0");
         posiveisMovimentos.add("3, 0");
@@ -513,80 +438,67 @@ public class TestSimulador {
     @Test
     public void moverJokerComoRainha(){
         Simulador simulador = new Simulador(4);
-        simulador.iniciaJogo(new File("test-files/test_joker_rainha.txt"));
+        simulador.iniciaJogo(new File("test-files/test_jokerPar.txt"));
+        simulador.turno=0;
         assertTrue("Deveria poder mover",simulador.processaJogada(1,1,2,2));
     }
 
     @Test
     public void moverJokerComoPoneiMagico(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece joker = new Joker (1,20,"Ponei Branco",1);
-        joker.setPosicao(1,1);
-        pecasMalucas.add(joker);
+        simulador.iniciaJogo(new File("test-files/test_jokerImpar.txt"));
+        simulador.turno=1;
         assertTrue("Deveria poder mover",simulador.processaJogada(1,1,3,3));
     }
 
     @Test
     public void moverJokerComoPadreDaVila(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece joker = new Joker (1,10,"Padre Preta",2);
-        joker.setPosicao(1,1);
-        pecasMalucas.add(joker);
+        simulador.iniciaJogo(new File("test-files/test_jokerPar.txt"));
+        simulador.turno=2;
         assertTrue("Deveria poder mover",simulador.processaJogada(1,1,3,3));
     }
 
     @Test
     public void moverJokerComoTorreHor(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece joker = new Joker (1,20,"TorreH Preta",3);
-        joker.setPosicao(1,1);
-        pecasMalucas.add(joker);
+        simulador.iniciaJogo(new File("test-files/test_jokerImpar.txt"));
+        simulador.turno=3;
         assertTrue("Deveria poder mover",simulador.processaJogada(1,1,3,1));
     }
 
     @Test
     public void moverJokerComoTorreVer(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece joker = new Joker (1,10,"TorreV Preta",4);
-        joker.setPosicao(1,1);
-        pecasMalucas.add(joker);
+        simulador.iniciaJogo(new File("test-files/test_jokerPar.txt"));
+        simulador.turno=4;
         assertTrue("Deveria poder mover",simulador.processaJogada(1,1,1,3));
     }
 
     @Test
     public void moverJokerComoLebre(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece joker = new Joker (1,20,"Lebre Preta",5);
-        joker.setPosicao(1,1);
-        pecasMalucas.add(joker);
+        simulador.iniciaJogo(new File("test-files/test_jokerImpar.txt"));
+        simulador.turno=5;
         assertFalse("Não deveria poder mover",simulador.processaJogada(1,1,2,2));
     }
 
     @Test
     public void sugetaoJoker(){
         Simulador simulador = new Simulador(4);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece joker = new Joker(1,10,"Joker Preto",0);
-        joker.setPosicao(0,0);
-        pecasMalucas.add(joker);
+        simulador.iniciaJogo(new File("test-files/test_jokerSugestao.txt"));
+        simulador.turno=0;
         List<String> possiveisMovimentos = new ArrayList<>();
-        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1 , 2, 0 , 2, 2 , 0, 2, 3, 0, 3, 3 , 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
+        possiveisMovimentos.add("1, 0");
+        possiveisMovimentos.add("1, 1");
+        possiveisMovimentos.add("0, 1");
+        possiveisMovimentos.add("2, 0");
+        possiveisMovimentos.add("2, 2");
+        possiveisMovimentos.add("0, 2");
+        possiveisMovimentos.add("3, 0");
+        possiveisMovimentos.add("3, 3");
+        possiveisMovimentos.add("0, 3");
+        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1 , 2, 0 , 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
     }
 
-    @Test
-    public void processajogada_recuperacaoDePecas() {
-        Simulador simulador = new Simulador(5);
-        List<CrazyPiece>pecasMalucas = new ArrayList<>();
-        CrazyPiece novaPeace = new Rainha(1, 10, "1156");
-        novaPeace.setPosicao(1, 1);
-        pecasMalucas.add(novaPeace);
-        CrazyPiece recoperacao = pecasMalucas.get(0);
-        assertTrue("deveria mexer", simulador.processaJogada(1, 1, 0, 0));
-        assertNotEquals("deveria ser diferente", String.valueOf(recoperacao), String.valueOf(simulador.recuperaPecas.get(0)));
-    }
 }
