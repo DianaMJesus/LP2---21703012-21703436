@@ -87,7 +87,7 @@ public class CrazyPiece {
         CrazyPiece pecaRecebida = Simulador.receberPeca(x, y, pecasMalucas);
         boolean torreEspecial = false;
 
-        if (pecaRecebida.getTipoPeca() == 7) {
+        if (pecaRecebida != null && pecaRecebida.getTipoPeca() == 7) {
             switch (turno % 6) {
                 case 0:
                     pecaRecebida.passoMax = 5;
@@ -320,7 +320,7 @@ public class CrazyPiece {
     public void setTipo(int turno){}
 
     public  String toString(){
-        if(this.posX==-1 && this.posY==-1){
+        if(this.posX==-10 && this.posY==-10){
             return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (n/a)";
         }
         return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (" + posX + ", " +  posY + ")";

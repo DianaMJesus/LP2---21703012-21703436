@@ -102,7 +102,6 @@ public class Simulador {
 
                         case 7:
                             novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
-                            ((Joker) novaPeca).setTipo(turno);
                             break;
 
                         default:
@@ -118,6 +117,7 @@ public class Simulador {
                                 if(Integer.parseInt(info[i]) == crazyPiece.getId()){
                                     crazyPiece.estaEmJogo();
                                     crazyPiece.setPosicao(i,countLinha-(nPecas+2));
+                                    crazyPiece.emJogo = true;
                                 }
                             }
                         }
@@ -193,10 +193,18 @@ public class Simulador {
                             } else if (this.getIDEquipaAJogar() == 20) { //Brancas
                                 this.validasBrancas++;
                             }
+                            turno++;
+                            for(CrazyPiece novaPeace : pecasMalucas){
+                                if(novaPeace.getTipoPeca() == 7){
+                                    novaPeace.setTipo(turno);
+                                }
+                            }
+                            return true;
                         }
                     } else if (!destino.equipaEquals(equipaJogar)) {
                         if (origem.podeMover(xD, yD, pecasMalucas, turno, tamanhoTabuleiro)) {
-                            destino.setPosicao(-1, -1);
+                            destino.emJogo = false;
+                            destino.setPosicao(-10, -10);
                             origem.setPosicao(xD, yD);
                             this.semCaptura = 0;
                             this.capturaPrevia = true;
@@ -207,17 +215,15 @@ public class Simulador {
                                 this.validasBrancas++;
                                 this.capturadasBrancas++;
                             }
-
+                            turno++;
+                            for(CrazyPiece novaPeace : pecasMalucas){
+                                if(novaPeace.getTipoPeca() == 7){
+                                    novaPeace.setTipo(turno);
+                                }
+                            }
+                            return true;
                         }
                     }
-                    turno++;
-
-                    for(CrazyPiece novaPeace : pecasMalucas){
-                        if(novaPeace.getTipoPeca() == 7){
-                            novaPeace.setTipo(turno);
-                        }
-                    }
-                    return true;
                 }
             }
         }
@@ -380,8 +386,16 @@ public class Simulador {
     public List<String> obterSugestoesJogada(int xO, int yO){
         List<String> sugetoesJogada = new ArrayList<>();
         CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
-        if (peace != null) {
-            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas,turno,tamanhoTabuleiro);
+        if(peace.getEquipa() == getEquipaJogar(turno)) {
+            if (peace != null) {
+                sugetoesJogada = peace.sugetaoJogada(xO, yO, pecasMalucas, turno, tamanhoTabuleiro);
+            }
+        }else{
+            sugetoesJogada.add("Pedido inválido");
+        }
+
+        if(sugetoesJogada.size() == 0){
+            sugetoesJogada.add("Pedido inválido");
         }
         return sugetoesJogada;
     }
