@@ -193,6 +193,13 @@ public class Simulador {
                             } else if (this.getIDEquipaAJogar() == 20) { //Brancas
                                 this.validasBrancas++;
                             }
+                            turno++;
+                            for(CrazyPiece novaPeace : pecasMalucas){
+                                if(novaPeace.getTipoPeca() == 7){
+                                    novaPeace.setTipo(turno);
+                                }
+                            }
+                            return true;
                         }
                     } else if (!destino.equipaEquals(equipaJogar)) {
                         if (origem.podeMover(xD, yD, pecasMalucas, turno, tamanhoTabuleiro)) {
@@ -207,17 +214,15 @@ public class Simulador {
                                 this.validasBrancas++;
                                 this.capturadasBrancas++;
                             }
-
+                            turno++;
+                            for(CrazyPiece novaPeace : pecasMalucas){
+                                if(novaPeace.getTipoPeca() == 7){
+                                    novaPeace.setTipo(turno);
+                                }
+                            }
+                            return true;
                         }
                     }
-                    turno++;
-
-                    for(CrazyPiece novaPeace : pecasMalucas){
-                        if(novaPeace.getTipoPeca() == 7){
-                            novaPeace.setTipo(turno);
-                        }
-                    }
-                    return true;
                 }
             }
         }
