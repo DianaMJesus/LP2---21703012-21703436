@@ -391,7 +391,7 @@ public class Simulador {
             sugetoesJogada.add("Pedido inválido");
         }
 
-        if(sugetoesJogada.size() == 0){
+        if(sugetoesJogada.size() ==0){ // colocar o espaço
             sugetoesJogada.add("Pedido inválido");
         }
         return sugetoesJogada;
