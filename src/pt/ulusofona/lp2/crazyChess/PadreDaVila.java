@@ -36,7 +36,7 @@ public class PadreDaVila extends CrazyPiece {
 
                 List<CrazyPiece> pecasAoRedor = getPecasAoRedor(x,y,pecasMalucas);
                 for (CrazyPiece peace : pecasAoRedor) {
-                    if (peace != null && peace.getTipoPeca() == 1 && peace.getEquipa() != Simulador.getEquipaJogar(turno)) {
+                    if (peace != null && (peace.getTipoPeca() == 1 || (peace.getTipoPeca() == 7 && turno%6 == 0)) && peace.getEquipa() != Simulador.getEquipaJogar(turno)) {
                         return false;
                     }
                 }

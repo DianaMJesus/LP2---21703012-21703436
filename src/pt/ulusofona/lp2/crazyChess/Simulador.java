@@ -69,44 +69,52 @@ public class Simulador {
                     info=linha.split(":"); //coloca num array a infomacao da linha e é separada pelos :
                     CrazyPiece novaPeca=null;
                     int tipoP=Integer.parseInt(info[1]);
+                    if(Integer.parseInt(info[0]) > 0) {
+                        for (CrazyPiece peace : pecasMalucas){
+                            if(peace.getId() == Integer.parseInt(info[0])){
+                                return false;
+                            }
+                        }
+                        switch (tipoP) {
+                            case 0:
+                                novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                    switch (tipoP){
-                        case 0:
-                            novaPeca=new Rei(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
-                            break;
+                            case 1:
+                                novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                        case 1:
-                            novaPeca=new Rainha(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
-                            break;
+                            case 2:
+                                novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                        case 2:
-                            novaPeca=new PoneiMagico(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
-                            break;
+                            case 3:
+                                novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                        case 3:
-                            novaPeca=new PadreDaVila(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
-                            break;
+                            case 4:
+                                novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                break;
 
-                        case 4:
-                            novaPeca=new TorreH(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
-                            break;
+                            case 5:
+                                novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                break;
 
-                        case 5:
-                            novaPeca=new TorreV(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3],tamanhoTabuleiro);
-                            break;
+                            case 6:
+                                novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                        case 6:
-                            novaPeca=new Lebre(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
-                            break;
+                            case 7:
+                                novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                        case 7:
-                            novaPeca=new Joker(Integer.parseInt(info[0]),Integer.parseInt(info[2]),info[3]);
-                            break;
-
-                        default:
-                            break;
+                            default:
+                                break;
+                        }
+                        pecasMalucas.add(novaPeca);
+                    }else{
+                        return false;
                     }
-                    pecasMalucas.add(novaPeca);
 
                 }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
                     info=linha.split(":");
@@ -391,7 +399,7 @@ public class Simulador {
             sugetoesJogada.add("Pedido inválido");
         }
 
-        if(sugetoesJogada.size() == 0){
+        if(sugetoesJogada.size() ==0){ // colocar o espaço
             sugetoesJogada.add("Pedido inválido");
         }
         return sugetoesJogada;
