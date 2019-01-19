@@ -1,6 +1,0 @@
-iniciaJogo:
-->adaptar;
-
-->Corrir problemas nos testes; NÃO PERCEBO O ERRO NESTA MERDA!!!!!!!!
-
-o numero de linhas do ficheiro é 2+quantidade de peças+tamanho do tabuleiro (+1)
