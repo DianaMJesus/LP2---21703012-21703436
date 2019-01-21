@@ -8,7 +8,7 @@ public class Lebre extends CrazyPiece {
         super.tipoPeca=6;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo="2";
+        super.valorRelativo=2;
         super.passoMax=1;
         super.tipo="Lebre";
         if(equipa == 10){

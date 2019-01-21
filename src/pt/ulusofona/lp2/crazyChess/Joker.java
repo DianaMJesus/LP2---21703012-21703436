@@ -8,7 +8,7 @@ public class Joker extends CrazyPiece {
         super.tipoPeca=7;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo="4";
+        super.valorRelativo=4;
         super.tipo="Joker/Rainha";
         if(equipa == 10){
             imagePNG = "joker_preto.png";

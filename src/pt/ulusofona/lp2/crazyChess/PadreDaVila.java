@@ -9,7 +9,7 @@ public class PadreDaVila extends CrazyPiece {
         super.tipoPeca=3;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo="3";
+        super.valorRelativo=3;
         super.passoMax=3;
         super.tipo="Padre da Vila";
         if(equipa == 10){

@@ -32,11 +32,11 @@ public class Simulador {
     }
 
 //Leitura do Ficheiro (Feito)
-    public boolean iniciaJogo(File ficheiroInicial){
+    public void iniciaJogo(File ficheiroInicial) {
         this.reset();
-        try{
-            Scanner leitorFicheiro = new Scanner (ficheiroInicial);
-            int countLinha=0;
+        try {
+            Scanner leitorFicheiro = new Scanner(ficheiroInicial);
+            int countLinha = 0;
             int nPecas = 0;
 
             /*
@@ -44,92 +44,160 @@ public class Simulador {
             segunda info-> n peças
             terceira info-> caracterização de peças
             quarta info-> localização das peças no tabuleiro
+            quinta info -> atribuir informação caso seja aberto um jogo antigo
              */
 
-            while(leitorFicheiro.hasNextLine()){
+            while (leitorFicheiro.hasNextLine()) {
 
-                String linha= leitorFicheiro.nextLine();
+                String linha = leitorFicheiro.nextLine();
                 String info[];
 
-                if(countLinha == 0){
-                    if(Integer.parseInt(linha)>=4 && Integer.parseInt(linha)<=12) {
-                        tamanhoTabuleiro = Integer.parseInt(linha); //guarda o tamanho do tabuleiro
-                    }else{
-                        return false;
-                    }
-
-                }else if(countLinha==1){
-                    if(Integer.parseInt(linha)<(tamanhoTabuleiro*tamanhoTabuleiro)) {
-                        nPecas = Integer.parseInt(linha); //guarda o numero de pecas
-                    }else{
-                        return false;
-                    }
-
-                }else if((countLinha-2)<nPecas){
-                    info=linha.split(":"); //coloca num array a infomacao da linha e é separada pelos :
-                    CrazyPiece novaPeca=null;
-                    int tipoP=Integer.parseInt(info[1]);
-                    if(Integer.parseInt(info[0]) > 0) {
-                        for (CrazyPiece peace : pecasMalucas){
-                            if(peace.getId() == Integer.parseInt(info[0])){
-                                return false;
+                //Primeira parte -> tamanho do tabuleiro
+                if (countLinha == 0) {
+                    try {
+                        if (linha.length() == 1) {
+                            if (Integer.parseInt(linha) >= 4 && Integer.parseInt(linha) <= 12) {
+                                tamanhoTabuleiro = Integer.parseInt(linha); //guarda o tamanho do tabuleiro
+                            } else {
+                                //Duvida do que colocar
+                            }
+                        } else {
+                            if(linha.length() > 1) {
+                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + linha.length() + ")");
+                            }else if(linha.length() < 1){
+                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MENOS (Esperava: 1 ; Obtive: " + linha.length() + ")");
                             }
                         }
-                        switch (tipoP) {
-                            case 0:
-                                novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                break;
-
-                            case 1:
-                                novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                break;
-
-                            case 2:
-                                novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                break;
-
-                            case 3:
-                                novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                break;
-
-                            case 4:
-                                novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
-                                break;
-
-                            case 5:
-                                novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
-                                break;
-
-                            case 6:
-                                novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                break;
-
-                            case 7:
-                                novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                break;
-
-                            default:
-                                break;
-                        }
-                        pecasMalucas.add(novaPeca);
-                    }else{
-                        return false;
+                    }catch (InvalidSimulatorInputException e){
+                        System.out.println(e.getDescricaoProblema());
+                        break;
                     }
 
-                }else if((countLinha-nPecas-2)<tamanhoTabuleiro){
-                    info=linha.split(":");
-                    for(int i=0;i < tamanhoTabuleiro;i++){
-                        if(Integer.parseInt(info[i]) != 0){
-                            for(CrazyPiece crazyPiece:pecasMalucas){
-                                if(Integer.parseInt(info[i]) == crazyPiece.getId()){
-                                    crazyPiece.estaEmJogo();
-                                    crazyPiece.setPosicao(i,countLinha-(nPecas+2));
-                                    crazyPiece.setEmJogo(true);
+                }
+                //Segunda parte -> numero de peças existentes no jogo
+                else if (countLinha == 1) {
+                    try {
+                        if(linha.length() == 1) {
+                            if (Integer.parseInt(linha) < (tamanhoTabuleiro * tamanhoTabuleiro)) {
+                                nPecas = Integer.parseInt(linha); //guarda o numero de pecas
+                            } else {
+                                //Duvida do que colocar
+                            }
+                        } else {
+                            if(linha.length() > 1) {
+                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + linha.length() + ")");
+                            }else if(linha.length() < 1){
+                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MENOS (Esperava: 1 ; Obtive: " + linha.length() + ")");
+                            }
+                        }
+                    }catch (InvalidSimulatorInputException e){
+                        System.out.println(e.getDescricaoProblema());
+                        break;
+                    }
+
+                }
+                //Terceira parte -> informação sobre as peças
+                else if ((countLinha - 2) < nPecas) {
+                    try {
+                        if (linha.length() == 4) {
+
+                            info = linha.split(":"); //coloca num array a infomacao da linha e é separada pelos :
+                            CrazyPiece novaPeca = null;
+                            int tipoP = Integer.parseInt(info[1]);
+
+                            if (Integer.parseInt(info[0]) > 0) {
+                                for (CrazyPiece peace : pecasMalucas) {
+                                    if (peace.getId() == Integer.parseInt(info[0])) {
+                                        //Duvida do que colocar
+                                    }
+                                }
+
+                                switch (tipoP) {
+                                    case 0:
+                                        novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                        break;
+
+                                    case 1:
+                                        novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                        break;
+
+                                    case 2:
+                                        novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                        break;
+
+                                    case 3:
+                                        novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                        break;
+
+                                    case 4:
+                                        novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                        break;
+
+                                    case 5:
+                                        novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                        break;
+
+                                    case 6:
+                                        novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                        break;
+
+                                    case 7:
+                                        novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+                                pecasMalucas.add(novaPeca);
+
+                            } else {
+                                //Duvida do que colocar
+                            }
+
+                        } else {
+                            if (linha.length() > 4) {
+                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MAIS (Esperava: 4 ; Obtive: " + linha.length() + ")");
+                            } else if (linha.length() < 4) {
+                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MENOS (Esperava: 4 ; Obtive: " + linha.length() + ")");
+                            }
+                        }
+                    }catch (InvalidSimulatorInputException e){
+                        System.out.println(e.getDescricaoProblema());
+                        break;
+                    }
+                }
+                //Quarta parte -> definir a localização de cada peça no tabuleiro
+                else if ((countLinha - nPecas - 2) < tamanhoTabuleiro) {
+                    try {
+                        if (linha.length() == tamanhoTabuleiro) {
+                            info = linha.split(":");
+                            for (int i = 0; i < tamanhoTabuleiro; i++) {
+                                if (Integer.parseInt(info[i]) != 0) {
+                                    for (CrazyPiece crazyPiece : pecasMalucas) {
+                                        if (Integer.parseInt(info[i]) == crazyPiece.getId()) {
+                                            crazyPiece.estaEmJogo();
+                                            crazyPiece.setPosicao(i, countLinha - (nPecas + 2));
+                                            crazyPiece.setEmJogo(true);
+                                        }
+                                    }
                                 }
                             }
+                        } else {
+                            if(linha.length() > tamanhoTabuleiro){
+                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MAIS (Esperava: " + tamanhoTabuleiro + "; Obtive: " + linha.length() + ")");
+                            }else if(linha.length() < tamanhoTabuleiro){
+                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MENOS (Esperava: " + tamanhoTabuleiro + "; Obtive: " + linha.length() + ")");
+                            }
                         }
+                    }catch (InvalidSimulatorInputException e){
+                        //Duvida do que colocar
+                        System.out.println(e.getDescricaoProblema());
+                        break;
                     }
-                }else{
+                }
+                //Quinta parte -> defenição dos parametros caso seja aberto um jogo antigo
+                else {
                     info = linha.split(":");
                     validasPretas = Integer.parseInt(info[1]);
                     capturadasPretas = Integer.parseInt(info[2]);
@@ -137,16 +205,14 @@ public class Simulador {
                     validasBrancas = Integer.parseInt(info[4]);
                     capturadasBrancas = Integer.parseInt(info[5]);
                     invalidasBrancas = Integer.parseInt(info[6]);
-                    turno=validasBrancas + validasPretas;
+                    turno = validasBrancas + validasPretas;
                 }
 
                 countLinha++;
             }
 
-            return true;
-
         } catch (FileNotFoundException e) {
-            return false;
+            System.out.println("Não foi possivel ler o ficheiro");
         }
     }
 
@@ -390,17 +456,17 @@ public class Simulador {
     }
 
 //Disponibiliza as possíveis jogadas de cada peça
-    public List<String> obterSugestoesJogada(int xO, int yO){
-        List<String> sugetoesJogada = new ArrayList<>();
+    public List<Comparable> obterSugestoesJogada(int xO, int yO){
+        List<Comparable> sugetoesJogada = new ArrayList<>();
         CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
         if(peace != null && peace.getEquipa() == getEquipaJogar(turno)) {
-            sugetoesJogada = peace.sugetaoJogada(xO, yO, pecasMalucas, turno, tamanhoTabuleiro);
+            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas,turno,tamanhoTabuleiro);
         }else{
-            sugetoesJogada.add("Pedido inválido");
+            sugetoesJogada = new ArrayList<>();
         }
 
         if(sugetoesJogada.size() ==0){ // colocar o espaço
-            sugetoesJogada.add("Pedido inválido");
+            sugetoesJogada = new ArrayList<>();
         }
         return sugetoesJogada;
     }

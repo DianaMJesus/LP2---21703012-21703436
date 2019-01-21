@@ -11,7 +11,7 @@ public class Rei extends CrazyPiece{
         super.tipoPeca=0;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo="(infinito)";
+        super.valorRelativo=Integer.MAX_VALUE;
         super.passoMax=1;
         super.tipo="Rei";
         if(equipa==10){
@@ -30,5 +30,13 @@ public class Rei extends CrazyPiece{
             }
         }
         return false;
+    }
+
+    @Override
+    public  String toString(){
+        if(!emJogo){
+            return id + " | " + tipo + " | (Infinito) | " + equipa + " | " + alcunha + " @ (n/a)";
+        }
+        return id + " | " + tipo + " | (Infinito) | " + equipa + " | " + alcunha + " @ (" + posX + ", " +  posY + ")";
     }
 }

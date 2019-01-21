@@ -10,7 +10,7 @@ public class Rainha extends CrazyPiece {
         super.tipoPeca=1;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo="8";
+        super.valorRelativo=8;
         super.passoMax=5;
         super.tipo="Rainha";
         if(equipa == 10){

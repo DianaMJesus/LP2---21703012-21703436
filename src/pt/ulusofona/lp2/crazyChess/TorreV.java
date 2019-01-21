@@ -9,7 +9,7 @@ public class TorreV extends CrazyPiece {
         super.tipoPeca=5;
         super.equipa=equipa;
         super.alcunha=alcunha;
-        super.valorRelativo="3";
+        super.valorRelativo=3;
         super.passoMax=tamanhoTabuleiro;
         super.tipo="TorreV";
         if(equipa == 10){
