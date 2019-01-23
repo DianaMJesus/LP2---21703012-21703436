@@ -63,9 +63,13 @@ public class TestSimulador {
         possiveisMovimentos.add("2, 2, 0");
         possiveisMovimentos.add("1, 2, 0");
         possiveisMovimentos.add("0, 2, 0");
+        possiveisMovimentos.add("0, 1, 0");
 
         List<String> sugestao = new ArrayList<>();
-        sugestao.add(simulador.obterSugestoesJogada(1,1).toString());
+
+        for(int t = 0; t < simulador.obterSugestoesJogada(1,1).size(); t++) {
+            sugestao.add(simulador.obterSugestoesJogada(1, 1).get(t).toString());
+        }
 
         assertEquals("Deveria dar as posições [(0, 0, 0),(1, 0, 0),(2, 0, 0),(2, 1, 0),(2, 2, 0),(1, 2, 0),(0, 2, 0),(0, 1, 0)]",possiveisMovimentos,sugestao);
     }
@@ -160,7 +164,9 @@ public class TestSimulador {
         possiveisMovimentos.add("1, 3, 0");
 
         List<String> sugestao = new ArrayList<>();
-        sugestao.add(simulador.obterSugestoesJogada(1,1).toString());
+        for(int t = 0; t < simulador.obterSugestoesJogada(1,1).size(); t++){
+            sugestao.add(simulador.obterSugestoesJogada(1,1).get(t).toString());
+        }
 
         assertEquals("Deveria dar [(1, 0, 0),(1, 1, 0),(0, 1, 0),(2, 0, 0),(2, 2, 0),(0, 2, 0),(3, 0, 0),(3, 3, 0),(0, 3, 0)]",possiveisMovimentos,sugestao);
     }
@@ -300,7 +306,9 @@ public class TestSimulador {
         possiveisMovimentos.add("3, 3, 0");
 
         List<String> sugestao = new ArrayList<>();
-        sugestao.add(simulador.obterSugestoesJogada(0,0).toString());
+        for(int t = 0; t < simulador.obterSugestoesJogada(0,0).size(); t++){
+            sugestao.add(simulador.obterSugestoesJogada(0,0).get(t).toString());
+        }
 
         assertEquals("Deveria dar as posições [(1, 1, 0),(2, 2, 0),(3, 3, 0)]",possiveisMovimentos,sugestao);
     }
@@ -352,7 +360,9 @@ public class TestSimulador {
         possiveisMovimentos.add("3, 1, 0");
 
         List<String> sugestao = new ArrayList<>();
-        sugestao.add(simulador.obterSugestoesJogada(0,1).toString());
+        for(int t = 0; t < simulador.obterSugestoesJogada(0,1).size(); t++){
+            sugestao.add(simulador.obterSugestoesJogada(0,1).get(t).toString());
+        }
 
         assertEquals("Deveria dar as posições [(1, 1, 0),(2, 1, 0),(3, 1, 0)]",possiveisMovimentos,sugestao);
     }
@@ -404,7 +414,9 @@ public class TestSimulador {
         possiveisMovimentos.add("1, 3, 0");
 
         List<String> sugestao = new ArrayList<>();
-        sugestao.add(simulador.obterSugestoesJogada(1,0).toString());
+        for(int t = 0; t < simulador.obterSugestoesJogada(1,0).size(); t++){
+            sugestao.add(simulador.obterSugestoesJogada(1,0).get(t).toString());
+        }
 
         assertEquals("Deveria dar as posições [(1, 1, 0),(1, 2, 0),(1, 3, 0)]",possiveisMovimentos,sugestao);
     }
@@ -461,7 +473,9 @@ public class TestSimulador {
         posiveisMovimentos.add("1, 2, 0");
 
         List<String> sugestao = new ArrayList<>();
-        sugestao.add(simulador.obterSugestoesJogada(2,1).toString());
+        for(int t = 0; t < simulador.obterSugestoesJogada(2,1).size(); t++){
+            sugestao.add(simulador.obterSugestoesJogada(2,1).get(t).toString());
+        }
 
         assertEquals("Deveria dar as posições [(1, 0, 0),(3, 0, 0),(3, 2, 0),(1, 2, 0)]",posiveisMovimentos,sugestao);
     }
@@ -522,18 +536,21 @@ public class TestSimulador {
         simulador.turno=0;
 
         List<String> possiveisMovimentos = new ArrayList<>();
-        possiveisMovimentos.add("1, 0");
-        possiveisMovimentos.add("1, 1");
-        possiveisMovimentos.add("0, 1");
-        possiveisMovimentos.add("2, 0");
-        possiveisMovimentos.add("2, 2");
-        possiveisMovimentos.add("0, 2");
-        possiveisMovimentos.add("3, 0");
-        possiveisMovimentos.add("3, 3");
-        possiveisMovimentos.add("0, 3");
+        possiveisMovimentos.add("1, 0, 0");
+        possiveisMovimentos.add("1, 1, 0");
+        possiveisMovimentos.add("0, 1, 0");
+        possiveisMovimentos.add("2, 0, 0");
+        possiveisMovimentos.add("2, 2, 0");
+        possiveisMovimentos.add("0, 2, 0");
+        possiveisMovimentos.add("3, 0, 0");
+        possiveisMovimentos.add("3, 3, 0");
+        possiveisMovimentos.add("0, 3, 0");
 
         List<String> sugestao = new ArrayList<>();
-        sugestao.add(simulador.obterSugestoesJogada(0,0).toString());
+        for(int t = 0; t < simulador.obterSugestoesJogada(0,0).size(); t++){
+            sugestao.add(simulador.obterSugestoesJogada(0,0).get(t).toString());
+        }
+
         assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1 , 2, 0 , 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,sugestao);
     }
 

@@ -1,7 +1,10 @@
 package pt.ulusofona.lp2.crazyChess;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CrazyPiece {
     int id, equipa, tipoPeca, posX = -1, posY = -1, passoMax;
@@ -120,17 +123,17 @@ public class CrazyPiece {
         return false;
     }
 
-    public List<Comparable> sugetaoJogada(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro) {
+    public List<Comparable> sugetaoJogada(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro, CrazyPiece pecaPassada) {
         List<Comparable> posibilidades = new ArrayList<>();
         Jogada resultado;
-        CrazyPiece pecaRecebida = Simulador.receberPeca(x, y, pecasMalucas);
+        CrazyPiece peca = Simulador.receberPeca(x, y, pecasMalucas);
         boolean pecaPonei = false;
 
         //Definir a informação para o caso da peca ser um Joker
-        if (pecaRecebida != null && pecaRecebida.getTipoPeca() == 7) {
+        if (pecaPassada != null && pecaPassada.getTipoPeca() == 7) {
             switch (turno % 6) {
                 case 0: //Rainha
-                    pecaRecebida.passoMax = 5;
+                    pecaPassada.passoMax = 5;
                     break;
 
                 case 1: //Ponei Magico
@@ -138,19 +141,19 @@ public class CrazyPiece {
                     break;
 
                 case 2: //Padre da Vila
-                    pecaRecebida.passoMax = 3;
+                    pecaPassada.passoMax = 3;
                     break;
 
                 case 3: //TorreH
-                    pecaRecebida.passoMax = tamanhoTabuleiro;
+                    pecaPassada.passoMax = tamanhoTabuleiro;
                     break;
 
                 case 4: //TorreV
-                    pecaRecebida.passoMax = tamanhoTabuleiro;
+                    pecaPassada.passoMax = tamanhoTabuleiro;
                     break;
 
                 case 5: //Lebre
-                    pecaRecebida.passoMax = 1;
+                    pecaPassada.passoMax = 1;
                     break;
 
                 default:
@@ -159,17 +162,17 @@ public class CrazyPiece {
         }
 
         //Caso a peça não seja um Ponei Magico
-        if ((pecaRecebida != null) && (pecaRecebida.getTipoPeca() != 2) && !pecaPonei) {
-            for (int pos = 1; pos <= pecaRecebida.passoMax; pos++) {
+        if ((pecaPassada != null) && (pecaPassada.getTipoPeca() != 2) && !pecaPonei) {
+            for (int pos = 1; pos <= pecaPassada.passoMax; pos++) {
                 //Esquerda - Cima
                 if (podeMover(x - pos, y - pos, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca((x - pos) , (y - pos), pecasMalucas);
+                        peca = Simulador.receberPeca((x - pos) , (y - pos), pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada((x - pos) , (y - pos) ,0);
                         }else{
-                            resultado = new Jogada((x - pos) , (y - pos) , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x - pos) , (y - pos) , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -178,12 +181,12 @@ public class CrazyPiece {
                 //Mantem - Cima
                 if (podeMover(x, y - pos, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x >= 0 && x < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca(x , (y - pos), pecasMalucas);
+                        peca = Simulador.receberPeca(x , (y - pos), pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada(x , (y - pos) ,0);
                         }else{
-                            resultado = new Jogada(x , (y - pos) , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada(x , (y - pos) , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -192,12 +195,12 @@ public class CrazyPiece {
                 //Direita - Cima
                 if (podeMover(x + pos, y - pos, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x + pos >= 0 && x + pos < tamanhoTabuleiro) && (y - pos >= 0 && y - pos < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca((x + pos) , (y - pos), pecasMalucas);
+                        peca = Simulador.receberPeca((x + pos) , (y - pos), pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada((x + pos) , (y - pos) ,0);
                         }else{
-                            resultado = new Jogada((x + pos) , (y - pos) , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x + pos) , (y - pos) , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -206,12 +209,12 @@ public class CrazyPiece {
                 //Direita - Mantem
                 if (podeMover(x + pos, y, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x + pos >= 0 && x + pos < tamanhoTabuleiro) && (y >= 0 && y < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca((x + pos) , y, pecasMalucas);
+                        peca = Simulador.receberPeca((x + pos) , y, pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada((x + pos), y ,0);
                         }else{
-                            resultado = new Jogada((x + pos) , y  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x + pos) , y  , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -220,12 +223,12 @@ public class CrazyPiece {
                 //Direita - Baixo
                 if (podeMover(x + pos, y + pos, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x + pos >= 0 && x + pos < tamanhoTabuleiro) && (y + pos >= 0 && y + pos < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca((x + pos) , (y + pos), pecasMalucas);
+                        peca = Simulador.receberPeca((x + pos) , (y + pos), pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada((x + pos), (y + pos) ,0);
                         }else{
-                            resultado = new Jogada((x + pos) , (y + pos)  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x + pos) , (y + pos)  , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -234,12 +237,12 @@ public class CrazyPiece {
                 //Mantem - Baixo
                 if (podeMover(x, y + pos, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x >= 0 && x < tamanhoTabuleiro) && (y + pos >= 0 && y + pos < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca(x , (y + pos), pecasMalucas);
+                        peca = Simulador.receberPeca(x , (y + pos), pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada(x , (y + pos) ,0);
                         }else{
-                            resultado = new Jogada(x , (y + pos)  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada(x , (y + pos)  , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -248,12 +251,12 @@ public class CrazyPiece {
                 //Esquerda - Baixo
                 if (podeMover(x - pos, y + pos, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y + pos >= 0 && y + pos < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca((x - pos) , (y + pos), pecasMalucas);
+                        peca = Simulador.receberPeca((x - pos) , (y + pos), pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada((x - pos) , (y + pos) ,0);
                         }else{
-                            resultado = new Jogada((x - pos) , (y + pos)  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x - pos) , (y + pos)  , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -262,12 +265,12 @@ public class CrazyPiece {
                 //Esquerda - Mantem
                 if (podeMover(x - pos, y, pecasMalucas, turno, tamanhoTabuleiro)) {
                     if ((x - pos >= 0 && x - pos < tamanhoTabuleiro) && (y >= 0 && y < tamanhoTabuleiro)) {
-                        pecaRecebida = Simulador.receberPeca((x - pos) , y , pecasMalucas);
+                        peca = Simulador.receberPeca((x - pos) , y , pecasMalucas);
 
-                        if(pecaRecebida == null){
+                        if(peca == null){
                             resultado = new Jogada((x - pos) , y ,0);
                         }else{
-                            resultado = new Jogada((x - pos) , y  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x - pos) , y  , peca.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -276,15 +279,15 @@ public class CrazyPiece {
             }
         }
         //Caso a peça seja um Ponei
-        else if (pecaRecebida.getTipoPeca() == 2 || pecaPonei) {
+        else if (peca.getTipoPeca() == 2 || pecaPonei) {
             if ((x - 2 >= 0) && (y - 2 >= 0)) {
                 if (podeMover(x - 2, y - 2, pecasMalucas, turno, tamanhoTabuleiro)) {
-                    pecaRecebida = Simulador.receberPeca((x - 2) , (y - 2), pecasMalucas);
+                    peca = Simulador.receberPeca((x - 2) , (y - 2), pecasMalucas);
 
-                    if(pecaRecebida == null){
+                    if(peca == null){
                         resultado = new Jogada((x - 2) , (y - 2) ,0);
                     }else{
-                        resultado = new Jogada((x - 2) , (y - 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x - 2) , (y - 2)  , peca.getValorRelativo());
                     }
 
                     posibilidades.add(resultado);
@@ -293,12 +296,12 @@ public class CrazyPiece {
 
             if ((x - 2 >= 0) && (y + 2 < tamanhoTabuleiro)) {
                 if (podeMover(x - 2, y + 2, pecasMalucas, turno, tamanhoTabuleiro)) {
-                    pecaRecebida = Simulador.receberPeca((x - 2) , (y + 2), pecasMalucas);
+                    peca = Simulador.receberPeca((x - 2) , (y + 2), pecasMalucas);
 
-                    if(pecaRecebida == null){
+                    if(peca == null){
                         resultado = new Jogada((x - 2) , (y + 2) ,0);
                     }else{
-                        resultado = new Jogada((x - 2) , (y + 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x - 2) , (y + 2)  , peca.getValorRelativo());
                     }
 
                     posibilidades.add(resultado);
@@ -307,12 +310,12 @@ public class CrazyPiece {
 
             if ((x + 2 < tamanhoTabuleiro) && (y - 2 >= 0)) {
                 if (podeMover(x + 2, y - 2, pecasMalucas, turno, tamanhoTabuleiro)) {
-                    pecaRecebida = Simulador.receberPeca((x + 2) , (y - 2), pecasMalucas);
+                    peca = Simulador.receberPeca((x + 2) , (y - 2), pecasMalucas);
 
-                    if(pecaRecebida == null){
+                    if(peca == null){
                         resultado = new Jogada((x + 2) , (y - 2) ,0);
                     }else{
-                        resultado = new Jogada((x + 2) , (y - 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x + 2) , (y - 2)  , peca.getValorRelativo());
                     }
 
                     posibilidades.add(resultado);
@@ -321,14 +324,13 @@ public class CrazyPiece {
 
             if ((2 < tamanhoTabuleiro) && (y - 2 < tamanhoTabuleiro)) {
                 if (podeMover(x + 2, y + 2, pecasMalucas, turno, tamanhoTabuleiro)) {
-                    pecaRecebida = Simulador.receberPeca((x + 2) , (y + 2), pecasMalucas);
+                    peca = Simulador.receberPeca((x + 2) , (y + 2), pecasMalucas);
 
-                    if(pecaRecebida == null){
+                    if(peca == null){
                         resultado = new Jogada((x + 2) , (y + 2) ,0);
                     }else{
-                        resultado = new Jogada((x + 2) , (y + 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x + 2) , (y + 2)  , peca.getValorRelativo());
                     }
-
                     posibilidades.add(resultado);
                 }
             }

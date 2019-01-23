@@ -425,10 +425,10 @@ public class Simulador {
 
 //Disponibiliza as possíveis jogadas de cada peça
     public List<Comparable> obterSugestoesJogada(int xO, int yO){
-        List<Comparable> sugetoesJogada = new ArrayList<>();
+        List<Comparable> sugetoesJogada;
         CrazyPiece peace = receberPeca(xO,yO,pecasMalucas);
         if(peace != null && peace.getEquipa() == getEquipaJogar(turno)) {
-            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas,turno,tamanhoTabuleiro);
+            sugetoesJogada = peace.sugetaoJogada(xO,yO,pecasMalucas,turno,tamanhoTabuleiro,peace);
         }else{
             sugetoesJogada = new ArrayList<>();
         }
@@ -436,6 +436,7 @@ public class Simulador {
         if(sugetoesJogada.size() ==0){ // colocar o espaço
             sugetoesJogada = new ArrayList<>();
         }
+
         return sugetoesJogada;
     }
 
