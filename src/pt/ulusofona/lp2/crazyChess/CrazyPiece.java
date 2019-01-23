@@ -8,6 +8,10 @@ public class CrazyPiece {
     String imagePNG;
     String alcunha;
     int valorRelativo;
+    int nrCapturadas = 0;
+    int nrPontos = 0;
+    int jogadasValidas = 0;
+    int jogadasInvalidas = 0;
     String tipo;
     boolean emJogo = false;
 
@@ -63,15 +67,45 @@ public class CrazyPiece {
         return valorRelativo;
     }
 
+    public int getNrCapturadas(){
+        return nrCapturadas;
+    }
+
+    public int getNrPontos(){
+        return nrPontos;
+    }
+
+    public int getJogadasValidas() {
+        return jogadasValidas;
+    }
+
+    public int getJogadasInvalidas() {
+        return jogadasInvalidas;
+    }
+
     public void setPosicao(int x, int y) {
         this.posX = x;
         this.posY = y;
     }
-    //se existe peca e se é da equipa
-
 
     public void setEmJogo(boolean emJogo) {
         this.emJogo = emJogo;
+    }
+
+    public void captorou(){
+        this.nrCapturadas ++;
+    }
+
+    public void setPontos(int valor){
+        this.nrPontos += valor;
+    }
+
+    public void setJogadasValidas() {
+        this.jogadasValidas ++;
+    }
+
+    public void setJogadasInvalidas() {
+        this.jogadasInvalidas ++;
     }
 
     public boolean comida() {
@@ -407,4 +441,5 @@ public class CrazyPiece {
         }
         return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (" + posX + ", " +  posY + ")";
     }
+
 }

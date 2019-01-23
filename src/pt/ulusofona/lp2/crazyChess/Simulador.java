@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Simulador {
 
@@ -32,7 +31,7 @@ public class Simulador {
     }
 
 //Leitura do Ficheiro (Feito)
-    public void iniciaJogo(File ficheiroInicial) {
+    public void iniciaJogo(File ficheiroInicial) throws InvalidSimulatorInputException {
         this.reset();
         try {
             Scanner leitorFicheiro = new Scanner(ficheiroInicial);
@@ -54,146 +53,124 @@ public class Simulador {
 
                 //Primeira parte -> tamanho do tabuleiro
                 if (countLinha == 0) {
-                    try {
-                        if (linha.length() == 1) {
-                            if (Integer.parseInt(linha) >= 4 && Integer.parseInt(linha) <= 12) {
-                                tamanhoTabuleiro = Integer.parseInt(linha); //guarda o tamanho do tabuleiro
-                            } else {
-                                //Duvida do que colocar
-                            }
+                    info = linha.split(":");
+                    if (info.length == 1) {
+                        if (Integer.parseInt(info[0]) >= 4 && Integer.parseInt(info[0]) <= 12) {
+                            tamanhoTabuleiro = Integer.parseInt(info[0]); //guarda o tamanho do tabuleiro
                         } else {
-                            if(linha.length() > 1) {
-                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + linha.length() + ")");
-                            }else if(linha.length() < 1){
-                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MENOS (Esperava: 1 ; Obtive: " + linha.length() + ")");
-                            }
+                            //Duvida do que colocar
                         }
-                    }catch (InvalidSimulatorInputException e){
-                        System.out.println(e.getDescricaoProblema());
-                        break;
+                    } else {
+                        if(info.length > 1) {
+                            throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + info.length + ")");
+                        }else if(info.length < 1){
+                            throw new InvalidSimulatorInputException(countLinha,"DADOS A MENOS (Esperava: 1 ; Obtive: " + info.length + ")");
+                        }
                     }
-
                 }
                 //Segunda parte -> numero de peças existentes no jogo
                 else if (countLinha == 1) {
-                    try {
-                        if(linha.length() == 1) {
-                            if (Integer.parseInt(linha) < (tamanhoTabuleiro * tamanhoTabuleiro)) {
-                                nPecas = Integer.parseInt(linha); //guarda o numero de pecas
-                            } else {
-                                //Duvida do que colocar
-                            }
+                    info = linha.split(":");
+                    if(info.length == 1) {
+                        if (Integer.parseInt(info[0]) < (tamanhoTabuleiro * tamanhoTabuleiro)) {
+                            nPecas = Integer.parseInt(info[0]); //guarda o numero de pecas
                         } else {
-                            if(linha.length() > 1) {
-                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + linha.length() + ")");
-                            }else if(linha.length() < 1){
-                                throw new InvalidSimulatorInputException(countLinha,"DADOS A MENOS (Esperava: 1 ; Obtive: " + linha.length() + ")");
-                            }
+                            //Duvida do que colocar
                         }
-                    }catch (InvalidSimulatorInputException e){
-                        System.out.println(e.getDescricaoProblema());
-                        break;
+                    } else {
+                        if(info.length > 1) {
+                            throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + info.length + ")");
+                        }else if(info.length < 1){
+                            throw new InvalidSimulatorInputException(countLinha,"DADOS A MENOS (Esperava: 1 ; Obtive: " + info.length + ")");
+                        }
                     }
-
                 }
                 //Terceira parte -> informação sobre as peças
                 else if ((countLinha - 2) < nPecas) {
-                    try {
-                        if (linha.length() == 4) {
+                    info = linha.split(":");
+                    if (info.length == 4) {
+                        CrazyPiece novaPeca = null;
+                        int tipoP = Integer.parseInt(info[1]);
 
-                            info = linha.split(":"); //coloca num array a infomacao da linha e é separada pelos :
-                            CrazyPiece novaPeca = null;
-                            int tipoP = Integer.parseInt(info[1]);
-
-                            if (Integer.parseInt(info[0]) > 0) {
-                                for (CrazyPiece peace : pecasMalucas) {
-                                    if (peace.getId() == Integer.parseInt(info[0])) {
-                                        //Duvida do que colocar
-                                    }
+                        if (Integer.parseInt(info[0]) > 0) {
+                            for (CrazyPiece peace : pecasMalucas) {
+                                if (peace.getId() == Integer.parseInt(info[0])) {
+                                    //Duvida do que colocar
                                 }
-
-                                switch (tipoP) {
-                                    case 0:
-                                        novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                        break;
-
-                                    case 1:
-                                        novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                        break;
-
-                                    case 2:
-                                        novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                        break;
-
-                                    case 3:
-                                        novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                        break;
-
-                                    case 4:
-                                        novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
-                                        break;
-
-                                    case 5:
-                                        novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
-                                        break;
-
-                                    case 6:
-                                        novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                        break;
-
-                                    case 7:
-                                        novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-
-                                pecasMalucas.add(novaPeca);
-
-                            } else {
-                                //Duvida do que colocar
                             }
+
+                            switch (tipoP) {
+                                case 0:
+                                    novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                    break;
+
+                                case 1:
+                                    novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                    break;
+
+                                case 2:
+                                    novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                    break;
+
+                                case 3:
+                                    novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                    break;
+
+                                case 4:
+                                    novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                    break;
+
+                                case 5:
+                                    novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                    break;
+
+                                case 6:
+                                    novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                    break;
+
+                                case 7:
+                                    novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                    break;
+
+                                default:
+                                    break;
+                                }
+
+                            pecasMalucas.add(novaPeca);
 
                         } else {
-                            if (linha.length() > 4) {
-                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MAIS (Esperava: 4 ; Obtive: " + linha.length() + ")");
-                            } else if (linha.length() < 4) {
-                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MENOS (Esperava: 4 ; Obtive: " + linha.length() + ")");
-                            }
+
                         }
-                    }catch (InvalidSimulatorInputException e){
-                        System.out.println(e.getDescricaoProblema());
-                        break;
+
+                    } else {
+                        if (info.length > 4) {
+                            throw new InvalidSimulatorInputException(countLinha, "DADOS A MAIS (Esperava: 4 ; Obtive: " + info.length + ")");
+                        } else if (info.length < 4) {
+                            throw new InvalidSimulatorInputException(countLinha, "DADOS A MENOS (Esperava: 4 ; Obtive: " + info.length + ")");
+                        }
                     }
                 }
                 //Quarta parte -> definir a localização de cada peça no tabuleiro
                 else if ((countLinha - nPecas - 2) < tamanhoTabuleiro) {
-                    try {
-                        if (linha.length() == tamanhoTabuleiro) {
-                            info = linha.split(":");
-                            for (int i = 0; i < tamanhoTabuleiro; i++) {
-                                if (Integer.parseInt(info[i]) != 0) {
-                                    for (CrazyPiece crazyPiece : pecasMalucas) {
-                                        if (Integer.parseInt(info[i]) == crazyPiece.getId()) {
-                                            crazyPiece.estaEmJogo();
-                                            crazyPiece.setPosicao(i, countLinha - (nPecas + 2));
-                                            crazyPiece.setEmJogo(true);
-                                        }
+                    info = linha.split(":");
+                    if (info.length == tamanhoTabuleiro) {
+                        for (int i = 0; i < tamanhoTabuleiro; i++) {
+                            if (Integer.parseInt(info[i]) != 0) {
+                                for (CrazyPiece crazyPiece : pecasMalucas) {
+                                    if (Integer.parseInt(info[i]) == crazyPiece.getId()) {
+                                        crazyPiece.estaEmJogo();
+                                        crazyPiece.setPosicao(i, countLinha - (nPecas + 2));
+                                        crazyPiece.setEmJogo(true);
                                     }
                                 }
                             }
-                        } else {
-                            if(linha.length() > tamanhoTabuleiro){
-                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MAIS (Esperava: " + tamanhoTabuleiro + "; Obtive: " + linha.length() + ")");
-                            }else if(linha.length() < tamanhoTabuleiro){
-                                throw new InvalidSimulatorInputException(countLinha, "DADOS A MENOS (Esperava: " + tamanhoTabuleiro + "; Obtive: " + linha.length() + ")");
-                            }
                         }
-                    }catch (InvalidSimulatorInputException e){
-                        //Duvida do que colocar
-                        System.out.println(e.getDescricaoProblema());
-                        break;
+                    } else {
+                        if(info.length > tamanhoTabuleiro){
+                            throw new InvalidSimulatorInputException(countLinha, "DADOS A MAIS (Esperava: " + tamanhoTabuleiro + "; Obtive: " + info.length + ")");
+                        }else if(info.length < tamanhoTabuleiro){
+                            throw new InvalidSimulatorInputException(countLinha, "DADOS A MENOS (Esperava: " + tamanhoTabuleiro + "; Obtive: " + info.length + ")");
+                        }
                     }
                 }
                 //Quinta parte -> defenição dos parametros caso seja aberto um jogo antigo
@@ -211,8 +188,8 @@ public class Simulador {
                 countLinha++;
             }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("Não foi possivel ler o ficheiro");
+        } catch (FileNotFoundException e){
+
         }
     }
 
@@ -226,6 +203,7 @@ public class Simulador {
         //Guardar a posição e estado das peças
         recuperaPecas.clear();
         String linha;
+        CrazyPiece origem = receberPeca(xO, yO, pecasMalucas);
         for(CrazyPiece peace:pecasMalucas){
             linha = "" + peace.getId() + ":" + peace.getPosX() + ":" + peace.getPosY();
             recuperaPecas.add(linha);
@@ -252,7 +230,6 @@ public class Simulador {
         if(!(xD == xO && yD == yO)) {
             if (((xO >= 0 && xO < tamanhoTabuleiro) && (yO >= 0 && yO < tamanhoTabuleiro)) &&
                     ((xD >= 0 && xD < tamanhoTabuleiro) && (yD >= 0 && yD < tamanhoTabuleiro))) {
-                CrazyPiece origem = receberPeca(xO, yO, pecasMalucas);
 
                 if (origem != null && origem.getEquipa() == this.getIDEquipaAJogar()) {
                     CrazyPiece destino = receberPeca(xD, yD, pecasMalucas);
@@ -266,17 +243,19 @@ public class Simulador {
                                 this.validasBrancas++;
                             }
                             turno++;
+                            origem.setJogadasValidas();
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
                                 }
                             }
+                            origem.setPontos(0);
                             return true;
                         }
                     } else if (!destino.equipaEquals(equipaJogar)) {
                         if (origem.podeMover(xD, yD, pecasMalucas, turno, tamanhoTabuleiro)) {
                             destino.setEmJogo(false);
-                            destino.setPosicao(-1, -1);
+                            destino.comida();
                             origem.setPosicao(xD, yD);
                             this.semCaptura = 0;
                             this.capturaPrevia = true;
@@ -287,7 +266,11 @@ public class Simulador {
                                 this.validasBrancas++;
                                 this.capturadasBrancas++;
                             }
+                            origem.captorou();
+                            origem.setJogadasValidas();
+                            origem.setPontos(destino.getValorRelativo());
                             turno++;
+
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
@@ -305,6 +288,8 @@ public class Simulador {
         }else if(this.getIDEquipaAJogar()==20){ //Brancas
             invalidasBrancas++;
         }
+
+        origem.setJogadasInvalidas();
         System.out.println("invalida");
         return false;
     }
@@ -578,6 +563,57 @@ public class Simulador {
             System.out.println("Deu erro ao guardar o jogo");
         }
         return true;
+    }
+
+    public Map<String, List<String>> getEstatisticas(){
+        Map<String, List<String>> estatisticas = new HashMap<>();
+        List<String> topInfo = new ArrayList<>();
+
+        //A lista contém as 5 peças com mais capturas, ordenadas da peça com mais capturas para a peça com menos capturas.
+        //Falta a ordenação alfabetica
+        pecasMalucas.stream()
+                .sorted((p1,p2) -> p2.getNrCapturadas() - p1.getNrCapturadas())
+                .limit(5)
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+
+        estatisticas.put("top5Capturas",topInfo);
+
+        //A lista contém as 5 peças com mais pontos, ordenadas da peça com mais pontos para a peça com menos
+        //Falta a ordenação alfabetica
+        pecasMalucas.stream()
+                .sorted((p1,p2) -> p2.getNrPontos() - p1.getNrPontos())
+                .limit(5)
+                .sorted(Comparator.comparing(CrazyPiece::getAlcunha))
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+
+
+        estatisticas.put("top5Pontos",topInfo);
+
+        //A lista contém todas as peças com mais do que 5 capturas
+        pecasMalucas.stream()
+                .filter((p) -> p.getNrCapturadas() > 5)
+                .limit(5)
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+
+        estatisticas.put("pecasMais5Capturas",topInfo);
+
+        //contendo as 3 peças cujo rácio (Nr Jogadas Inválidas / Nr. Jogadas) é maior.
+        pecasMalucas.stream()
+                .sorted((p1,p2) -> (p2.getJogadasInvalidas()/p2.getJogadasValidas()) - (p1.getJogadasInvalidas()/p1.getJogadasValidas()))
+                .limit(3)
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+
+        estatisticas.put("3pecasMaisBaralhadas",topInfo);
+
+        //contendo todos os tipos de peças que tiveram capturas, ordenados do tipo que teve mais capturas para o tipo que teve menos capturas.
+        pecasMalucas.stream()
+                .sorted((p1,p2) -> (p2.getJogadasInvalidas()/p2.getJogadasValidas()) - (p1.getJogadasInvalidas()/p1.getJogadasValidas()))
+                .limit(3)
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+
+        estatisticas.put("3pecasMaisBaralhadas",topInfo);
+
+        return estatisticas;
     }
 
 //Reenicia as variaveis do jogo
