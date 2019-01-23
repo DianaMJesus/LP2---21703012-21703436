@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Simulador {
 
@@ -18,6 +19,7 @@ public class Simulador {
 
     //Listas
     List<CrazyPiece> pecasMalucas = new ArrayList<>();
+    List<PecasCapturam> pecasCapturam = new ArrayList<>();
     List<String> recuperaPecas = new ArrayList<>();
     private List<String> informacaoEquipas = new ArrayList<>();
 
@@ -82,47 +84,67 @@ public class Simulador {
 
                     if (info.length == 4) {
                         CrazyPiece novaPeca = null;
+                        PecasCapturam peca = null;
+
                         int tipoP = Integer.parseInt(info[1]);
 
                         switch (tipoP) {
                             case 0:
                                 novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                peca = new PecasCapturam(0);
                                 break;
 
                             case 1:
                                 novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                peca = new PecasCapturam(1);
                                 break;
 
                             case 2:
                                 novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                peca = new PecasCapturam(2);
                                 break;
 
                             case 3:
                                 novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                peca = new PecasCapturam(3);
                                 break;
 
                             case 4:
                                 novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                peca = new PecasCapturam(4);
                                 break;
 
                             case 5:
                                 novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                peca = new PecasCapturam(5);
                                 break;
 
                             case 6:
                                 novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                peca = new PecasCapturam(6);
                                 break;
 
                             case 7:
                                 novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                peca = new PecasCapturam(7);
                                 break;
 
                             default:
                                 break;
                         }
 
-                            pecasMalucas.add(novaPeca);
+                        pecasMalucas.add(novaPeca);
 
+                        boolean pExiste = false;
+                        for(PecasCapturam pecaExiste : pecasCapturam){
+                            if(pecaExiste.getIdTipoPeca() == peca.getIdTipoPeca()){
+                                pExiste = true;
+                            }
+                        }
+
+                        if(!pExiste) {
+                            pecasCapturam.add(peca);
+                        }
 
                     } else {
                         if (info.length > 4) {
@@ -225,18 +247,22 @@ public class Simulador {
                             } else if (this.getIDEquipaAJogar() == 20) { //Brancas
                                 this.validasBrancas++;
                             }
-                            turno++;
-                            origem.setJogadasValidas();
+
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
                                 }
                             }
+
+                            turno++;
                             origem.setPontos(0);
+                            origem.setJogadasValidas();
+                            System.out.println(origem.getJogadasValidas());
                             return true;
                         }
                     } else if (!destino.equipaEquals(equipaJogar)) {
                         if (origem.podeMover(xD, yD, pecasMalucas, turno, tamanhoTabuleiro)) {
+
                             destino.setEmJogo(false);
                             destino.comida();
                             origem.setPosicao(xD, yD);
@@ -249,16 +275,24 @@ public class Simulador {
                                 this.validasBrancas++;
                                 this.capturadasBrancas++;
                             }
-                            origem.captorou();
-                            origem.setJogadasValidas();
-                            origem.setPontos(destino.getValorRelativo());
-                            turno++;
+
+                            for(PecasCapturam peca:pecasCapturam){
+                                if(origem.getTipoPeca() == peca.getIdTipoPeca()){
+                                    peca.setnCapturadas();
+                                }
+                            }
 
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
                                 }
                             }
+
+                            turno++;
+                            origem.captorou();
+                            origem.setJogadasValidas();
+                            origem.setPontos(destino.getValorRelativo());
+                            System.out.println(origem.getJogadasValidas());
                             return true;
                         }
                     }
@@ -273,7 +307,6 @@ public class Simulador {
         }
 
         origem.setJogadasInvalidas();
-        System.out.println("invalida");
         return false;
     }
 
@@ -551,14 +584,16 @@ public class Simulador {
 
     public Map<String, List<String>> getEstatisticas(){
         Map<String, List<String>> estatisticas = new HashMap<>();
+        List<CrazyPiece> pecasDesorganizadas = new ArrayList<>();
         List<String> topInfo = new ArrayList<>();
 
         //A lista contém as 5 peças com mais capturas, ordenadas da peça com mais capturas para a peça com menos capturas.
         //Falta a ordenação alfabetica
-        pecasMalucas.stream()
+        pecasDesorganizadas=pecasMalucas.stream()
                 .sorted((p1,p2) -> p2.getNrCapturadas() - p1.getNrCapturadas())
                 .limit(5)
-                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
+                .collect(Collectors.toList());
+
 
         estatisticas.put("top5Capturas",topInfo);
 
@@ -582,19 +617,19 @@ public class Simulador {
 
         //contendo as 3 peças cujo rácio (Nr Jogadas Inválidas / Nr. Jogadas) é maior.
         pecasMalucas.stream()
-                .sorted((p1,p2) -> (p2.getJogadasInvalidas()/p2.getJogadasValidas()) - (p1.getJogadasInvalidas()/p1.getJogadasValidas()))
+                .sorted((p1,p2) -> p2.calcularRacio() - p1.calcularRacio())
                 .limit(3)
                 .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
 
         estatisticas.put("3pecasMaisBaralhadas",topInfo);
 
         //contendo todos os tipos de peças que tiveram capturas, ordenados do tipo que teve mais capturas para o tipo que teve menos capturas.
-        pecasMalucas.stream()
-                .sorted((p1,p2) -> (p2.getJogadasInvalidas()/p2.getJogadasValidas()) - (p1.getJogadasInvalidas()/p1.getJogadasValidas()))
-                .limit(3)
-                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
 
-        estatisticas.put("3pecasMaisBaralhadas",topInfo);
+        pecasCapturam.stream()
+                .sorted((p1,p2) -> (p2.getnCapturadas()- p1.getnCapturadas()))
+                .forEach((p)-> topInfo.add("" + p.getIdTipoPeca() + ":" + p.getnCapturadas()));
+
+        estatisticas.put("tiposPecaCapturados",topInfo);
 
         return estatisticas;
     }

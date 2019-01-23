@@ -437,6 +437,13 @@ public class CrazyPiece {
 
     public void setTipo(int turno){}
 
+    public int calcularRacio(){
+        if(this.jogadasValidas == 0){
+            return 0;
+        }
+        return this.jogadasInvalidas/this.jogadasValidas;
+    }
+
     public  String toString(){
         if(!emJogo){
             return id + " | " + tipo + " | " + valorRelativo + " | " + equipa + " | " + alcunha + " @ (n/a)";
