@@ -49,7 +49,7 @@ public class Simulador {
 
             while (leitorFicheiro.hasNextLine()) {
 
-                String linha = leitorFicheiro.nextLine();
+                String linha =  leitorFicheiro.nextLine();
                 String info[];
 
                 //Primeira e Segunda parte
