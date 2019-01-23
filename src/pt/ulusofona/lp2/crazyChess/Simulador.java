@@ -536,7 +536,7 @@ public class Simulador {
                 }
 
                 if(secao == 1){
-                    escrever.write("" +  pecasMalucas.size());
+                    escrever.write("" + pecasMalucas.size());
                     escrever.write(newLine);
                 }
 
