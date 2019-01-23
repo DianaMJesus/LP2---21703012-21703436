@@ -17,7 +17,7 @@ public class Jogada implements Comparable<Jogada> {
 
     public int compareTo(Jogada jogada){
         if(jogada.nPontos > 0){
-            if(this.nPontos > jogada.nPontos){
+            if(this.nPontos < jogada.nPontos){
                 return 1;
             }else{
                 return -1;
