@@ -30,7 +30,7 @@ public class Simulador {
     }
 
 //Leitura do Ficheiro (Feito)
-    public void iniciaJogo(File ficheiroInicial) throws InvalidSimulatorInputException {
+    public void iniciaJogo(File ficheiroInicial) throws InvalidSimulatorInputException , IOException{
         this.reset();
         try {
             Scanner leitorFicheiro = new Scanner(ficheiroInicial);
@@ -54,11 +54,7 @@ public class Simulador {
                 if (countLinha == 0) {
                     info = linha.split(":");
                     if (info.length == 1) {
-                        if (Integer.parseInt(info[0]) >= 4 && Integer.parseInt(info[0]) <= 12) {
-                            tamanhoTabuleiro = Integer.parseInt(info[0]); //guarda o tamanho do tabuleiro
-                        } else {
-                            //Duvida do que colocar
-                        }
+                        tamanhoTabuleiro = Integer.parseInt(info[0]); //guarda o tamanho do tabuleiro
                     } else {
                         if(info.length > 1) {
                             throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + info.length + ")");
@@ -71,11 +67,7 @@ public class Simulador {
                 else if (countLinha == 1) {
                     info = linha.split(":");
                     if(info.length == 1) {
-                        if (Integer.parseInt(info[0]) < (tamanhoTabuleiro * tamanhoTabuleiro)) {
-                            nPecas = Integer.parseInt(info[0]); //guarda o numero de pecas
-                        } else {
-                            //Duvida do que colocar
-                        }
+                        nPecas = Integer.parseInt(info[0]); //guarda o numero de pecas
                     } else {
                         if(info.length > 1) {
                             throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + info.length + ")");
@@ -87,59 +79,50 @@ public class Simulador {
                 //Terceira parte -> informação sobre as peças
                 else if ((countLinha - 2) < nPecas) {
                     info = linha.split(":");
+
                     if (info.length == 4) {
                         CrazyPiece novaPeca = null;
                         int tipoP = Integer.parseInt(info[1]);
 
-                        if (Integer.parseInt(info[0]) > 0) {
-                            for (CrazyPiece peace : pecasMalucas) {
-                                if (peace.getId() == Integer.parseInt(info[0])) {
-                                    //Duvida do que colocar
-                                }
-                            }
+                        switch (tipoP) {
+                            case 0:
+                                novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                            switch (tipoP) {
-                                case 0:
-                                    novaPeca = new Rei(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                    break;
+                            case 1:
+                                novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                                case 1:
-                                    novaPeca = new Rainha(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                    break;
+                            case 2:
+                                novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                                case 2:
-                                    novaPeca = new PoneiMagico(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                    break;
+                            case 3:
+                                novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                                case 3:
-                                    novaPeca = new PadreDaVila(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                    break;
+                            case 4:
+                                novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                break;
 
-                                case 4:
-                                    novaPeca = new TorreH(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
-                                    break;
+                            case 5:
+                                novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
+                                break;
 
-                                case 5:
-                                    novaPeca = new TorreV(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3], tamanhoTabuleiro);
-                                    break;
+                            case 6:
+                                novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                                case 6:
-                                    novaPeca = new Lebre(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                    break;
+                            case 7:
+                                novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
+                                break;
 
-                                case 7:
-                                    novaPeca = new Joker(Integer.parseInt(info[0]), Integer.parseInt(info[2]), info[3]);
-                                    break;
-
-                                default:
-                                    break;
-                                }
+                            default:
+                                break;
+                        }
 
                             pecasMalucas.add(novaPeca);
 
-                        } else {
-
-                        }
 
                     } else {
                         if (info.length > 4) {
@@ -181,6 +164,7 @@ public class Simulador {
                     validasBrancas = Integer.parseInt(info[4]);
                     capturadasBrancas = Integer.parseInt(info[5]);
                     invalidasBrancas = Integer.parseInt(info[6]);
+                    semCaptura = Integer.parseInt(info[7]);
                     turno = validasBrancas + validasPretas;
                 }
 
@@ -188,7 +172,7 @@ public class Simulador {
             }
 
         } catch (FileNotFoundException e){
-
+            throw new IOException();
         }
     }
 
@@ -553,7 +537,7 @@ public class Simulador {
                     }
                 }
                 else if(secao == 4){
-                    linhaAdicionar = getIDEquipaAJogar() + ":" + validasPretas + ":" + capturadasPretas + ":" + invalidasPretas + ":" + validasBrancas + ":" + capturadasBrancas + ":" + invalidasBrancas;
+                    linhaAdicionar = getIDEquipaAJogar() + ":" + validasPretas + ":" + capturadasPretas + ":" + invalidasPretas + ":" + validasBrancas + ":" + capturadasBrancas + ":" + invalidasBrancas + ":" + semCaptura;
                     escrever.write(linhaAdicionar);
                 }
             }
@@ -573,7 +557,7 @@ public class Simulador {
         pecasMalucas.stream()
                 .sorted((p1,p2) -> p2.getNrCapturadas() - p1.getNrCapturadas())
                 .limit(5)
-                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
 
         estatisticas.put("top5Capturas",topInfo);
 
@@ -583,7 +567,7 @@ public class Simulador {
                 .sorted((p1,p2) -> p2.getNrPontos() - p1.getNrPontos())
                 .limit(5)
                 .sorted(Comparator.comparing(CrazyPiece::getAlcunha))
-                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
 
 
         estatisticas.put("top5Pontos",topInfo);
@@ -591,8 +575,7 @@ public class Simulador {
         //A lista contém todas as peças com mais do que 5 capturas
         pecasMalucas.stream()
                 .filter((p) -> p.getNrCapturadas() > 5)
-                .limit(5)
-                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
 
         estatisticas.put("pecasMais5Capturas",topInfo);
 
@@ -600,7 +583,7 @@ public class Simulador {
         pecasMalucas.stream()
                 .sorted((p1,p2) -> (p2.getJogadasInvalidas()/p2.getJogadasValidas()) - (p1.getJogadasInvalidas()/p1.getJogadasValidas()))
                 .limit(3)
-                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
 
         estatisticas.put("3pecasMaisBaralhadas",topInfo);
 
@@ -608,7 +591,7 @@ public class Simulador {
         pecasMalucas.stream()
                 .sorted((p1,p2) -> (p2.getJogadasInvalidas()/p2.getJogadasValidas()) - (p1.getJogadasInvalidas()/p1.getJogadasValidas()))
                 .limit(3)
-                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.nrCapturadas));
+                .forEach((p)-> topInfo.add("" + p.getEquipa() + ":" + p.getAlcunha() + ":" + p.getNrPontos() + ":" + p.getNrCapturadas()));
 
         estatisticas.put("3pecasMaisBaralhadas",topInfo);
 

@@ -159,7 +159,7 @@ public class CrazyPiece {
         }
 
         //Caso a peça não seja um Ponei Magico
-        if (pecaRecebida != null && pecaRecebida.getTipoPeca() != 2 && !pecaPonei) {
+        if ((pecaRecebida != null) && (pecaRecebida.getTipoPeca() != 2) && !pecaPonei) {
             for (int pos = 1; pos <= pecaRecebida.passoMax; pos++) {
                 //Esquerda - Cima
                 if (podeMover(x - pos, y - pos, pecasMalucas, turno, tamanhoTabuleiro)) {

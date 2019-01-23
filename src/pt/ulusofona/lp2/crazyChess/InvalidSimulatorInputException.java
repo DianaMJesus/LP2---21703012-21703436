@@ -10,7 +10,7 @@ public class InvalidSimulatorInputException extends IOException {
     InvalidSimulatorInputException(){}
 
     InvalidSimulatorInputException(int linhaErro, String descricaoProblema){
-        this.linhaErro = linhaErro;
+        this.linhaErro = linhaErro + 1;
         this.descricaoProblema = descricaoProblema;
     }
 

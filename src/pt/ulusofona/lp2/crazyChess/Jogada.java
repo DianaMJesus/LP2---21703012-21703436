@@ -12,6 +12,9 @@ public class Jogada implements Comparable<Jogada> {
 
     @Override
     public String toString() {
+        if(this.nPontos == Integer.MAX_VALUE){
+            return this.x + ", " + this.y + ", (infinito)";
+        }
         return this.x + ", " + this.y + ", " + this.nPontos;
     }
 
