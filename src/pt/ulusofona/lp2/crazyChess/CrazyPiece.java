@@ -122,7 +122,7 @@ public class CrazyPiece {
 
     public List<Comparable> sugetaoJogada(int x, int y, List<CrazyPiece> pecasMalucas, int turno, int tamanhoTabuleiro) {
         List<Comparable> posibilidades = new ArrayList<>();
-        Comparable resultado;
+        Jogada resultado;
         CrazyPiece pecaRecebida = Simulador.receberPeca(x, y, pecasMalucas);
         boolean pecaPonei = false;
 
@@ -159,7 +159,7 @@ public class CrazyPiece {
         }
 
         //Caso a peça não seja um Ponei Magico
-        if (pecaRecebida != null && pecaRecebida.getTipoPeca() != 2 && pecaPonei == false) {
+        if (pecaRecebida != null && pecaRecebida.getTipoPeca() != 2 && !pecaPonei) {
             for (int pos = 1; pos <= pecaRecebida.passoMax; pos++) {
                 //Esquerda - Cima
                 if (podeMover(x - pos, y - pos, pecasMalucas, turno, tamanhoTabuleiro)) {
@@ -167,9 +167,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca((x - pos) , (y - pos), pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable((x - pos) , (y - pos) ,0);
+                            resultado = new Jogada((x - pos) , (y - pos) ,0);
                         }else{
-                            resultado = new Comparable((x - pos) , (y - pos) , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x - pos) , (y - pos) , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -181,9 +181,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca(x , (y - pos), pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable(x , (y - pos) ,0);
+                            resultado = new Jogada(x , (y - pos) ,0);
                         }else{
-                            resultado = new Comparable(x , (y - pos) , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada(x , (y - pos) , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -195,9 +195,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca((x + pos) , (y - pos), pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable((x + pos) , (y - pos) ,0);
+                            resultado = new Jogada((x + pos) , (y - pos) ,0);
                         }else{
-                            resultado = new Comparable((x + pos) , (y - pos) , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x + pos) , (y - pos) , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -209,9 +209,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca((x + pos) , y, pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable((x + pos), y ,0);
+                            resultado = new Jogada((x + pos), y ,0);
                         }else{
-                            resultado = new Comparable((x + pos) , y  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x + pos) , y  , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -223,9 +223,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca((x + pos) , (y + pos), pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable((x + pos), (y + pos) ,0);
+                            resultado = new Jogada((x + pos), (y + pos) ,0);
                         }else{
-                            resultado = new Comparable((x + pos) , (y + pos)  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x + pos) , (y + pos)  , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -237,9 +237,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca(x , (y + pos), pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable(x , (y + pos) ,0);
+                            resultado = new Jogada(x , (y + pos) ,0);
                         }else{
-                            resultado = new Comparable(x , (y + pos)  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada(x , (y + pos)  , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -251,9 +251,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca((x - pos) , (y + pos), pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable((x - pos) , (y + pos) ,0);
+                            resultado = new Jogada((x - pos) , (y + pos) ,0);
                         }else{
-                            resultado = new Comparable((x - pos) , (y + pos)  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x - pos) , (y + pos)  , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -265,9 +265,9 @@ public class CrazyPiece {
                         pecaRecebida = Simulador.receberPeca((x - pos) , y , pecasMalucas);
 
                         if(pecaRecebida == null){
-                            resultado = new Comparable((x - pos) , y ,0);
+                            resultado = new Jogada((x - pos) , y ,0);
                         }else{
-                            resultado = new Comparable((x - pos) , y  , pecaRecebida.getValorRelativo());
+                            resultado = new Jogada((x - pos) , y  , pecaRecebida.getValorRelativo());
                         }
 
                         posibilidades.add(resultado);
@@ -276,15 +276,15 @@ public class CrazyPiece {
             }
         }
         //Caso a peça seja um Ponei
-        else if (pecaRecebida.getTipoPeca() == 2 || pecaPonei == true) {
+        else if (pecaRecebida.getTipoPeca() == 2 || pecaPonei) {
             if ((x - 2 >= 0) && (y - 2 >= 0)) {
                 if (podeMover(x - 2, y - 2, pecasMalucas, turno, tamanhoTabuleiro)) {
                     pecaRecebida = Simulador.receberPeca((x - 2) , (y - 2), pecasMalucas);
 
                     if(pecaRecebida == null){
-                        resultado = new Comparable((x - 2) , (y - 2) ,0);
+                        resultado = new Jogada((x - 2) , (y - 2) ,0);
                     }else{
-                        resultado = new Comparable((x - 2) , (y - 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x - 2) , (y - 2)  , pecaRecebida.getValorRelativo());
                     }
 
                     posibilidades.add(resultado);
@@ -296,9 +296,9 @@ public class CrazyPiece {
                     pecaRecebida = Simulador.receberPeca((x - 2) , (y + 2), pecasMalucas);
 
                     if(pecaRecebida == null){
-                        resultado = new Comparable((x - 2) , (y + 2) ,0);
+                        resultado = new Jogada((x - 2) , (y + 2) ,0);
                     }else{
-                        resultado = new Comparable((x - 2) , (y + 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x - 2) , (y + 2)  , pecaRecebida.getValorRelativo());
                     }
 
                     posibilidades.add(resultado);
@@ -310,9 +310,9 @@ public class CrazyPiece {
                     pecaRecebida = Simulador.receberPeca((x + 2) , (y - 2), pecasMalucas);
 
                     if(pecaRecebida == null){
-                        resultado = new Comparable((x + 2) , (y - 2) ,0);
+                        resultado = new Jogada((x + 2) , (y - 2) ,0);
                     }else{
-                        resultado = new Comparable((x + 2) , (y - 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x + 2) , (y - 2)  , pecaRecebida.getValorRelativo());
                     }
 
                     posibilidades.add(resultado);
@@ -324,16 +324,16 @@ public class CrazyPiece {
                     pecaRecebida = Simulador.receberPeca((x + 2) , (y + 2), pecasMalucas);
 
                     if(pecaRecebida == null){
-                        resultado = new Comparable((x + 2) , (y + 2) ,0);
+                        resultado = new Jogada((x + 2) , (y + 2) ,0);
                     }else{
-                        resultado = new Comparable((x + 2) , (y + 2)  , pecaRecebida.getValorRelativo());
+                        resultado = new Jogada((x + 2) , (y + 2)  , pecaRecebida.getValorRelativo());
                     }
 
                     posibilidades.add(resultado);
                 }
             }
         }
-        System.out.println(posibilidades);
+
         return posibilidades;
     }
 
