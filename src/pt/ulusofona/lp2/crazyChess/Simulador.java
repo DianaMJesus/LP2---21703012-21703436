@@ -52,24 +52,18 @@ public class Simulador {
                 String linha = leitorFicheiro.nextLine();
                 String info[];
 
-                //Primeira parte -> tamanho do tabuleiro
-                if (countLinha == 0) {
+                //Primeira e Segunda parte
+                if (countLinha == 0 || countLinha == 1) {
                     info = linha.split(":");
                     if (info.length == 1) {
-                        tamanhoTabuleiro = Integer.parseInt(info[0]); //guarda o tamanho do tabuleiro
-                    } else {
-                        if(info.length > 1) {
-                            throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + info.length + ")");
-                        }else if(info.length < 1){
-                            throw new InvalidSimulatorInputException(countLinha,"DADOS A MENOS (Esperava: 1 ; Obtive: " + info.length + ")");
+                        //Primeira parte -> tamanho do tabuleiro
+                        if(countLinha == 0) {
+                            tamanhoTabuleiro = Integer.parseInt(info[0]); //guarda o tamanho do tabuleiro
                         }
-                    }
-                }
-                //Segunda parte -> numero de peças existentes no jogo
-                else if (countLinha == 1) {
-                    info = linha.split(":");
-                    if(info.length == 1) {
-                        nPecas = Integer.parseInt(info[0]); //guarda o numero de pecas
+                        //Segunda parte -> numero de peças existentes no jogo
+                        else if(countLinha == 1){
+                            nPecas = Integer.parseInt(info[0]); //guarda o numero de pecas
+                        }
                     } else {
                         if(info.length > 1) {
                             throw new InvalidSimulatorInputException(countLinha,"DADOS A MAIS (Esperava: 1 ; Obtive: " + info.length + ")");
@@ -187,6 +181,9 @@ public class Simulador {
                     capturadasBrancas = Integer.parseInt(info[5]);
                     invalidasBrancas = Integer.parseInt(info[6]);
                     semCaptura = Integer.parseInt(info[7]);
+                    if(semCaptura != 0){
+                        capturaPrevia = true;
+                    }
                     turno = validasBrancas + validasPretas;
                 }
 
@@ -252,13 +249,14 @@ public class Simulador {
                                 this.validasBrancas++;
                             }
 
+                            turno++;
+
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
                                 }
                             }
 
-                            turno++;
                             origem.setPontos(0);
                             origem.setJogadasValidas();
                             System.out.println(origem.getJogadasValidas());
@@ -286,13 +284,14 @@ public class Simulador {
                                 }
                             }
 
+                            turno++;
+
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
                                 }
                             }
 
-                            turno++;
                             origem.captorou();
                             origem.setJogadasValidas();
                             origem.setPontos(destino.getValorRelativo());
