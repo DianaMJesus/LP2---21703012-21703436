@@ -130,6 +130,7 @@ public class Simulador {
                         pecasMalucas.add(novaPeca);
 
                         boolean pExiste = false;
+
                         for(PecasCapturam pecaExiste : pecasCapturam){
                             if(pecaExiste.getIdTipoPeca() == peca.getIdTipoPeca()){
                                 pExiste = true;
