@@ -54,16 +54,20 @@ public class TestSimulador {
     public void sugestaoRei() throws InvalidSimulatorInputException , IOException{
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_rei.txt"));
+
         List<String> possiveisMovimentos = new ArrayList<>();
-        possiveisMovimentos.add("0, 0");
-        possiveisMovimentos.add("1, 0");
-        possiveisMovimentos.add("2, 0");
-        possiveisMovimentos.add("2, 1");
-        possiveisMovimentos.add("2, 2");
-        possiveisMovimentos.add("1, 2");
-        possiveisMovimentos.add("0, 2");
-        possiveisMovimentos.add("0, 1");
-        assertEquals("Deveria dar as posições [0, 0, 1, 0, 2, 0, 2, 1, 2, 2, 1, 2, 0, 2, 0, 1]",possiveisMovimentos,simulador.obterSugestoesJogada(1,1).toString());
+        possiveisMovimentos.add("0, 0, 0");
+        possiveisMovimentos.add("1, 0, 0");
+        possiveisMovimentos.add("2, 0, 0");
+        possiveisMovimentos.add("2, 1, 0");
+        possiveisMovimentos.add("2, 2, 0");
+        possiveisMovimentos.add("1, 2, 0");
+        possiveisMovimentos.add("0, 2, 0");
+
+        List<String> sugestao = new ArrayList<>();
+        sugestao.add(simulador.obterSugestoesJogada(1,1).toString());
+
+        assertEquals("Deveria dar as posições [(0, 0, 0),(1, 0, 0),(2, 0, 0),(2, 1, 0),(2, 2, 0),(1, 2, 0),(0, 2, 0),(0, 1, 0)]",possiveisMovimentos,sugestao);
     }
 
 //Testes da peca Rainha
@@ -141,19 +145,24 @@ public class TestSimulador {
     public void sugestaoRainha() throws InvalidSimulatorInputException , IOException{
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_rainha.txt"));
+
         List<String> possiveisMovimentos = new ArrayList<>();
-        possiveisMovimentos.add("0, 0");
-        possiveisMovimentos.add("1, 0");
-        possiveisMovimentos.add("2, 0");
-        possiveisMovimentos.add("2, 1");
-        possiveisMovimentos.add("2, 2");
-        possiveisMovimentos.add("1, 2");
-        possiveisMovimentos.add("0, 2");
-        possiveisMovimentos.add("0, 1");
-        possiveisMovimentos.add("3, 1");
-        possiveisMovimentos.add("3, 3");
-        possiveisMovimentos.add("1, 3");
-        assertEquals("Deveria dar [1, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(1,1));
+        possiveisMovimentos.add("0, 0, 0");
+        possiveisMovimentos.add("1, 0, 0");
+        possiveisMovimentos.add("2, 0, 0");
+        possiveisMovimentos.add("2, 1, 0");
+        possiveisMovimentos.add("2, 2, 0");
+        possiveisMovimentos.add("1, 2, 0");
+        possiveisMovimentos.add("0, 2, 0");
+        possiveisMovimentos.add("0, 1, 0");
+        possiveisMovimentos.add("3, 1, 0");
+        possiveisMovimentos.add("3, 3, 0");
+        possiveisMovimentos.add("1, 3, 0");
+
+        List<String> sugestao = new ArrayList<>();
+        sugestao.add(simulador.obterSugestoesJogada(1,1).toString());
+
+        assertEquals("Deveria dar [(1, 0, 0),(1, 1, 0),(0, 1, 0),(2, 0, 0),(2, 2, 0),(0, 2, 0),(3, 0, 0),(3, 3, 0),(0, 3, 0)]",possiveisMovimentos,sugestao);
     }
 //Testes para a peça Ponei Magico
     @Test
@@ -216,9 +225,11 @@ public class TestSimulador {
     public void sugestaoPoneiMagico() throws InvalidSimulatorInputException , IOException{
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_ponei.txt"));
+
         String possiveisMovimentos = "2, 2, 0";
         String sugestao = simulador.obterSugestoesJogada(0,0).get(0).toString();
-        assertEquals("Deveria dar a posição [2, 2, 0]", possiveisMovimentos, sugestao );
+
+        assertEquals("Deveria dar a posição [(2, 2, 0)]", possiveisMovimentos, sugestao );
     }
 
 //Testes da peca Padre da Vila
@@ -282,11 +293,16 @@ public class TestSimulador {
     public void sugestaoPadre() throws InvalidSimulatorInputException , IOException{
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_padre.txt"));
+
         List<String> possiveisMovimentos = new ArrayList<>();
-        possiveisMovimentos.add("1, 1");
-        possiveisMovimentos.add("2, 2");
-        possiveisMovimentos.add("3, 3");
-        assertEquals("Deveria dar as posições [1, 1, 2, 2, 3, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
+        possiveisMovimentos.add("1, 1, 0");
+        possiveisMovimentos.add("2, 2, 0");
+        possiveisMovimentos.add("3, 3, 0");
+
+        List<String> sugestao = new ArrayList<>();
+        sugestao.add(simulador.obterSugestoesJogada(0,0).toString());
+
+        assertEquals("Deveria dar as posições [(1, 1, 0),(2, 2, 0),(3, 3, 0)]",possiveisMovimentos,sugestao);
     }
 
 //Testes da peça Torre Horizontal
@@ -329,11 +345,16 @@ public class TestSimulador {
     public void sugestaoTorreHorizontal() throws InvalidSimulatorInputException , IOException{
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_torreH.txt"));
+
         List<String> possiveisMovimentos = new ArrayList<>();
-        possiveisMovimentos.add("1, 1");
-        possiveisMovimentos.add("2, 1");
-        possiveisMovimentos.add("3, 1");
-        assertEquals("Deveria dar as posições [1, 1, 2, 1, 3, 1]",possiveisMovimentos,simulador.obterSugestoesJogada(0,1));
+        possiveisMovimentos.add("1, 1, 0");
+        possiveisMovimentos.add("2, 1, 0");
+        possiveisMovimentos.add("3, 1, 0");
+
+        List<String> sugestao = new ArrayList<>();
+        sugestao.add(simulador.obterSugestoesJogada(0,1).toString());
+
+        assertEquals("Deveria dar as posições [(1, 1, 0),(2, 1, 0),(3, 1, 0)]",possiveisMovimentos,sugestao);
     }
 
 //Testes da peça Torre Vertical
@@ -376,11 +397,16 @@ public class TestSimulador {
     public void sugestaoTorreVertical() throws InvalidSimulatorInputException , IOException{
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_torreV.txt"));
+
         List<String> possiveisMovimentos = new ArrayList<>();
-        possiveisMovimentos.add("1, 1");
-        possiveisMovimentos.add("1, 2");
-        possiveisMovimentos.add("1, 3");
-        assertEquals("Deveria dar as posições [1, 1, 1, 2, 1, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(1,0));
+        possiveisMovimentos.add("1, 1, 0");
+        possiveisMovimentos.add("1, 2, 0");
+        possiveisMovimentos.add("1, 3, 0");
+
+        List<String> sugestao = new ArrayList<>();
+        sugestao.add(simulador.obterSugestoesJogada(1,0).toString());
+
+        assertEquals("Deveria dar as posições [(1, 1, 0),(1, 2, 0),(1, 3, 0)]",possiveisMovimentos,sugestao);
     }
 //Testes da peça Lebre
     @Test
@@ -427,12 +453,17 @@ public class TestSimulador {
     public void sugestaoLebre() throws InvalidSimulatorInputException , IOException{
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_lebreSugestao.txt"));
+
         List<String> posiveisMovimentos = new ArrayList<>();
-        posiveisMovimentos.add("1, 0");
-        posiveisMovimentos.add("3, 0");
-        posiveisMovimentos.add("3, 2");
-        posiveisMovimentos.add("1, 2");
-        assertEquals("Deveria dar as posições [1, 0, 3, 0, 3, 2, 1, 2]",posiveisMovimentos,simulador.obterSugestoesJogada(2,1));
+        posiveisMovimentos.add("1, 0, 0");
+        posiveisMovimentos.add("3, 0, 0");
+        posiveisMovimentos.add("3, 2, 0");
+        posiveisMovimentos.add("1, 2, 0");
+
+        List<String> sugestao = new ArrayList<>();
+        sugestao.add(simulador.obterSugestoesJogada(2,1).toString());
+
+        assertEquals("Deveria dar as posições [(1, 0, 0),(3, 0, 0),(3, 2, 0),(1, 2, 0)]",posiveisMovimentos,sugestao);
     }
 //Testes da peca Joker
 
@@ -489,6 +520,7 @@ public class TestSimulador {
         Simulador simulador = new Simulador(4);
         simulador.iniciaJogo(new File("test-files/test_jokerSugestao.txt"));
         simulador.turno=0;
+
         List<String> possiveisMovimentos = new ArrayList<>();
         possiveisMovimentos.add("1, 0");
         possiveisMovimentos.add("1, 1");
@@ -499,7 +531,10 @@ public class TestSimulador {
         possiveisMovimentos.add("3, 0");
         possiveisMovimentos.add("3, 3");
         possiveisMovimentos.add("0, 3");
-        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1 , 2, 0 , 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,simulador.obterSugestoesJogada(0,0));
+
+        List<String> sugestao = new ArrayList<>();
+        sugestao.add(simulador.obterSugestoesJogada(0,0).toString());
+        assertEquals("Deveria dar as posições [1, 0, 1, 1, 0, 1 , 2, 0 , 2, 2, 0, 2, 3, 0, 3, 3, 0, 3]",possiveisMovimentos,sugestao);
     }
 
 }
