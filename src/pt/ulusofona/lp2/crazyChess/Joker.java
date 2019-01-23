@@ -24,37 +24,37 @@ public class Joker extends CrazyPiece {
             case 0: //Rainha
                 piece = new Rainha(id,Simulador.getEquipaJogar(turno),alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
-                tipo="Joker/Rainha";
+                setTipo(0);
                 break;
 
             case 1: //Ponei Magico
                 piece = new PoneiMagico(id,Simulador.getEquipaJogar(turno),alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
-                tipo="Joker/Ponei Magico";
+                setTipo(1);
                 break;
 
             case 2: //Padre da Vila
                 piece = new PadreDaVila(id,Simulador.getEquipaJogar(turno),alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
-                tipo="Joker/Padre da Vila";
+                setTipo(2);
                 break;
 
             case 3: //TorreH
                 piece = new TorreH(id,Simulador.getEquipaJogar(turno),alcunha,tamanhoTabuleiro);
                 piece.setPosicao(this.getPosX(),this.getPosY());
-                tipo="Joker/TorreH";
+                setTipo(3);
                 break;
 
             case 4: //TorreV
                 piece = new TorreV(id,Simulador.getEquipaJogar(turno),alcunha,tamanhoTabuleiro);
                 piece.setPosicao(this.getPosX(),this.getPosY());
-                tipo="Joker/TorreV";
+                setTipo(4);
                 break;
 
             case 5: //Lebre
                 piece = new Lebre(id,Simulador.getEquipaJogar(turno),alcunha);
                 piece.setPosicao(this.getPosX(),this.getPosY());
-                tipo="Joker/Lebre";
+                setTipo(5);
                 break;
         }
         return piece!=null && piece.podeMover(x,y,pecasMalucas,turno,tamanhoTabuleiro);
@@ -87,5 +87,7 @@ public class Joker extends CrazyPiece {
                 break;
         }
     }
+
+
 
 }

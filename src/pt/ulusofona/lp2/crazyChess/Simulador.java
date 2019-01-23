@@ -187,6 +187,9 @@ public class Simulador {
                     capturadasBrancas = Integer.parseInt(info[5]);
                     invalidasBrancas = Integer.parseInt(info[6]);
                     semCaptura = Integer.parseInt(info[7]);
+                    if(semCaptura != 0){
+                        capturaPrevia = true;
+                    }
                     turno = validasBrancas + validasPretas;
                 }
 
@@ -252,13 +255,15 @@ public class Simulador {
                                 this.validasBrancas++;
                             }
 
+                            turno++;
+                            
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
                                 }
                             }
 
-                            turno++;
+
                             origem.setPontos(0);
                             origem.setJogadasValidas();
                             System.out.println(origem.getJogadasValidas());
@@ -286,13 +291,15 @@ public class Simulador {
                                 }
                             }
 
+                            turno++;
+
                             for(CrazyPiece novaPeace : pecasMalucas){
                                 if(novaPeace.getTipoPeca() == 7){
                                     novaPeace.setTipo(turno);
                                 }
                             }
 
-                            turno++;
+
                             origem.captorou();
                             origem.setJogadasValidas();
                             origem.setPontos(destino.getValorRelativo());
